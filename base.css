@@ -1,0 +1,88 @@
+/* =========================================================
+   桢昱烽 · 主理人版 V2 —— 版面设计统一样式（所有页面必须引用）
+   画布：1920 × 1080，一页一个 HTML 文件
+   ========================================================= */
+:root {
+  --dark: #0A0A0B;
+  --light: #F5F4F0;
+  --white: #FFFFFF;
+  --orange: #FF5500;
+  --gold: #E5B95C;
+  --red: #E0352B;
+  --ink: #0E0E10;
+  --sub-dk: rgba(255,255,255,0.45);
+  --sub-lt: rgba(14,14,16,0.45);
+  --line-dk: rgba(255,255,255,0.12);
+  --line-lt: rgba(14,14,16,0.12);
+  --sans: "PingFang SC", "Hiragino Sans GB", "Heiti SC", sans-serif;
+  --serif: "Songti SC", "STSong", serif;
+  --brush: "Xingkai SC", "Kaiti SC", serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+body { font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+
+.slide {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden;
+}
+.slide.dark  { background: var(--dark);  color: #FFFFFF; }
+.slide.light { background: var(--light); color: var(--ink); }
+.slide.white { background: var(--white); color: var(--ink); }
+.slide.black { background: #000000;      color: #FFFFFF; }
+
+/* ---------- 固定页眉页脚（每页都要有） ---------- */
+.chrome-ch {           /* 左上：章节名 */
+  position: absolute; top: 60px; left: 96px; z-index: 20;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.24em;
+}
+.chrome-no {           /* 右下：页码 */
+  position: absolute; bottom: 52px; right: 96px; z-index: 20;
+  font-size: 15px; font-weight: 600; letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+.dark .chrome-ch, .dark .chrome-no, .black .chrome-ch, .black .chrome-no, .on-photo .chrome-ch, .on-photo .chrome-no { color: rgba(255,255,255,0.45); }
+.light .chrome-ch, .light .chrome-no, .white .chrome-ch, .white .chrome-no { color: rgba(14,14,16,0.42); }
+
+/* ---------- 字号层级 ---------- */
+.t-manifesto { font-size: 128px; font-weight: 900; line-height: 1.12; letter-spacing: -0.02em; }
+.t-hero      { font-size: 120px; font-weight: 900; line-height: 1.08; letter-spacing: -0.02em; }
+.t-title     { font-size: 88px;  font-weight: 800; line-height: 1.12; letter-spacing: -0.015em; }
+.t-title-s   { font-size: 72px;  font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; }
+.t-num       { font-size: 140px; font-weight: 900; line-height: 1;    letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.t-num-s     { font-size: 96px;  font-weight: 900; line-height: 1;    letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.t-sub       { font-size: 26px;  font-weight: 500; line-height: 1.5; }
+.t-label     { font-size: 18px;  font-weight: 600; letter-spacing: 0.08em; }
+.dark .t-sub, .black .t-sub, .on-photo .t-sub, .dark .t-label, .black .t-label { color: var(--sub-dk); }
+.light .t-sub, .white .t-sub, .light .t-label, .white .t-label { color: var(--sub-lt); }
+
+.orange { color: var(--orange); }
+.gold   { color: var(--gold); }
+
+/* ---------- 常用构件 ---------- */
+.hairline-dk { border-top: 1px solid var(--line-dk); }
+.hairline-lt { border-top: 1px solid var(--line-lt); }
+
+.pill {               /* 声音/播放等小按钮 */
+  display: inline-flex; align-items: center; gap: 10px;
+  height: 48px; padding: 0 22px; border-radius: 999px;
+  font-size: 17px; font-weight: 700; letter-spacing: 0.04em;
+  border: 1px solid rgba(255,255,255,0.28); color: #fff;
+  background: rgba(10,10,12,0.55); backdrop-filter: blur(10px);
+}
+.light .pill, .white .pill { border-color: rgba(14,14,16,0.18); color: var(--ink); background: rgba(255,255,255,0.7); }
+.pill.on { background: var(--orange); border-color: var(--orange); color: #fff; }
+.pill.gold-btn { background: transparent; border-color: var(--gold); color: var(--gold); }
+
+.fullbleed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scrim-left   { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.55) 45%, rgba(10,10,11,0) 75%); }
+.scrim-bottom { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.35) 32%, rgba(10,10,11,0) 55%); }
+.scrim-full   { position: absolute; inset: 0; background: rgba(10,10,11,0.45); }
+
+/* 分屏：图 46% / 字 54% */
+.split-media { position: absolute; top: 0; bottom: 0; width: 46%; overflow: hidden; }
+.split-media.left  { left: 0; }
+.split-media.right { right: 0; }
+.split-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.split-body { position: absolute; top: 0; bottom: 0; width: 54%; display: flex; flex-direction: column; justify-content: center; }
+.split-body.right { right: 0; padding: 0 120px 0 110px; }
+.split-body.left  { left: 0;  padding: 0 110px 0 120px; }

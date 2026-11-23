@@ -1,0 +1,710 @@
+/* =========================================================
+   桢昱烽 · 主理人版 V2 —— 演示舞台与交互引擎样式
+   ========================================================= */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+}
+
+#stage {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(1);
+  will-change: transform;
+}
+
+/* ---------- 幻灯片叠放与切换 ---------- */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* ---------- 入场揭示动画 (.rv / .d1..d5) ---------- */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide.active .rv {
+  opacity: 1;
+  transform: none;
+}
+
+.slide.active.deck-pre .rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: none;
+}
+
+.slide.active .rv.d1 { transition-delay: 0.10s; }
+.slide.active .rv.d2 { transition-delay: 0.25s; }
+.slide.active .rv.d3 { transition-delay: 0.40s; }
+.slide.active .rv.d4 { transition-delay: 0.55s; }
+.slide.active .rv.d5 { transition-delay: 0.70s; }
+
+/* ---------- 右侧细小进度点 (#deckRail) ---------- */
+#deckRail {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  pointer-events: auto;
+}
+
+#deckRail .deck-dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  outline: none;
+  transition:
+    height 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.22s ease,
+    background-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+#deckRail .deck-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px -8px;
+}
+
+#deckRail[data-theme="light"] .deck-dot {
+  background: rgba(14, 14, 16, 0.26);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+#deckRail .deck-dot:hover {
+  transform: scale(1.45);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+#deckRail[data-theme="light"] .deck-dot:hover {
+  background: rgba(14, 14, 16, 0.65);
+}
+
+#deckRail .deck-dot.active {
+  height: 18px;
+  background: var(--orange, #FF5500);
+  box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.25);
+}
+
+#deckRail[data-theme="light"] .deck-dot.active {
+  background: var(--orange, #FF5500);
+  box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.22);
+}
+
+/* ---------- 右上角全局控制区 (#deckControls) ---------- */
+#deckControls {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top, 10px));
+  right: max(16px, env(safe-area-inset-right, 16px));
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+#deckControls .deck-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(16, 16, 20, 0.62);
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--sans, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.16s ease;
+}
+
+#deckControls[data-theme="light"] .deck-ctrl-btn {
+  border-color: rgba(14, 14, 16, 0.15);
+  background: rgba(255, 255, 255, 0.78);
+  color: #0E0E10;
+  box-shadow: 0 2px 10px rgba(14, 14, 16, 0.08);
+}
+
+#deckControls .deck-ctrl-btn:hover {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(28, 28, 34, 0.82);
+}
+
+#deckControls[data-theme="light"] .deck-ctrl-btn:hover {
+  border-color: rgba(14, 14, 16, 0.3);
+  background: rgba(255, 255, 255, 0.94);
+}
+
+#deckControls .deck-ctrl-btn:active {
+  transform: scale(0.96);
+}
+
+#deckControls .deck-ctrl-btn.on,
+#deckControls[data-theme="light"] .deck-ctrl-btn.on {
+  background: var(--orange, #FF5500);
+  border-color: var(--orange, #FF5500);
+  color: #FFFFFF;
+  box-shadow: 0 2px 14px rgba(255, 85, 0, 0.32);
+}
+
+#deckControls .deck-ctrl-btn.is-hidden {
+  display: none;
+}
+
+/* 轻量提示条（如全屏不支持时） */
+#deckToast {
+  position: fixed;
+  top: calc(max(10px, env(safe-area-inset-top, 10px)) + 38px);
+  right: max(16px, env(safe-area-inset-right, 16px));
+  z-index: 125;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(18, 18, 22, 0.88);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--sans, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#deckToast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- 视频全屏弹窗 (#deckModal) ---------- */
+#deckModal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+#deckModal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#deckModal .deck-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 8, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+#deckModal .deck-modal-shell {
+  position: relative;
+  z-index: 2;
+  width: min(92vw, calc(80vh * 16 / 9), 1280px);
+  width: min(92vw, calc(80dvh * 16 / 9), 1280px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform: translateY(10px) scale(0.985);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#deckModal.open .deck-modal-shell {
+  transform: none;
+}
+
+#deckModal .deck-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 4px;
+}
+
+#deckModal .deck-modal-title {
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--sans, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#deckModal .deck-modal-close {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease;
+}
+
+#deckModal .deck-modal-close:hover {
+  background: var(--orange, #FF5500);
+  border-color: var(--orange, #FF5500);
+}
+
+#deckModal .deck-modal-close:active {
+  transform: scale(0.92);
+}
+
+#deckModal .deck-modal-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+#deckModal video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+/* ---------- 手机端视口适配（仅引擎 UI，不影响舞台 1920x1080） ---------- */
+@media (max-width: 768px) {
+  #deckControls {
+    top: max(10px, env(safe-area-inset-top, 10px));
+    right: max(12px, env(safe-area-inset-right, 12px));
+    gap: 6px;
+  }
+
+  #deckControls .deck-ctrl-btn {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 11px;
+  }
+
+  #deckRail {
+    right: 6px;
+    gap: 5px;
+    padding: 4px 2px;
+  }
+
+  #deckRail .deck-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  #deckRail .deck-dot.active {
+    height: 14px;
+  }
+
+  #deckModal {
+    padding: 14px;
+  }
+
+  #deckModal .deck-modal-shell {
+    width: 94vw;
+  }
+
+  #deckModal .deck-modal-title {
+    font-size: 14px;
+  }
+}
+
+/* ---------- 开场门 (#startGate) ---------- */
+#startGate {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+  background: radial-gradient(ellipse 70% 55% at 50% 48%, rgba(255, 85, 0, 0.08) 0%, #000000 68%);
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.38s ease, visibility 0.38s ease;
+}
+
+#startGate .gate-eyebrow {
+  font-family: var(--sans, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: clamp(11px, 1.05vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.42);
+  margin-bottom: 24px;
+}
+
+#startGate .gate-title {
+  font-family: var(--sans, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: clamp(44px, 6.4vw, 96px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  margin-bottom: 46px;
+}
+
+#startGate .gate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 130, 60, 0.72);
+  background: var(--orange, #FF5500);
+  color: #FFFFFF;
+  font-family: var(--sans, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: clamp(14px, 1.3vw, 19px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 8px 32px rgba(255, 85, 0, 0.38);
+  animation: deckGatePulse 2.4s ease-in-out infinite;
+  transition: transform 0.18s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#startGate .gate-btn:hover {
+  background: #ff671a;
+  box-shadow: 0 10px 40px rgba(255, 85, 0, 0.56);
+}
+
+#startGate .gate-btn:active {
+  transform: scale(0.96);
+}
+
+#startGate.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#startGate.is-gone {
+  display: none;
+}
+
+@keyframes deckGatePulse {
+  0%, 100% {
+    box-shadow: 0 6px 26px rgba(255, 85, 0, 0.34), 0 0 0 0 rgba(255, 85, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(255, 85, 0, 0.54), 0 0 0 10px rgba(255, 85, 0, 0);
+  }
+}
+
+/* ---------- 灵魂层转场与特效 (.fx-*) ---------- */
+.fx-streak {
+  position: fixed;
+  inset: 0;
+  z-index: 155;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-streak-bar {
+  position: absolute;
+  top: -15%;
+  left: 0;
+  width: 34vw;
+  min-width: 260px;
+  height: 130%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 85, 0, 0.08) 25%,
+    rgba(255, 132, 48, 0.42) 48%,
+    rgba(255, 224, 180, 0.62) 54%,
+    rgba(255, 85, 0, 0.14) 76%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  animation: deckStreakAcross 0.56s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes deckStreakAcross {
+  0% {
+    opacity: 0;
+    transform: translate3d(-40vw, 0, 0) skewX(-16deg);
+  }
+  20% {
+    opacity: 0.95;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(118vw, 0, 0) skewX(-16deg);
+  }
+}
+
+.fx-chapter {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-chapter-char {
+  font-family: var(--serif, "Songti SC", "STSong", serif);
+  font-weight: 900;
+  font-size: min(44vw, 54vh);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.34);
+  text-shadow:
+    0 0 80px rgba(255, 85, 0, 0.34),
+    0 12px 48px rgba(0, 0, 0, 0.38);
+  will-change: transform, opacity;
+  animation: deckChapterFly 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes deckChapterFly {
+  0% {
+    opacity: 0;
+    transform: translate3d(18vw, 0, 0) scale(1.26);
+  }
+  24% {
+    opacity: 1;
+    transform: translate3d(3vw, 0, 0) scale(1.04);
+  }
+  72% {
+    opacity: 0.85;
+    transform: translate3d(-4vw, 0, 0) scale(0.98);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-22vw, 0, 0) scale(0.88);
+  }
+}
+
+.fx-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 165;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.fx-sweep-box {
+  position: absolute;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-sweep-beam {
+  position: absolute;
+  top: -25%;
+  left: 0;
+  width: 44%;
+  height: 150%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 24%,
+    rgba(255, 255, 255, 0.72) 50%,
+    rgba(255, 140, 60, 0.24) 74%,
+    transparent 100%
+  );
+  will-change: transform, opacity;
+  animation: deckSweepBeam 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes deckSweepBeam {
+  0% {
+    opacity: 0;
+    transform: translate3d(-150%, 0, 0) skewX(-22deg);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(320%, 0, 0) skewX(-22deg);
+  }
+}
+
+.fx-sparks-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 65;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx-spark {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.fx-particles-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.fx-lightning-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 18;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.fx-lightning-bolt {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes deckBoltBreath {
+  0%, 100% {
+    opacity: 0.42;
+  }
+  45% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.65;
+  }
+}
+
+.fx-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.fx-char.fx-space {
+  white-space: pre;
+}
+
+.fx-char.is-slam-prep {
+  opacity: 0;
+  transform: scale(2.15) translateY(-18px);
+  transition: none;
+}
+
+.fx-char.is-in {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition:
+    opacity 0.16s ease-out,
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes deckSlideShakeFallback {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  15% { transform: translate3d(-10px, 6px, 0); }
+  30% { transform: translate3d(9px, -7px, 0); }
+  45% { transform: translate3d(-7px, -4px, 0); }
+  60% { transform: translate3d(6px, 5px, 0); }
+  75% { transform: translate3d(-3px, -2px, 0); }
+}
+
+.slide.fx-shaking {
+  animation: deckSlideShakeFallback 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
