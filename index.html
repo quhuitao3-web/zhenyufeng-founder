@@ -1219,7 +1219,7 @@
     </div>
   </div>
   <div class="frame">
-    <video class="no-nav" src="assets/fire.mp4" poster="assets/frame_fire.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="metadata"></video>
+    <video class="no-nav" data-no-duck src="assets/fire.mp4" poster="assets/frame_fire.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="metadata"></video>
     <div class="shade"></div>
     <div class="live"><b></b>实拍</div>
     <button type="button" class="pill no-nav">🔈 燃烧音效</button>
@@ -1228,9 +1228,20 @@
 </section>
 
 <style>
-#p16 .title { position: absolute; left: 120px; top: 150px; }
+#p16 .title {
+  position: absolute;
+  left: 120px;
+  top: 110px;
+  font-size: 168px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
 #p16 .badge {
-  position: absolute; right: 120px; top: 166px; text-align: right;
+  margin-left: auto;
+  align-self: flex-end;
+  text-align: right;
+  padding-bottom: 24px;
   transform-origin: 65% 50%;
   will-change: transform, opacity;
 }
@@ -1255,7 +1266,7 @@
 #p16 .badge .k { font-size: 18px; font-weight: 600; letter-spacing: .16em; color: rgba(255,255,255,.45); }
 #p16 .badge .v { margin-top: 12px; font-size: 44px; font-weight: 800; letter-spacing: -.01em; color: #fff; font-variant-numeric: tabular-nums; }
 #p16 .badge .v small { font-size: 22px; font-weight: 600; color: rgba(255,255,255,.55); margin-left: 6px; }
-#p16 .cmp { position: absolute; left: 120px; right: 120px; top: 360px; display: flex; align-items: flex-end; gap: 64px; }
+#p16 .cmp { position: absolute; left: 120px; right: 120px; top: 330px; display: flex; align-items: flex-end; gap: 64px; }
 #p16 .cmp .slow { font-size: 150px; font-weight: 900; line-height: 1; letter-spacing: -.035em; color: rgba(255,255,255,.62); font-variant-numeric: tabular-nums; }
 #p16 .cmp .fast { font-size: 250px; font-weight: 900; line-height: .86; letter-spacing: -.04em; color: var(--orange); }
 #p16 .cmp .fast-num {
@@ -1307,12 +1318,12 @@
 </style>
 <section id="p16" class="slide dark" data-ch="叁 · 国企背书" data-cue="race">
   <div class="chrome-ch">叁 · 国企背书</div>
-  <div class="title t-hero rv d1">分钟差</div>
-  <div class="badge"><div class="k">效率差</div><div class="v">100–150<small>倍</small></div></div>
+  <div class="title t-hero rv d1">这就是<span class="orange">速度！</span></div>
   <div class="cmp rv d3">
     <div class="slow">400–480<span class="u">分钟</span></div>
     <div class="vs">vs</div>
     <div class="fast"><span class="fast-num">3</span><span class="u">分钟</span></div>
+    <div class="badge"><div class="k">效率差</div><div class="v">100–150<small>倍</small></div></div>
   </div>
   <div class="bars rv d4">
     <div class="timer">
@@ -1844,7 +1855,7 @@
 
 <style>
   #p21 {
-    background: #06070b;
+    background: #04050a;
   }
   #p21 .p21-world {
     position: absolute;
@@ -1860,43 +1871,55 @@
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    background: linear-gradient(90deg, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.55) 30%, transparent 55%);
+    background: linear-gradient(
+      90deg,
+      rgba(5, 7, 12, 0.78) 0%,
+      rgba(5, 7, 12, 0.34) 24%,
+      rgba(5, 7, 12, 0) 45%
+    );
   }
   #p21 .p21-vignette {
     position: absolute;
     inset: 0;
     z-index: 3;
     pointer-events: none;
-    background: radial-gradient(ellipse 84% 80% at 54% 50%, transparent 50%, rgba(4,5,8,0.62) 100%);
-  }
-  #p21 .p21-speedlines {
-    position: absolute;
-    left: -14%;
-    top: -14%;
-    width: 128%;
-    height: 128%;
-    z-index: 4;
-    pointer-events: none;
-    opacity: 0;
-    transform: scale(0.96);
-    background: repeating-conic-gradient(
-      from 0deg at 56% 52%,
-      rgba(255, 142, 56, 0.36) 0deg 1.15deg,
-      transparent 1.15deg 4.8deg,
-      rgba(255, 255, 255, 0.24) 4.8deg 5.6deg,
-      transparent 5.6deg 10.6deg
+    background: radial-gradient(
+      ellipse 86% 82% at 52% 52%,
+      transparent 48%,
+      rgba(3, 4, 8, 0.6) 100%
     );
-    -webkit-mask-image: radial-gradient(circle at 56% 52%, transparent 0%, transparent 22%, rgba(0,0,0,0.52) 45%, #000 74%);
-    mask-image: radial-gradient(circle at 56% 52%, transparent 0%, transparent 22%, rgba(0,0,0,0.52) 45%, #000 74%);
+    transition: background 0.35s ease;
   }
-  #p21.is-boost .p21-speedlines {
-    animation: p21_speed_burst 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  #p21.is-boost .p21-vignette {
+    background: radial-gradient(
+      ellipse 78% 74% at 52% 52%,
+      transparent 38%,
+      rgba(3, 4, 8, 0.82) 100%
+    );
   }
-  @keyframes p21_speed_burst {
-    0% { opacity: 0; transform: scale(0.92); }
-    20% { opacity: 0.95; transform: scale(1.0); }
-    62% { opacity: 0.78; transform: scale(1.05); }
-    100% { opacity: 0; transform: scale(1.1); }
+  #p21 .p21-letterbox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    background: #000000;
+    z-index: 10;
+    pointer-events: none;
+    transition: height 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #p21 .p21-letterbox.top {
+    top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  #p21 .p21-letterbox.bot {
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  #p21.is-s2 .p21-letterbox {
+    height: 90px;
+  }
+  #p21.is-stamped .p21-letterbox {
+    height: 0;
   }
   #p21 .p21-tags {
     position: absolute;
@@ -1909,29 +1932,57 @@
     position: absolute;
     left: 0;
     top: 0;
-    padding: 9px 14px;
+    padding: 9px 15px;
     border-radius: 10px;
-    background: rgba(12, 14, 20, 0.78);
+    background: rgba(10, 12, 18, 0.84);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.16);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-    color: #fff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.58);
+    color: #ffffff;
     white-space: nowrap;
     opacity: 0;
     will-change: transform, opacity;
-    transition: opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    transition: opacity 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
     pointer-events: none;
   }
   #p21 .tag.is-show {
     opacity: 1;
   }
+  #p21 .tag-alert {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ff6b63;
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.25s ease, margin-bottom 0.25s ease;
+  }
+  #p21 .tag.rival.is-low .tag-alert {
+    max-height: 26px;
+    opacity: 1;
+    margin-bottom: 5px;
+    animation: p21_alert_blink 0.52s ease-in-out infinite;
+  }
+  #p21 .tag-alert-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff3b30;
+    box-shadow: 0 0 10px #ff3b30;
+    flex: none;
+  }
   #p21 .tag-head {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 800;
     letter-spacing: 0.04em;
     line-height: 1.2;
   }
@@ -1942,58 +1993,61 @@
     flex: none;
   }
   #p21 .tag.rival {
-    border-color: rgba(154, 163, 178, 0.42);
+    border-color: rgba(158, 168, 184, 0.44);
   }
   #p21 .tag.rival .tag-dot {
-    background: #9AA3B2;
+    background: #9aa3b2;
     box-shadow: 0 0 8px rgba(154, 163, 178, 0.65);
   }
   #p21 .tag.rival .tag-title {
-    color: #D2D8E2;
+    color: #d6dce6;
   }
   #p21 .tag.rival.is-low {
-    border-color: rgba(255, 59, 48, 0.65);
+    border-color: rgba(255, 59, 48, 0.88);
+    box-shadow: 0 10px 28px rgba(255, 59, 48, 0.34);
   }
   #p21 .tag.rival.is-low .tag-dot {
-    background: #FF3B30;
-    box-shadow: 0 0 10px rgba(255, 59, 48, 0.85);
+    background: #ff3b30;
+    box-shadow: 0 0 10px rgba(255, 59, 48, 0.9);
   }
   #p21 .tag.us {
-    border-color: rgba(255, 85, 0, 0.58);
+    border-color: rgba(255, 85, 0, 0.65);
   }
   #p21 .tag.us .tag-dot {
-    background: #FF5500;
+    background: #ff5500;
     box-shadow: 0 0 10px rgba(255, 85, 0, 0.9);
   }
   #p21 .tag.us.is-charged {
-    border-color: rgba(255, 108, 34, 0.95);
-    box-shadow: 0 10px 30px rgba(255, 85, 0, 0.32), inset 0 0 18px rgba(255, 85, 0, 0.16);
+    border-color: rgba(255, 130, 50, 0.98);
+    box-shadow:
+      0 10px 34px rgba(255, 85, 0, 0.45),
+      inset 0 0 18px rgba(255, 100, 20, 0.24);
   }
   #p21 .tag-bar {
-    width: 144px;
+    width: 152px;
     height: 6px;
     margin-top: 7px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.14);
     overflow: hidden;
   }
   #p21 .tag-fill {
     height: 100%;
     width: 10%;
     border-radius: 999px;
-    transition: background-color 0.25s ease;
+    transition: background 0.25s ease;
   }
   #p21 .tag.rival .tag-fill {
     width: 30%;
-    background: linear-gradient(90deg, #6E7685, #9AA3B2);
+    background: linear-gradient(90deg, #6e7685, #a4adbc);
   }
   #p21 .tag.rival.is-low .tag-fill {
-    background: linear-gradient(90deg, #CC221B, #FF3B30);
+    background: linear-gradient(90deg, #cc221b, #ff453a);
   }
   #p21 .tag.us .tag-fill {
     width: 10%;
-    background: linear-gradient(90deg, #FF5500, #FF9933);
-    box-shadow: 0 0 10px rgba(255, 85, 0, 0.75);
+    background: linear-gradient(90deg, #ff5500, #ffb347);
+    box-shadow: 0 0 10px rgba(255, 110, 30, 0.75);
   }
   #p21 .tag-sub {
     margin-top: 6px;
@@ -2003,78 +2057,42 @@
     line-height: 1.2;
   }
   #p21 .tag.rival .tag-sub {
-    color: rgba(154, 163, 178, 0.78);
-  }
-  #p21 .tag.rival.is-parked .tag-sub {
-    color: #B4BCC9;
+    color: rgba(182, 190, 204, 0.86);
   }
   #p21 .tag.us .tag-sub {
-    color: #FFB07A;
+    color: #ff9a52;
     opacity: 0;
     max-height: 0;
     margin-top: 0;
     overflow: hidden;
     transform: translateY(-4px) scale(0.9);
-    transition: opacity 0.28s ease, max-height 0.28s ease, margin-top 0.28s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      opacity 0.28s ease,
+      max-height 0.28s ease,
+      margin-top 0.28s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
   #p21 .tag.us.is-charged .tag-sub {
     opacity: 1;
     max-height: 28px;
     margin-top: 6px;
-    color: #FF7A2F;
-    text-shadow: 0 0 14px rgba(255, 85, 0, 0.72);
+    color: #ff983f;
+    text-shadow: 0 0 14px rgba(255, 100, 20, 0.85);
     transform: translateY(0) scale(1);
   }
-  #p21 .tag.turn {
-    padding: 8px 16px;
-    border-color: rgba(255, 130, 50, 0.72);
-    background: rgba(18, 12, 10, 0.82);
-    box-shadow: 0 0 24px rgba(255, 85, 0, 0.28);
-  }
-  #p21 .tag.turn .tag-head {
-    font-size: 16px;
-    color: #FFD3B0;
-  }
-  #p21 .tag.turn .tag-dot {
-    background: #FF6B1A;
-    box-shadow: 0 0 12px #FF5500;
-  }
-  #p21 .tag.turn.is-on.is-show {
-    opacity: 1;
-    animation: p21_turn_pulse 2.1s ease-in-out infinite;
-  }
-  @keyframes p21_turn_pulse {
-    0%, 100% { box-shadow: 0 0 18px rgba(255, 85, 0, 0.24); border-color: rgba(255, 130, 50, 0.62); }
-    50% { box-shadow: 0 0 34px rgba(255, 85, 0, 0.56); border-color: rgba(255, 150, 75, 0.96); }
-  }
-  #p21 .tag.alert {
-    padding: 6px 13px;
-    border-color: rgba(255, 59, 48, 0.92);
-    background: rgba(42, 10, 12, 0.88);
-    box-shadow: 0 0 24px rgba(255, 59, 48, 0.45);
-  }
-  #p21 .tag.alert .tag-head {
-    font-size: 15px;
-    font-weight: 800;
-    color: #FF6B63;
-  }
-  #p21 .tag.alert .tag-dot {
-    background: #FF3B30;
-    box-shadow: 0 0 12px #FF3B30;
-  }
-  #p21 .tag.alert.is-on.is-show {
-    opacity: 1;
-    animation: p21_alert_blink 0.55s ease-in-out infinite;
-  }
   @keyframes p21_alert_blink {
-    0%, 100% { opacity: 1; box-shadow: 0 0 26px rgba(255, 59, 48, 0.58); }
-    50% { opacity: 0.48; box-shadow: 0 0 10px rgba(255, 59, 48, 0.2); }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
   }
   #p21 .words {
     position: absolute;
     left: 96px;
-    top: 300px;
-    transform: none;
+    top: 128px;
     z-index: 12;
     pointer-events: none;
   }
@@ -2090,25 +2108,30 @@
   #p21 .s {
     position: absolute;
     height: 1px;
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 75%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.55) 75%,
+      rgba(255, 255, 255, 0) 100%
+    );
     opacity: 0;
     transform: translateX(-260px);
   }
   #p21 .row {
     position: relative;
-    font-size: 132px;
+    font-size: 96px;
     font-weight: 900;
-    line-height: 1.15;
+    line-height: 1.14;
     letter-spacing: 0.02em;
     z-index: 1;
     opacity: 0;
-    transform: translateX(-110px);
-    text-shadow: 0 10px 42px rgba(0, 0, 0, 0.85);
+    transform: translateX(-90px);
+    text-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
   }
   #p21 .row.r2 {
     margin-left: 0;
-    transform: translateX(-220px);
-    color: #fff;
+    transform: translateX(-180px);
+    color: #ffffff;
   }
   #p21.is-s1 .s-r1 {
     animation: p21_streak_in 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -2123,28 +2146,121 @@
     animation: p21_row2_in 0.36s cubic-bezier(0.12, 0.9, 0.24, 1) forwards;
   }
   @keyframes p21_streak_in {
-    0% { opacity: 0; transform: translateX(-260px) scaleX(1.35); }
-    45% { opacity: 1; }
-    100% { opacity: 1; transform: translateX(0) scaleX(1); }
+    0% {
+      opacity: 0;
+      transform: translateX(-260px) scaleX(1.35);
+    }
+    45% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scaleX(1);
+    }
   }
   @keyframes p21_streak_overtake {
-    0% { opacity: 0; transform: translateX(-340px) scaleX(1.55); }
-    45% { opacity: 1; }
-    100% { opacity: 1; transform: translateX(0) scaleX(1); }
+    0% {
+      opacity: 0;
+      transform: translateX(-340px) scaleX(1.55);
+    }
+    45% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scaleX(1);
+    }
   }
   @keyframes p21_row1_in {
-    0% { opacity: 0; transform: translateX(-110px); }
-    100% { opacity: 1; transform: translateX(0); }
+    0% {
+      opacity: 0;
+      transform: translateX(-90px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
   @keyframes p21_row2_in {
-    0% { opacity: 0; transform: translateX(-220px) skewX(-6deg); }
-    75% { opacity: 1; transform: translateX(6px) skewX(1deg); }
-    100% { opacity: 1; transform: translateX(0) skewX(0deg); }
+    0% {
+      opacity: 0;
+      transform: translateX(-180px) skewX(-6deg);
+    }
+    75% {
+      opacity: 1;
+      transform: translateX(5px) skewX(1deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) skewX(0deg);
+    }
+  }
+  #p21 .p21-hud {
+    position: absolute;
+    right: 96px;
+    bottom: 112px;
+    z-index: 13;
+    pointer-events: none;
+    width: 274px;
+    padding: 14px 22px 16px;
+    border-radius: 16px;
+    background: rgba(8, 10, 16, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  #p21.is-boost .p21-hud {
+    border-color: rgba(255, 110, 30, 0.85);
+    box-shadow:
+      0 14px 40px rgba(255, 85, 0, 0.35),
+      inset 0 0 24px rgba(255, 85, 0, 0.15);
+  }
+  #p21 .p21-spd-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  #p21 .p21-spd-val {
+    font-size: 74px;
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: #ffffff;
+    text-shadow: 0 0 22px rgba(255, 255, 255, 0.18);
+  }
+  #p21.is-boost .p21-spd-val {
+    color: #ff9f4d;
+    text-shadow: 0 0 28px rgba(255, 95, 20, 0.7);
+  }
+  #p21 .p21-spd-unit {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.62);
+  }
+  #p21 .p21-spd-track {
+    margin-top: 12px;
+    width: 100%;
+    height: 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+  #p21 .p21-spd-bar {
+    height: 100%;
+    width: 21%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #ff5500, #ffb85c, #ffffff);
+    box-shadow: 0 0 12px rgba(255, 100, 20, 0.8);
   }
   #p21 .stamp-wrap {
     position: absolute;
-    left: 1180px;
-    top: 640px;
+    left: 1230px;
+    top: 390px;
     z-index: 15;
     transform: rotate(-8deg) scale(1.65);
     opacity: 0;
@@ -2154,76 +2270,90 @@
     animation: p21_stamp_slam 0.26s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   @keyframes p21_stamp_slam {
-    0% { opacity: 0; transform: rotate(-8deg) scale(1.65); }
-    42% { opacity: 1; transform: rotate(-8deg) scale(0.95); }
-    74% { opacity: 1; transform: rotate(-8deg) scale(1.015); }
-    100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+    0% {
+      opacity: 0;
+      transform: rotate(-8deg) scale(1.65);
+    }
+    42% {
+      opacity: 1;
+      transform: rotate(-8deg) scale(0.95);
+    }
+    74% {
+      opacity: 1;
+      transform: rotate(-8deg) scale(1.015);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(-8deg) scale(1);
+    }
   }
   #p21 .halo {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 780px;
-    height: 780px;
+    width: 720px;
+    height: 720px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,85,0,0.2) 0%, rgba(255,85,0,0.06) 42%, transparent 72%);
+    background: radial-gradient(
+      circle,
+      rgba(255, 85, 0, 0.22) 0%,
+      rgba(255, 85, 0, 0.06) 44%,
+      transparent 72%
+    );
     pointer-events: none;
   }
   #p21 .stamp {
-    width: 610px;
-    height: 228px;
+    width: 540px;
+    height: 204px;
     border-radius: 18px;
-    border: 13px solid var(--orange);
-    background: rgba(12, 10, 10, 0.42);
+    border: 12px solid var(--orange);
+    background: rgba(10, 8, 9, 0.56);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 0 60px rgba(255,85,0,0.5), inset 0 0 40px rgba(255,85,0,0.28);
+    box-shadow:
+      0 0 56px rgba(255, 85, 0, 0.54),
+      inset 0 0 36px rgba(255, 85, 0, 0.28);
   }
   #p21 .stamp::before {
     content: "";
     position: absolute;
-    inset: 13px;
+    inset: 12px;
     border-radius: 8px;
     border: 3px solid var(--orange);
     opacity: 0.9;
   }
   #p21 .stamp-text {
     color: var(--orange);
-    font-size: 92px;
+    font-size: 84px;
     font-weight: 900;
     line-height: 1;
     text-align: center;
     letter-spacing: 0.08em;
     white-space: nowrap;
     margin-right: -0.08em;
-    text-shadow: 0 0 30px rgba(255,85,0,0.58);
+    text-shadow: 0 0 28px rgba(255, 85, 0, 0.62);
   }
   #p21 .grain {
     position: absolute;
-    inset: -13px;
+    inset: -12px;
     border-radius: 18px;
-    background: radial-gradient(circle at 30% 70%, rgba(10,10,11,0.55) 0 3px, transparent 4px),
-                radial-gradient(circle at 72% 24%, rgba(10,10,11,0.5) 0 2px, transparent 3px),
-                radial-gradient(circle at 64% 82%, rgba(10,10,11,0.5) 0 5px, transparent 6px),
-                radial-gradient(circle at 18% 36%, rgba(10,10,11,0.45) 0 2px, transparent 3px);
+    background:
+      radial-gradient(circle at 30% 70%, rgba(10, 10, 11, 0.55) 0 3px, transparent 4px),
+      radial-gradient(circle at 72% 24%, rgba(10, 10, 11, 0.5) 0 2px, transparent 3px),
+      radial-gradient(circle at 64% 82%, rgba(10, 10, 11, 0.5) 0 5px, transparent 6px),
+      radial-gradient(circle at 18% 36%, rgba(10, 10, 11, 0.45) 0 2px, transparent 3px);
   }
 </style>
 <section id="p21" class="slide dark" data-ch="终章 · 表演系" data-cue="drums" data-chapter="终">
   <canvas class="p21-world" width="1920" height="1080"></canvas>
   <div class="p21-scrim"></div>
   <div class="p21-vignette"></div>
-  <div class="p21-speedlines"></div>
   <div class="p21-tags">
-    <div class="tag turn">
-      <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">行业拐点</span></div>
-    </div>
-    <div class="tag alert">
-      <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">电量告急</span></div>
-    </div>
     <div class="tag rival">
+      <div class="tag-alert"><span class="tag-alert-dot"></span><span>电量告急</span></div>
       <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">传统慢充</span></div>
       <div class="tag-bar"><div class="tag-fill"></div></div>
       <div class="tag-sub">充满需 8 小时</div>
@@ -2234,18 +2364,29 @@
       <div class="tag-sub">3 分钟满电</div>
     </div>
   </div>
+  <div class="p21-letterbox top"></div>
+  <div class="p21-letterbox bot"></div>
   <div class="chrome-ch">终章 · 表演系</div>
   <div class="words">
     <div class="streaks">
-      <div class="s s-r1" style="top:36px;left:-40px;width:420px"></div>
-      <div class="s s-r1" style="top:80px;left:24px;width:280px"></div>
-      <div class="s s-r1" style="top:124px;left:-70px;width:360px"></div>
-      <div class="s s-r2" style="top:194px;left:-20px;width:460px"></div>
-      <div class="s s-r2" style="top:238px;left:50px;width:260px"></div>
-      <div class="s s-r2" style="top:280px;left:-50px;width:400px"></div>
+      <div class="s s-r1" style="top:28px;left:-40px;width:360px"></div>
+      <div class="s s-r1" style="top:64px;left:16px;width:240px"></div>
+      <div class="s s-r1" style="top:98px;left:-60px;width:310px"></div>
+      <div class="s s-r2" style="top:148px;left:-20px;width:400px"></div>
+      <div class="s s-r2" style="top:184px;left:40px;width:230px"></div>
+      <div class="s s-r2" style="top:218px;left:-45px;width:350px"></div>
     </div>
     <div class="row r1">属性定位</div>
     <div class="row r2">弯道超车</div>
+  </div>
+  <div class="p21-hud">
+    <div class="p21-spd-row">
+      <span class="p21-spd-val">25</span>
+      <span class="p21-spd-unit">km/h</span>
+    </div>
+    <div class="p21-spd-track">
+      <div class="p21-spd-bar"></div>
+    </div>
   </div>
   <div class="stamp-wrap">
     <div class="halo"></div>
@@ -2468,7 +2609,7 @@
     transition: opacity 1.2s ease;
   }
   #p23.p23-on .p23-bloom {
-    opacity: 0.32;
+    opacity: 0.40;
   }
   #p23 .p23-sky {
     position: absolute;
@@ -2478,10 +2619,43 @@
     mix-blend-mode: screen;
     opacity: 0;
     transition: opacity 1.5s ease;
-    background: radial-gradient(ellipse 52% 38% at 960px 100px, rgba(255,160,72,0.22) 0%, rgba(255,105,30,0.08) 46%, transparent 78%);
+    background:
+      radial-gradient(ellipse 58% 44% at 960px 100px, rgba(255,190,90,0.31) 0%, rgba(255,165,65,0.13) 44%, transparent 80%),
+      radial-gradient(ellipse 84% 52% at 960px 240px, rgba(255,190,90,0.13) 0%, transparent 74%);
   }
   #p23.p23-on .p23-sky {
     opacity: 1;
+  }
+  #p23 .p23-rays {
+    position: absolute;
+    left: 160px;
+    top: -700px;
+    width: 1600px;
+    height: 1600px;
+    z-index: 7;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0;
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 214, 140, 0.0) 0deg,
+      rgba(255, 214, 140, 0.22) 1.5deg,
+      rgba(255, 214, 140, 0.22) 2.6deg,
+      rgba(255, 214, 140, 0.0) 4.4deg,
+      transparent 4.4deg 14deg
+    );
+    -webkit-mask-image: radial-gradient(circle, #000 0, transparent 70%);
+    mask-image: radial-gradient(circle, #000 0, transparent 70%);
+    transition: opacity 1.4s ease;
+    will-change: transform, opacity;
+  }
+  #p23.p23-on .p23-rays {
+    opacity: 0.55;
+    animation: p23raysSpin 60s linear infinite;
+  }
+  @keyframes p23raysSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
   #p23 .p23-fog {
     position: absolute;
@@ -2493,13 +2667,13 @@
     overflow: hidden;
     pointer-events: none;
     mix-blend-mode: screen;
-    opacity: 0.12;
+    opacity: 0.14;
     filter: none;
     transition: opacity 1.6s ease, filter 1.6s ease;
   }
   #p23.p23-on .p23-fog {
-    opacity: 0.28;
-    filter: sepia(0.4) saturate(1.6) hue-rotate(-10deg);
+    opacity: 0.40;
+    filter: sepia(0.85) saturate(2.6) hue-rotate(4deg) brightness(1.12);
   }
   #p23 .p23-fog i {
     position: absolute;
@@ -2548,7 +2722,7 @@
     top: -1200px;
     transform-origin: 50% 100%;
     clip-path: polygon(48% 100%, 52% 100%, 100% 0, 0 0);
-    background: linear-gradient(0deg, rgba(255,226,170,0.55), rgba(255,200,130,0.10) 70%, transparent);
+    background: linear-gradient(0deg, rgba(255,222,145,0.62), rgba(255,190,95,0.14) 70%, transparent);
     will-change: transform;
   }
   #p23 .p23-search.lit i:first-child {
@@ -2737,6 +2911,14 @@
     font-weight: 300;
     margin: 0 .18em;
   }
+  #p23.p23-on .copy h1 {
+    text-shadow: 0 0 24px rgba(255, 200, 110, 0.35);
+    animation: p23titleGoldGlow 3.6s ease-in-out infinite;
+  }
+  @keyframes p23titleGoldGlow {
+    0%, 100% { text-shadow: 0 0 24px rgba(255, 200, 110, 0.35); }
+    50%      { text-shadow: 0 0 34px rgba(255, 212, 130, 0.50); }
+  }
   #p23.p23-on .copy h1 .orange {
     text-shadow: 0 0 28px rgba(255,85,0,0.45);
     animation: p23orangeGlow 3.2s ease-in-out infinite;
@@ -2760,6 +2942,7 @@
     <div class="p23-front-clip"><div class="p23-front"></div></div>
     <img class="fullbleed p23-bloom" src="assets/founder_hq_brand_lit.jpg" alt="">
     <div class="p23-sky"></div>
+    <div class="p23-rays"></div>
     <div class="p23-fog"><i class="f1"></i><i class="f2"></i></div>
     <div class="p23-search"><i></i><i></i></div>
     <div class="p23-core"><div class="streak"></div></div>
@@ -4999,86 +5182,40 @@
   (function () {
     const W = 1920;
     const H = 1080;
-    const FOV_RAD = (55 * Math.PI) / 180;
-    const FOCAL_BASE = (H * 0.5) / Math.tan(FOV_RAD * 0.5);
-    const NEAR_Z = 1.0;
+    const SEG_LEN = 200;
+    const DRAW_DIST = 300;
+    const ROAD_HALF_W = 1220;
+    const LANE_HALF_W = 40;
+    const SPEED_TO_WORLD = 115; // 120 km/h -> 13,800 world units/s (~69 segs/s)
+    const CURVE_STEP = 3.2; // World lateral dx integration factor per segment
 
-    const STRAIGHT1_LEN = 300;
-    const ARC_R = 120;
-    const ARC_LEN = ARC_R * Math.PI * 0.5;
-    const STRAIGHT2_LEN = 2000;
-    const TOTAL_LEN = STRAIGHT1_LEN + ARC_LEN + STRAIGHT2_LEN;
-    const APEX_S = STRAIGHT1_LEN + ARC_LEN * 0.5;
-    const SLOW_BAY_S = 404;
-    const SLOW_BAY_OFFSET = 10.8;
-    const FLASH_POST_S = 395;
-    const FLASH_POST_OFFSET = -9.6;
+    const slide = document.getElementById('p21');
+    if (!slide) return;
 
-    // Precompute 1m track centerline samples
-    const track = [];
-    (function buildTrack() {
-      const n = Math.floor(TOTAL_LEN) + 1;
-      for (let s = 0; s <= n; s++) {
-        let x, z, tx, tz, kappa;
-        if (s <= STRAIGHT1_LEN) {
-          x = 0;
-          z = s;
-          tx = 0;
-          tz = 1;
-          kappa = 0;
-        } else if (s <= STRAIGHT1_LEN + ARC_LEN) {
-          const th = (s - STRAIGHT1_LEN) / ARC_R;
-          x = ARC_R * (1 - Math.cos(th));
-          z = STRAIGHT1_LEN + ARC_R * Math.sin(th);
-          tx = Math.sin(th);
-          tz = Math.cos(th);
-          kappa = 1 / ARC_R;
-        } else {
-          const u = s - (STRAIGHT1_LEN + ARC_LEN);
-          x = ARC_R + u;
-          z = STRAIGHT1_LEN + ARC_R;
-          tx = 1;
-          tz = 0;
-          kappa = 0;
-        }
-        // Outward normal (-tz, tx): left/outside of the right turn
-        track.push({ s, x, z, tx, tz, nx: -tz, nz: tx, kappa });
-      }
-    })();
+    const canvas = slide.querySelector('.p21-world');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const tagRival = slide.querySelector('.tag.rival');
+    const tagUs = slide.querySelector('.tag.us');
+    const rivalFill = tagRival ? tagRival.querySelector('.tag-fill') : null;
+    const usFill = tagUs ? tagUs.querySelector('.tag-fill') : null;
+    const spdValEl = slide.querySelector('.p21-spd-val');
+    const spdBarEl = slide.querySelector('.p21-spd-bar');
+    const sealEl = slide.querySelector('.stamp') || slide.querySelector('.stamp-wrap');
 
-    const _sampleOut = { s: 0, x: 0, z: 0, tx: 0, tz: 1, nx: -1, nz: 0, kappa: 0 };
-    function sampleTrack(sVal, out) {
-      const target = out || _sampleOut;
-      const sc = sVal < 0 ? 0 : sVal > TOTAL_LEN ? TOTAL_LEN : sVal;
-      const i0 = Math.floor(sc);
-      const i1 = i0 + 1 < track.length ? i0 + 1 : i0;
-      const f = sc - i0;
-      const a = track[i0];
-      const b = track[i1];
-      let tx = a.tx + (b.tx - a.tx) * f;
-      let tz = a.tz + (b.tz - a.tz) * f;
-      const len = Math.hypot(tx, tz) || 1;
-      tx /= len;
-      tz /= len;
-      target.s = sc;
-      target.x = a.x + (b.x - a.x) * f;
-      target.z = a.z + (b.z - a.z) * f;
-      target.tx = tx;
-      target.tz = tz;
-      target.nx = -tz;
-      target.nz = tx;
-      target.kappa = a.kappa + (b.kappa - a.kappa) * f;
-      return target;
+    function clamp(v, lo, hi) {
+      return v < lo ? lo : v > hi ? hi : v;
     }
 
-    function innerLaneOffset(s) {
-      if (s < 265 || s > 525) return -3.5;
-      const u = (s - 265) / 260;
-      const bell = Math.sin(Math.PI * u);
-      return -3.5 - 1.5 * bell * bell;
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
     }
 
-    // Pre-generate offscreen radial glow sprites & city skyline (zero shadowBlur in loop)
+    function smoothstep(e0, e1, x) {
+      const t = clamp((x - e0) / (e1 - e0), 0, 1);
+      return t * t * (3 - 2 * t);
+    }
+
+    // ---------- Pre-rendered Offscreen Sprites (zero shadowBlur in rAF) ----------
     function makeGlowSprite(size, stops) {
       const c = document.createElement('canvas');
       c.width = size;
@@ -5094,85 +5231,204 @@
       return c;
     }
 
-    const sprOrangeGlow = makeGlowSprite(160, [
-      [0.0, 'rgba(255, 252, 240, 1.0)'],
-      [0.14, 'rgba(255, 168, 76, 0.92)'],
-      [0.36, 'rgba(255, 85, 0, 0.48)'],
-      [0.7, 'rgba(255, 68, 0, 0.12)'],
-      [1.0, 'rgba(255, 55, 0, 0)']
+    function makeBeamSprite(w, h, stops) {
+      const c = document.createElement('canvas');
+      c.width = w;
+      c.height = h;
+      const gctx = c.getContext('2d');
+      gctx.save();
+      gctx.translate(w * 0.5, h * 0.5);
+      gctx.scale(1, h / w);
+      const r = w * 0.5;
+      const g = gctx.createRadialGradient(0, 0, 0, 0, 0, r);
+      for (let i = 0; i < stops.length; i++) {
+        g.addColorStop(stops[i][0], stops[i][1]);
+      }
+      gctx.fillStyle = g;
+      gctx.beginPath();
+      gctx.arc(0, 0, r, 0, Math.PI * 2);
+      gctx.fill();
+      gctx.restore();
+      return c;
+    }
+
+    const sprOrangeGlow = makeGlowSprite(192, [
+      [0.0, 'rgba(255, 252, 238, 1.0)'],
+      [0.14, 'rgba(255, 175, 78, 0.94)'],
+      [0.36, 'rgba(255, 88, 10, 0.48)'],
+      [0.68, 'rgba(255, 65, 0, 0.14)'],
+      [1.0, 'rgba(255, 50, 0, 0)']
     ]);
-    const sprWhiteGlow = makeGlowSprite(128, [
-      [0.0, 'rgba(245, 250, 255, 0.92)'],
-      [0.18, 'rgba(195, 210, 232, 0.45)'],
-      [0.52, 'rgba(130, 150, 180, 0.14)'],
-      [1.0, 'rgba(100, 120, 150, 0)']
+    const sprWhiteGlow = makeGlowSprite(144, [
+      [0.0, 'rgba(255, 248, 232, 0.95)'],
+      [0.18, 'rgba(255, 200, 130, 0.55)'],
+      [0.48, 'rgba(255, 140, 60, 0.16)'],
+      [1.0, 'rgba(255, 120, 40, 0)']
     ]);
-    const sprRedGlow = makeGlowSprite(128, [
-      [0.0, 'rgba(255, 220, 216, 0.95)'],
-      [0.2, 'rgba(255, 59, 48, 0.72)'],
-      [0.55, 'rgba(255, 35, 24, 0.22)'],
+    const sprRedGlow = makeGlowSprite(160, [
+      [0.0, 'rgba(255, 235, 232, 0.98)'],
+      [0.2, 'rgba(255, 58, 46, 0.8)'],
+      [0.52, 'rgba(255, 30, 20, 0.26)'],
       [1.0, 'rgba(255, 20, 10, 0)']
     ]);
-    const sprBlueDim = makeGlowSprite(112, [
-      [0.0, 'rgba(210, 225, 245, 0.6)'],
-      [0.28, 'rgba(130, 155, 190, 0.24)'],
-      [1.0, 'rgba(90, 110, 140, 0)']
+    const sprBlueGlow = makeGlowSprite(128, [
+      [0.0, 'rgba(215, 232, 255, 0.78)'],
+      [0.26, 'rgba(130, 168, 220, 0.34)'],
+      [1.0, 'rgba(80, 110, 160, 0)']
     ]);
-    const sprSpark = makeGlowSprite(40, [
-      [0.0, 'rgba(255, 255, 235, 1.0)'],
-      [0.32, 'rgba(255, 145, 45, 0.85)'],
+    const sprSpark = makeGlowSprite(48, [
+      [0.0, 'rgba(255, 255, 240, 1.0)'],
+      [0.28, 'rgba(255, 155, 45, 0.9)'],
       [1.0, 'rgba(255, 70, 0, 0)']
     ]);
+    const sprFlare = makeBeamSprite(256, 56, [
+      [0.0, 'rgba(255, 250, 235, 0.95)'],
+      [0.25, 'rgba(255, 140, 45, 0.55)'],
+      [0.65, 'rgba(255, 75, 0, 0.14)'],
+      [1.0, 'rgba(255, 50, 0, 0)']
+    ]);
+    const sprHeadBeam = makeBeamSprite(220, 280, [
+      [0.0, 'rgba(255, 235, 200, 0.38)'],
+      [0.35, 'rgba(255, 175, 95, 0.18)'],
+      [0.72, 'rgba(255, 120, 40, 0.05)'],
+      [1.0, 'rgba(255, 100, 20, 0)']
+    ]);
 
-    // Pre-generate static city skyline strip (3072x360) for parallax horizon
-    const SKYLINE_W = 3072;
-    const SKYLINE_H = 340;
+    // Pre-rendered 3D road signboard canvases
+    const signCornerCanvas = (function buildCornerSign() {
+      const c = document.createElement('canvas');
+      c.width = 480;
+      c.height = 176;
+      const g = c.getContext('2d');
+      g.fillStyle = 'rgba(12, 15, 22, 0.95)';
+      g.strokeStyle = '#ff7b24';
+      g.lineWidth = 6;
+      g.beginPath();
+      g.roundRect(8, 8, 464, 160, 18);
+      g.fill();
+      g.stroke();
+
+      g.strokeStyle = 'rgba(255, 175, 95, 0.45)';
+      g.lineWidth = 2;
+      g.beginPath();
+      g.roundRect(18, 18, 444, 140, 12);
+      g.stroke();
+
+      g.strokeStyle = '#ff7b24';
+      g.lineWidth = 8;
+      g.lineCap = 'round';
+      g.lineJoin = 'round';
+      g.beginPath();
+      g.moveTo(56, 122);
+      g.lineTo(56, 76);
+      g.quadraticCurveTo(56, 54, 82, 54);
+      g.lineTo(118, 54);
+      g.moveTo(100, 38);
+      g.lineTo(120, 54);
+      g.lineTo(100, 70);
+      g.stroke();
+
+      g.fillStyle = '#ffffff';
+      g.font = '900 60px "PingFang SC", "Hiragino Sans GB", sans-serif';
+      g.textBaseline = 'middle';
+      g.textAlign = 'left';
+      g.fillText('行业拐点', 148, 89);
+      return c;
+    })();
+
+    const signSlowBayCanvas = (function buildSlowBaySign() {
+      const c = document.createElement('canvas');
+      c.width = 360;
+      c.height = 132;
+      const g = c.getContext('2d');
+      g.fillStyle = 'rgba(22, 26, 36, 0.94)';
+      g.strokeStyle = 'rgba(155, 172, 198, 0.78)';
+      g.lineWidth = 5;
+      g.beginPath();
+      g.roundRect(6, 6, 348, 120, 14);
+      g.fill();
+      g.stroke();
+
+      g.fillStyle = 'rgba(155, 172, 198, 0.25)';
+      g.fillRect(28, 34, 48, 62);
+      g.fillStyle = '#9aa6ba';
+      g.fillRect(42, 24, 20, 10);
+      g.fillStyle = 'rgba(255, 82, 72, 0.88)';
+      g.fillRect(34, 76, 36, 14);
+
+      g.fillStyle = '#dce3ee';
+      g.font = '800 50px "PingFang SC", "Hiragino Sans GB", sans-serif';
+      g.textBaseline = 'middle';
+      g.textAlign = 'left';
+      g.fillText('慢充站', 102, 67);
+      return c;
+    })();
+
+    // Pre-rendered night sky + distant skyline strip (3072x560)
+    const SKY_W = 3072;
+    const SKY_H = 560;
     const skylineCanvas = (function buildSkyline() {
       const c = document.createElement('canvas');
-      c.width = SKYLINE_W;
-      c.height = SKYLINE_H;
+      c.width = SKY_W;
+      c.height = SKY_H;
       const sctx = c.getContext('2d');
+
+      const skyGrad = sctx.createLinearGradient(0, 0, 0, SKY_H);
+      skyGrad.addColorStop(0.0, '#030408');
+      skyGrad.addColorStop(0.45, '#070a13');
+      skyGrad.addColorStop(0.8, '#170e12');
+      skyGrad.addColorStop(1.0, '#3e1a0c');
+      sctx.fillStyle = skyGrad;
+      sctx.fillRect(0, 0, SKY_W, SKY_H);
+
       let seed = 48271;
       function rnd() {
         seed = (seed * 16807) % 2147483647;
         return (seed - 1) / 2147483646;
       }
-      // Subtle horizon orange atmospheric mist band
-      const mist = sctx.createLinearGradient(0, SKYLINE_H * 0.35, 0, SKYLINE_H);
-      mist.addColorStop(0, 'rgba(255, 85, 0, 0)');
-      mist.addColorStop(0.7, 'rgba(255, 85, 0, 0.10)');
-      mist.addColorStop(1, 'rgba(255, 92, 20, 0.18)');
-      sctx.fillStyle = mist;
-      sctx.fillRect(0, 0, SKYLINE_W, SKYLINE_H);
 
-      // Draw looping building silhouettes + static window light strips
+      for (let i = 0; i < 120; i++) {
+        const sx = rnd() * SKY_W;
+        const sy = rnd() * (SKY_H * 0.56);
+        const a = 0.14 + rnd() * 0.36;
+        sctx.fillStyle = 'rgba(210, 225, 255, ' + a.toFixed(2) + ')';
+        sctx.fillRect(sx, sy, 1.5, 1.5);
+      }
+
+      const glowBand = sctx.createLinearGradient(0, SKY_H * 0.62, 0, SKY_H);
+      glowBand.addColorStop(0.0, 'rgba(255, 85, 0, 0)');
+      glowBand.addColorStop(0.7, 'rgba(255, 92, 22, 0.16)');
+      glowBand.addColorStop(1.0, 'rgba(255, 122, 42, 0.34)');
+      sctx.fillStyle = glowBand;
+      sctx.fillRect(0, SKY_H * 0.62, SKY_W, SKY_H * 0.38);
+
       let bx = 0;
       const buildings = [];
-      while (bx < SKYLINE_W) {
-        const bw = 24 + Math.floor(rnd() * 58);
-        const bh = 38 + Math.floor(Math.pow(rnd(), 1.35) * 195);
+      while (bx < SKY_W) {
+        const bw = 28 + Math.floor(rnd() * 64);
+        const bh = 48 + Math.floor(Math.pow(rnd(), 1.32) * 215);
         buildings.push({ x: bx, w: bw, h: bh, r1: rnd(), r2: rnd() });
-        bx += bw + 4 + Math.floor(rnd() * 16);
+        bx += bw + 4 + Math.floor(rnd() * 14);
       }
       for (let i = 0; i < buildings.length; i++) {
         const b = buildings[i];
-        const by = SKYLINE_H - b.h;
-        sctx.fillStyle = b.r1 > 0.5 ? '#0b0d14' : '#090b10';
+        const by = SKY_H - b.h;
+        sctx.fillStyle = b.r1 > 0.5 ? '#090b12' : '#07090f';
         sctx.fillRect(b.x, by, b.w, b.h);
-        if (b.h > 85 && b.r2 > 0.45) {
-          // Thin horizontal crown light or vertical window band
-          const warm = b.r1 > 0.72;
-          sctx.fillStyle = warm ? 'rgba(255, 130, 55, 0.24)' : 'rgba(155, 185, 225, 0.16)';
-          sctx.fillRect(b.x + 3, by + 5, b.w - 6, 2);
-          const rows = Math.floor((b.h - 24) / 14);
+        if (b.h > 80 && b.r2 > 0.38) {
+          const warm = b.r1 > 0.64;
+          sctx.fillStyle = warm ? 'rgba(255, 138, 60, 0.34)' : 'rgba(155, 190, 235, 0.22)';
+          sctx.fillRect(b.x + 3, by + 4, b.w - 6, 2);
+          const rows = Math.floor((b.h - 24) / 13);
           for (let ry = 0; ry < rows; ry++) {
-            if (rnd() > 0.56) {
-              sctx.fillStyle = warm && rnd() > 0.65
-                ? 'rgba(255, 150, 70, 0.18)'
-                : 'rgba(170, 196, 230, 0.11)';
+            if (rnd() > 0.5) {
+              sctx.fillStyle =
+                warm && rnd() > 0.55
+                  ? 'rgba(255, 152, 72, 0.24)'
+                  : 'rgba(168, 200, 238, 0.14)';
               const wx = b.x + 5 + Math.floor(rnd() * Math.max(4, b.w - 14));
-              const ww = Math.min(b.w - 8, 6 + Math.floor(rnd() * 14));
-              sctx.fillRect(wx, by + 14 + ry * 14, ww, 2);
+              const ww = Math.min(b.w - 8, 6 + Math.floor(rnd() * 16));
+              sctx.fillRect(wx, by + 13 + ry * 13, ww, 2);
             }
           }
         }
@@ -5180,218 +5436,131 @@
       return c;
     })();
 
-    // Camera state and basis
-    const cam = {
-      cx: -160, cy: 120, cz: 70,
-      lx: -20, ly: 0, lz: 290,
-      zoom: 1.0,
-      rx: 1, ry: 0, rz: 0,
-      ux: 0, uy: 1, uz: 0,
-      fx: 0, fy: 0, fz: 1,
-      focal: FOCAL_BASE
-    };
-
-    function updateCamBasis() {
-      let fx = cam.lx - cam.cx;
-      let fy = cam.ly - cam.cy;
-      let fz = cam.lz - cam.cz;
-      const fl = Math.hypot(fx, fy, fz) || 1;
-      fx /= fl; fy /= fl; fz /= fl;
-      // right = normalize(cross(worldUp(0,1,0), fwd)) = (fz, 0, -fx)
-      let rx = fz;
-      let ry = 0;
-      let rz = -fx;
-      const rl = Math.hypot(rx, rz) || 1;
-      rx /= rl; rz /= rl;
-      // up = cross(fwd, right)
-      const ux = fy * rz - fz * ry;
-      const uy = fz * rx - fx * rz;
-      const uz = fx * ry - fy * rx;
-      cam.fx = fx; cam.fy = fy; cam.fz = fz;
-      cam.rx = rx; cam.ry = ry; cam.rz = rz;
-      cam.ux = ux; cam.uy = uy; cam.uz = uz;
-      cam.focal = FOCAL_BASE * cam.zoom;
-    }
-
-    function toCam(wx, wy, wz, out) {
-      const dx = wx - cam.cx;
-      const dy = wy - cam.cy;
-      const dz = wz - cam.cz;
-      out.x = dx * cam.rx + dy * cam.ry + dz * cam.rz;
-      out.y = dx * cam.ux + dy * cam.uy + dz * cam.uz;
-      out.z = dx * cam.fx + dy * cam.fy + dz * cam.fz;
-    }
-
-    function projectWorld(wx, wy, wz, out) {
-      const dx = wx - cam.cx;
-      const dy = wy - cam.cy;
-      const dz = wz - cam.cz;
-      const cz = dx * cam.fx + dy * cam.fy + dz * cam.fz;
-      if (cz < NEAR_Z) return false;
-      const cx = dx * cam.rx + dy * cam.ry + dz * cam.rz;
-      const cy = dx * cam.ux + dy * cam.uy + dz * cam.uz;
-      const scale = cam.focal / cz;
-      out.sx = W * 0.5 + (cx * scale);
-      out.sy = H * 0.5 - (cy * scale);
-      out.cz = cz;
-      out.scale = scale;
-      return true;
-    }
-
-    // Reusable buffers for near-plane polygon & line clipping
-    const _polyIn = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 },
-                     { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }];
-    const _polyOut = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 },
-                      { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }];
-
-    function clipQuadAndPath(ctx, w0x, w0y, w0z, w1x, w1y, w1z, w2x, w2y, w2z, w3x, w3y, w3z) {
-      toCam(w0x, w0y, w0z, _polyIn[0]);
-      toCam(w1x, w1y, w1z, _polyIn[1]);
-      toCam(w2x, w2y, w2z, _polyIn[2]);
-      toCam(w3x, w3y, w3z, _polyIn[3]);
-      if (_polyIn[0].z < NEAR_Z && _polyIn[1].z < NEAR_Z && _polyIn[2].z < NEAR_Z && _polyIn[3].z < NEAR_Z) {
-        return false;
+    // Precompute fogged road color lookup table (32 distance buckets)
+    const FOG_STEPS = 32;
+    const roadPalettes = (function buildFogPalettes() {
+      const arr = [];
+      function mix(r, g, b, k) {
+        const rr = Math.round(9 + (r - 9) * k);
+        const gg = Math.round(10 + (g - 10) * k);
+        const bb = Math.round(16 + (b - 16) * k);
+        return 'rgb(' + rr + ',' + gg + ',' + bb + ')';
       }
-      let outLen = 0;
-      if (_polyIn[0].z >= NEAR_Z && _polyIn[1].z >= NEAR_Z && _polyIn[2].z >= NEAR_Z && _polyIn[3].z >= NEAR_Z) {
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-          const p = _polyIn[i];
-          const sc = cam.focal / p.z;
-          const sx = W * 0.5 + p.x * sc;
-          const sy = H * 0.5 - p.y * sc;
-          if (i === 0) ctx.moveTo(sx, sy);
-          else ctx.lineTo(sx, sy);
-        }
-        ctx.closePath();
-        return true;
+      for (let i = 0; i < FOG_STEPS; i++) {
+        const t = i / (FOG_STEPS - 1);
+        const k = Math.pow(1 - t, 1.35);
+        arr.push({
+          asphaltA: mix(38, 41, 51, k),
+          asphaltB: mix(30, 33, 42, k),
+          curbRed: mix(222, 44, 34, k),
+          curbWhite: mix(236, 240, 246, k),
+          dashWhite: mix(230, 235, 244, k),
+          bayAsphalt: mix(52, 57, 68, k),
+          bayBorder: mix(142, 160, 188, k),
+          guardRail: mix(64, 70, 84, k)
+        });
       }
-      for (let i = 0; i < 4; i++) {
-        const cur = _polyIn[i];
-        const nxt = _polyIn[(i + 1) & 3];
-        const inCur = cur.z >= NEAR_Z;
-        const inNxt = nxt.z >= NEAR_Z;
-        if (inCur && inNxt) {
-          const o = _polyOut[outLen++];
-          o.x = nxt.x; o.y = nxt.y; o.z = nxt.z;
-        } else if (inCur && !inNxt) {
-          const t = (NEAR_Z - cur.z) / (nxt.z - cur.z);
-          const o = _polyOut[outLen++];
-          o.x = cur.x + (nxt.x - cur.x) * t;
-          o.y = cur.y + (nxt.y - cur.y) * t;
-          o.z = NEAR_Z;
-        } else if (!inCur && inNxt) {
-          const t = (NEAR_Z - cur.z) / (nxt.z - cur.z);
-          const o1 = _polyOut[outLen++];
-          o1.x = cur.x + (nxt.x - cur.x) * t;
-          o1.y = cur.y + (nxt.y - cur.y) * t;
-          o1.z = NEAR_Z;
-          const o2 = _polyOut[outLen++];
-          o2.x = nxt.x; o2.y = nxt.y; o2.z = nxt.z;
-        }
-      }
-      if (outLen < 3) return false;
-      ctx.beginPath();
-      for (let i = 0; i < outLen; i++) {
-        const p = _polyOut[i];
-        const sc = cam.focal / p.z;
-        const sx = W * 0.5 + p.x * sc;
-        const sy = H * 0.5 - p.y * sc;
-        if (i === 0) ctx.moveTo(sx, sy);
-        else ctx.lineTo(sx, sy);
-      }
-      ctx.closePath();
-      return true;
+      return arr;
+    })();
+
+    // Pre-allocate projected segment buffer (zero GC churn)
+    const projSegs = new Array(DRAW_DIST);
+    for (let i = 0; i < DRAW_DIST; i++) {
+      projSegs[i] = {
+        idx: 0,
+        z1: 0,
+        z2: 0,
+        camX1: 0,
+        camX2: 0,
+        sx1: 0,
+        sy1: 0,
+        w1: 0,
+        sc1: 0,
+        sx2: 0,
+        sy2: 0,
+        w2: 0,
+        sc2: 0,
+        curve: 0,
+        fogIdx: 0
+      };
     }
 
-    const _cA = { x: 0, y: 0, z: 0 };
-    const _cB = { x: 0, y: 0, z: 0 };
-    function strokeLine3D(ctx, ax, ay, az, bx, by, bz) {
-      toCam(ax, ay, az, _cA);
-      toCam(bx, by, bz, _cB);
-      if (_cA.z < NEAR_Z && _cB.z < NEAR_Z) return;
-      if (_cA.z < NEAR_Z) {
-        const t = (NEAR_Z - _cA.z) / (_cB.z - _cA.z);
-        _cA.x += (_cB.x - _cA.x) * t;
-        _cA.y += (_cB.y - _cA.y) * t;
-        _cA.z = NEAR_Z;
-      } else if (_cB.z < NEAR_Z) {
-        const t = (NEAR_Z - _cB.z) / (_cA.z - _cB.z);
-        _cB.x += (_cA.x - _cB.x) * t;
-        _cB.y += (_cA.y - _cB.y) * t;
-        _cB.z = NEAR_Z;
-      }
-      const sA = cam.focal / _cA.z;
-      const sB = cam.focal / _cB.z;
-      ctx.beginPath();
-      ctx.moveTo(W * 0.5 + _cA.x * sA, H * 0.5 - _cA.y * sA);
-      ctx.lineTo(W * 0.5 + _cB.x * sB, H * 0.5 - _cB.y * sB);
-      ctx.stroke();
-    }
-
-    function fogRgb(r, g, b, dist, maxDist) {
-      const k = Math.max(0.08, Math.min(1, 1 - dist / maxDist));
-      const bgR = 9, bgG = 11, bgB = 16;
-      const rr = Math.round(bgR + (r - bgR) * k);
-      const gg = Math.round(bgG + (g - bgG) * k);
-      const bb = Math.round(bgB + (b - bgB) * k);
-      return 'rgb(' + rr + ',' + gg + ',' + bb + ')';
-    }
-
-    function clamp(v, lo, hi) {
-      return v < lo ? lo : v > hi ? hi : v;
-    }
-
-    function lerp(a, b, t) {
-      return a + (b - a) * t;
-    }
-
-    // Main slide controller
-    const slide = document.getElementById('p21');
-    if (!slide) return;
-
-    const canvas = slide.querySelector('.p21-world');
-    const ctx = canvas ? canvas.getContext('2d') : null;
-    const tagTurn = slide.querySelector('.tag.turn');
-    const tagAlert = slide.querySelector('.tag.alert');
-    const tagRival = slide.querySelector('.tag.rival');
-    const tagUs = slide.querySelector('.tag.us');
-    const rivalFill = tagRival ? tagRival.querySelector('.tag-fill') : null;
-    const usFill = tagUs ? tagUs.querySelector('.tag-fill') : null;
-    const sealEl = slide.querySelector('.stamp') || slide.querySelector('.stamp-wrap');
-
+    // ---------- Simulation State ----------
     let rafId = null;
     let lastTs = 0;
     let timers = [];
     let motorLoop = null;
     let stage = 0; // 0=standby, 1=beat1, 2=beat2, 3=beat3
-    let standbyElapsed = 0;
-    let beat1Elapsed = 0;
-    let beat2RealElapsed = 0;
     let beat2Started = false;
     let beat2Done = false;
+    let beat2RealElapsed = 0;
+    let beat2SimElapsed = 0;
+    let b2Milestone = 0;
     let timeScale = 1.0;
     let timeScaleTarget = 1.0;
-    let camMode = 'wide';
-    let targetZoom = 1.0;
+
+    let cornerStartSeg = 9999999;
+    let gatePassed = false;
+    let gateFlashAlpha = 0;
+    let shockwaveLife = 0;
     let pathReveal = 0;
     let pathTarget = 0;
+    let boostIntensity = 0;
+    let boostTarget = 0;
+    let mirrorAlpha = 0;
+    let mirrorTarget = 0;
+
+    // Camera state (camDist stays explicitly locked behind us.z!)
+    const cam = {
+      z: 0,
+      dist: 1550,
+      xOff: 70,
+      x: 70,
+      y: 1000,
+      fov: 100,
+      roll: 0,
+      horizonY: 468,
+      skyOffset: 0
+    };
+
+    const us = {
+      z: 1600,
+      x: 360,
+      v: 25,
+      targetV: 25,
+      lean: 0,
+      charge: 10,
+      charged: false,
+      boosting: false
+    };
 
     const rival = {
-      s: 135, offset: 3.5, v: 6, wx: 0, wz: 135, tx: 0, tz: 1, nx: -1, nz: 0,
-      lean: 0, charge: 30, braking: false, parked: false, trail: []
-    };
-    const us = {
-      s: 110, offset: -3.5, v: 6, wx: 0, wz: 110, tx: 0, tz: 1, nx: -1, nz: 0,
-      lean: 0, charge: 10, boosting: false, charged: false, trail: []
+      z: 3250,
+      gap: 1650,
+      x: -400,
+      v: 25,
+      lean: 0,
+      charge: 30,
+      lowAlert: false,
+      parked: false
     };
 
-    let sparks3D = [];
-    let shockwaves = [];
-    const _tp = { s: 0, x: 0, z: 0, tx: 0, tz: 1, nx: -1, nz: 0, kappa: 0 };
-    const _tp2 = { s: 0, x: 0, z: 0, tx: 0, tz: 1, nx: -1, nz: 0, kappa: 0 };
-    const _proj = { sx: 0, sy: 0, cz: 0, scale: 1 };
-    const _proj2 = { sx: 0, sy: 0, cz: 0, scale: 1 };
+    const sparks = [];
+    const speedSeeds = [];
+    for (let i = 0; i < 72; i++) {
+      speedSeeds.push({
+        angle: (i / 72) * Math.PI * 2 + (i % 3) * 0.019,
+        phase: (i * 0.37) % 1,
+        speed: 1.5 + (i % 5) * 0.42,
+        len: 0.16 + (i % 4) * 0.09,
+        thick: 1.2 + (i % 3) * 0.9,
+        warm: i % 3 === 0
+      });
+    }
+
+    let lastSpdDisplay = -1;
+    let frameTimes = [];
+    let avgFrameMs = 0;
 
     function addTimer(fn, ms) {
       const id = setTimeout(fn, ms);
@@ -5400,1058 +5569,1310 @@
     }
 
     function clearAllTimers() {
-      for (let i = 0; i < timers.length; i++) clearTimeout(timers[i]);
+      for (let i = 0; i < timers.length; i++) {
+        clearTimeout(timers[i]);
+      }
       timers.length = 0;
     }
 
-    function clearSparksDom() {
-      const layers = slide.querySelectorAll('.fx-sparks-layer');
-      for (let i = 0; i < layers.length; i++) {
-        if (layers[i].parentNode) layers[i].parentNode.removeChild(layers[i]);
-      }
-    }
-
-    function updateBikeWorld(bike) {
-      sampleTrack(bike.s, _tp);
-      bike.wx = _tp.x + bike.offset * _tp.nx;
-      bike.wz = _tp.z + bike.offset * _tp.nz;
-      bike.tx = _tp.tx;
-      bike.tz = _tp.tz;
-      bike.nx = _tp.nx;
-      bike.nz = _tp.nz;
-      const targetLean = _tp.kappa * clamp(bike.v * 0.48, 0, 52);
-      bike.lean = lerp(bike.lean, targetLean, 0.25);
-    }
-
-    function seedTrail(bike, count, spacing) {
-      bike.trail.length = 0;
-      for (let i = count; i >= 0; i--) {
-        const ss = Math.max(0, bike.s - i * spacing);
-        sampleTrack(ss, _tp);
-        const off = bike === us ? innerLaneOffset(ss) : bike.offset;
-        bike.trail.push({
-          x: _tp.x + off * _tp.nx,
-          z: _tp.z + off * _tp.nz,
-          boost: bike.boosting
-        });
-      }
-    }
-
-    function recordTrail(bike, maxPoints) {
-      const tr = bike.trail;
-      const last = tr.length ? tr[tr.length - 1] : null;
-      if (!last || Math.hypot(bike.wx - last.x, bike.wz - last.z) >= 0.75) {
-        tr.push({ x: bike.wx, z: bike.wz, boost: bike.boosting });
-        if (tr.length > maxPoints) tr.shift();
-      }
-    }
-
-    function spawnSparkBurst(count, intensity) {
+    function spawnSparks(count, sx, sy, spread) {
       for (let i = 0; i < count; i++) {
-        if (sparks3D.length > 140) sparks3D.shift();
-        const spread = (Math.random() - 0.5) * 0.9;
-        const speedBack = (12 + Math.random() * 24) * intensity;
-        sparks3D.push({
-          x: us.wx - us.tx * 1.1 + us.nx * (Math.random() - 0.5) * 0.4,
-          y: 0.35 + Math.random() * 0.45,
-          z: us.wz - us.tz * 1.1 + us.nz * (Math.random() - 0.5) * 0.4,
-          vx: -us.tx * speedBack + us.nx * spread * 10,
-          vy: 1.5 + Math.random() * 4.5,
-          vz: -us.tz * speedBack + us.nz * spread * 10,
-          life: 0,
-          maxLife: 0.35 + Math.random() * 0.42,
-          size: 0.32 + Math.random() * 0.42
+        if (sparks.length >= 64) sparks.shift();
+        const ang = Math.PI * (0.15 + Math.random() * 0.7);
+        const spd = (260 + Math.random() * 520) * (spread || 1);
+        sparks.push({
+          x: sx + (Math.random() - 0.5) * 28,
+          y: sy + (Math.random() - 0.5) * 14,
+          vx: Math.cos(ang) * spd * (Math.random() > 0.5 ? 1 : -1),
+          vy: -Math.abs(Math.sin(ang)) * spd * 0.45 + 140,
+          life: 1.0,
+          decay: 1.8 + Math.random() * 1.4,
+          size: 16 + Math.random() * 22
         });
       }
     }
 
-    function spawnShockwaves() {
-      sampleTrack(FLASH_POST_S, _tp);
-      const cx = _tp.x + -7.2 * _tp.nx;
-      const cz = _tp.z + -7.2 * _tp.nz;
-      shockwaves = [
-        { x: cx, z: cz, age: 0, delay: 0.0, dur: 0.62, maxR: 34 },
-        { x: cx, z: cz, age: 0, delay: 0.13, dur: 0.62, maxR: 38 },
-        { x: cx, z: cz, age: 0, delay: 0.26, dur: 0.65, maxR: 42 }
-      ];
+    function getSegCurve(segIdx) {
+      if (stage === 0) return 0;
+      const d = segIdx - cornerStartSeg;
+      if (d <= 0 || d >= 145) return 0;
+      if (d < 18) return 2.45 * smoothstep(0, 18, d);
+      if (d < 110) return 2.45;
+      return 2.45 * (1 - smoothstep(110, 145, d));
+    }
+
+    // Compute road centerline lateral displacement from cam.z out to targetZ
+    function computeCurveOffsetAt(targetZ) {
+      const baseSegIdx = Math.floor(cam.z / SEG_LEN);
+      const basePct = (cam.z - baseSegIdx * SEG_LEN) / SEG_LEN;
+      const segsAhead = clamp((targetZ - cam.z) / SEG_LEN, 0, DRAW_DIST - 1);
+      const wholeSegs = Math.floor(segsAhead);
+      const frac = segsAhead - wholeSegs;
+
+      let x = 0;
+      let dx = -(getSegCurve(baseSegIdx) * basePct * CURVE_STEP);
+      for (let k = 0; k < wholeSegs; k++) {
+        x += dx;
+        dx += getSegCurve(baseSegIdx + k) * CURVE_STEP;
+      }
+      x += dx * frac;
+      return x;
     }
 
     function resetAllState() {
       clearAllTimers();
-      clearSparksDom();
-      slide.classList.remove('is-s1', 'is-s2', 'is-stamped', 'is-boost');
-      if (tagTurn) tagTurn.classList.remove('is-on', 'is-show');
-      if (tagAlert) tagAlert.classList.remove('is-on', 'is-show');
-      if (tagRival) {
-        tagRival.classList.remove('is-low', 'is-parked', 'is-show');
-        tagRival.style.transform = '';
-      }
-      if (tagUs) {
-        tagUs.classList.remove('is-charged', 'is-show');
-        tagUs.style.transform = '';
-      }
-      if (tagTurn) tagTurn.style.transform = '';
-      if (tagAlert) tagAlert.style.transform = '';
-
       stage = 0;
-      standbyElapsed = 0;
-      beat1Elapsed = 0;
-      beat2RealElapsed = 0;
       beat2Started = false;
       beat2Done = false;
+      beat2RealElapsed = 0;
+      beat2SimElapsed = 0;
+      b2Milestone = 0;
       timeScale = 1.0;
       timeScaleTarget = 1.0;
-      camMode = 'wide';
-      targetZoom = 1.0;
-      cam.zoom = 1.0;
+      cornerStartSeg = 9999999;
+      gatePassed = false;
+      gateFlashAlpha = 0;
+      shockwaveLife = 0;
       pathReveal = 0;
       pathTarget = 0;
+      boostIntensity = 0;
+      boostTarget = 0;
+      mirrorAlpha = 0;
+      mirrorTarget = 0;
+      sparks.length = 0;
+      frameTimes.length = 0;
 
-      rival.s = 135;
-      rival.offset = 3.5;
-      rival.v = 6;
-      rival.lean = 0;
-      rival.charge = 30;
-      rival.braking = false;
-      rival.parked = false;
-      updateBikeWorld(rival);
-      seedTrail(rival, 14, 1.2);
-
-      us.s = 110;
-      us.offset = -3.5;
-      us.v = 6;
+      us.z = 1600;
+      us.x = 360;
+      us.v = 25;
+      us.targetV = 25;
       us.lean = 0;
       us.charge = 10;
-      us.boosting = false;
       us.charged = false;
-      updateBikeWorld(us);
-      seedTrail(us, 14, 1.2);
+      us.boosting = false;
 
-      sparks3D = [];
-      shockwaves = [];
+      rival.z = 3250;
+      rival.gap = 1650;
+      rival.x = -400;
+      rival.v = 25;
+      rival.lean = 0;
+      rival.charge = 30;
+      rival.lowAlert = false;
+      rival.parked = false;
 
-      cam.cx = -165; cam.cy = 104; cam.cz = 62;
-      cam.lx = -20; cam.ly = 12; cam.lz = 325;
-      updateCamBasis();
+      cam.dist = 1550;
+      cam.z = us.z - cam.dist;
+      cam.xOff = 70;
+      cam.x = 70;
+      cam.y = 1000;
+      cam.fov = 100;
+      cam.roll = 0;
+      cam.horizonY = 468;
+      cam.skyOffset = 0;
+
+      slide.classList.remove('is-s1', 'is-s2', 'is-stamped', 'is-boost');
+      if (tagRival) {
+        tagRival.classList.remove('is-show', 'is-low');
+        tagRival.style.opacity = '';
+      }
+      if (tagUs) {
+        tagUs.classList.remove('is-show', 'is-charged');
+        tagUs.style.opacity = '';
+      }
+      if (rivalFill) rivalFill.style.width = '30%';
+      if (usFill) usFill.style.width = '10%';
+      lastSpdDisplay = -1;
+      updateSpeedHud(25, false);
     }
 
-    // Desired camera calculation by mode
-    const _desiredCam = { cx: 0, cy: 0, cz: 0, lx: 0, ly: 0, lz: 0 };
-    function computeDesiredCamera() {
-      if (camMode === 'wide') {
-        const drift = Math.min(1, standbyElapsed * 0.08);
-        _desiredCam.cx = lerp(-165, -145, drift);
-        _desiredCam.cy = lerp(104, 96, drift);
-        _desiredCam.cz = lerp(62, 86, drift);
-        _desiredCam.lx = -20;
-        _desiredCam.ly = 12;
-        _desiredCam.lz = 325;
-        return;
+    function updateSpeedHud(spd, isBoost) {
+      const rounded = Math.round(spd);
+      if (rounded !== lastSpdDisplay) {
+        lastSpdDisplay = rounded;
+        if (spdValEl) spdValEl.textContent = String(rounded);
+        if (spdBarEl) {
+          const pct = clamp((rounded / 120) * 100, 6, 100);
+          spdBarEl.style.width = pct.toFixed(1) + '%';
+        }
       }
-      if (camMode === 'chase') {
-        const focusS = us.s * 0.65 + rival.s * 0.35;
-        sampleTrack(focusS, _tp);
-        sampleTrack(Math.min(TOTAL_LEN, focusS + 40), _tp2);
-        // 28m high, 60m behind, 15m left (outward normal)
-        _desiredCam.cx = _tp.x - _tp.tx * 60 + _tp.nx * 15;
-        _desiredCam.cy = 28;
-        _desiredCam.cz = _tp.z - _tp.tz * 60 + _tp.nz * 15;
-        // Shift look slightly left so track sits cleanly in center-right away from left text
-        _desiredCam.lx = _tp2.x + _tp2.nx * 6;
-        _desiredCam.ly = 1.5;
-        _desiredCam.lz = _tp2.z + _tp2.nz * 6;
-        return;
+      if (isBoost !== undefined) {
+        slide.classList.toggle('is-boost', Boolean(isBoost));
       }
-      if (camMode === 'low') {
-        const btT = clamp((beat2RealElapsed - 2.1) / 1.0, 0, 1);
-        const camS = lerp(371, 378, btT);
-        sampleTrack(camS, _tp);
-        // 6m high near inner apex looking closely at side-by-side flash-charge stagger
-        _desiredCam.cx = _tp.x - _tp.nx * 18.0;
-        _desiredCam.cy = 6.2;
-        _desiredCam.cz = _tp.z - _tp.nz * 18.0;
-        const lookS = lerp(398, 404, btT);
-        sampleTrack(lookS, _tp2);
-        // Bias look outward so Rival & Flash-Charge Pylon sit well right of left title
-        _desiredCam.lx = _tp2.x + _tp2.nx * 6.5;
-        _desiredCam.ly = 1.6;
-        _desiredCam.lz = _tp2.z + _tp2.nz * 6.5;
-        return;
-      }
-      if (camMode === 'boost') {
-        const bu = clamp((beat2RealElapsed - 3.1) / 1.5, 0, 1);
-        const focusS = Math.min(TOTAL_LEN, us.s - 10);
-        sampleTrack(focusS, _tp);
-        sampleTrack(Math.min(TOTAL_LEN, us.s + 28), _tp2);
-        _desiredCam.cx = _tp.x - _tp.tx * lerp(30, 56, bu) + _tp.nx * lerp(-8, 16, bu);
-        _desiredCam.cy = lerp(11, 26, bu);
-        _desiredCam.cz = _tp.z - _tp.tz * lerp(30, 56, bu) + _tp.nz * lerp(-8, 16, bu);
-        _desiredCam.lx = _tp2.x + _tp2.nx * 6;
-        _desiredCam.ly = 1.6;
-        _desiredCam.lz = _tp2.z + _tp2.nz * 6;
-        return;
-      }
-      // pull: 90m high, 160m behind, framing speeding US vs parked Rival in slow-charge bay
-      const followShift = Math.max(0, us.s - 820);
-      _desiredCam.cx = -84 + followShift;
-      _desiredCam.cy = 90;
-      _desiredCam.cz = 274;
-      _desiredCam.lx = 104 + followShift;
-      _desiredCam.ly = 4;
-      _desiredCam.lz = 396;
     }
 
-    // Beat 2 exact deterministic kinematics
-    function stepBeat2Kinematics(dtReal, dtSim) {
-      const t = beat2RealElapsed;
-      // Time scale: 0.18 during [2.1, 3.1], smooth 0.15s recovery at 3.1s
-      if (t >= 2.1 && t < 3.1) {
-        timeScale = 0.18;
-      } else if (t >= 3.1 && t < 3.25) {
-        const p = (t - 3.1) / 0.15;
-        timeScale = lerp(0.18, 1.0, p);
+    // ---------- Procedural Rear-View Motorcycle & Rider Renderer ----------
+    function drawBike(ctx, sx, sy, bikeH, leanDeg, opts) {
+      const isUs = opts.isUs;
+      const isBraking = opts.isBraking;
+      const isAlertFlash = opts.isAlertFlash;
+      const boost = opts.boost || 0;
+      const wheelPhase = opts.wheelPhase || 0;
+      const tuck = opts.tuck || 0;
+
+      const s = bikeH / 280;
+      const leanRad = (leanDeg * Math.PI) / 180;
+      const peek = clamp(leanDeg / 16, -1, 1);
+
+      ctx.save();
+      ctx.translate(sx, sy);
+      ctx.scale(s, s);
+
+      // 1. Contact shadow + forward headlight pool on asphalt + tail reflection
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.78)';
+      ctx.beginPath();
+      ctx.ellipse(peek * 14, 2, 56 + Math.abs(peek) * 16, 13, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      // Soft forward headlight pool casting onto asphalt ahead of bike (zero hard edges)
+      ctx.globalAlpha = isUs ? 0.52 + boost * 0.25 : 0.25;
+      ctx.drawImage(sprHeadBeam, -110 + peek * 18, -230, 220, 240);
+
+      if (isUs) {
+        ctx.globalAlpha = 0.34 + boost * 0.36;
+        ctx.drawImage(sprOrangeGlow, -110, -24, 220, 68);
       } else {
-        timeScale = 1.0;
+        ctx.globalAlpha = isAlertFlash ? 0.48 : 0.2;
+        ctx.drawImage(sprRedGlow, -90, -20, 180, 56);
+      }
+      ctx.restore();
+
+      // Lean whole bike + rider around rear tire ground patch
+      ctx.rotate(leanRad);
+
+      if (Math.abs(peek) > 0.18) {
+        ctx.fillStyle = '#0e1017';
+        ctx.beginPath();
+        ctx.ellipse(peek * 28, -36, 16, 30, peek * 0.14, 0, Math.PI * 2);
+        ctx.fill();
       }
 
-      // Rival velocity & outer slow-charge bay pull-off
-      if (t < 1.4) {
-        const u = t / 1.4;
-        rival.v = 24 + 54 * 0.5 * (1 - Math.cos(Math.PI * u)) + 37.7 * Math.sin(Math.PI * u);
-        rival.offset = 3.5;
-        rival.charge = lerp(28, 14, u);
-      } else if (t < 2.1) {
-        const u = (t - 1.4) / 0.7;
-        rival.v = lerp(78, 68, u);
-        rival.offset = lerp(3.5, 7.6, u);
-        rival.charge = lerp(14, 11, u);
-      } else if (t < 3.95) {
-        const u = clamp((t - 2.1) / 1.85, 0, 1);
-        const slowFactor = Math.max(0, 1 - u);
-        rival.v = 68 * slowFactor * slowFactor;
-        rival.offset = lerp(7.6, SLOW_BAY_OFFSET, Math.sin(u * Math.PI * 0.5));
-        rival.charge = 10;
+      // 2. Wide Sport Rear Tire
+      const tireW = 29;
+      const tireH = 76;
+      const tireTop = -tireH;
+      ctx.fillStyle = '#080a0f';
+      ctx.beginPath();
+      ctx.roundRect(-tireW, tireTop, tireW * 2, tireH, [24, 24, 16, 16]);
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(185, 200, 225, 0.18)';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.roundRect(-tireW + 2, tireTop + 2, tireW * 2 - 4, tireH - 4, [22, 22, 14, 14]);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(46, 52, 66, 0.82)';
+      for (let t = 0; t < 4; t++) {
+        const ty = tireTop + 10 + ((t * 16 + wheelPhase * 64) % 56);
+        if (ty < -8) ctx.fillRect(-10, ty, 20, 4);
+      }
+
+      // 3. Swingarm & Brake Caliper
+      ctx.fillStyle = '#252b37';
+      ctx.beginPath();
+      ctx.moveTo(-44, -68);
+      ctx.lineTo(-28, -28);
+      ctx.lineTo(-22, -32);
+      ctx.lineTo(-32, -74);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(44, -68);
+      ctx.lineTo(28, -28);
+      ctx.lineTo(22, -32);
+      ctx.lineTo(32, -74);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = isUs ? '#ff5e14' : '#768092';
+      ctx.fillRect(24, -46, 8, 13);
+
+      // 4. Sculpted Rear Fender & Twin Plasma Nozzles
+      ctx.fillStyle = '#131620';
+      ctx.beginPath();
+      ctx.moveTo(-36, -72);
+      ctx.quadraticCurveTo(0, -86, 36, -72);
+      ctx.lineTo(26, -50);
+      ctx.lineTo(-26, -50);
+      ctx.closePath();
+      ctx.fill();
+
+      if (isUs) {
+        ctx.fillStyle = boost > 0.2 ? '#fff4dc' : '#ff7b28';
+        ctx.beginPath();
+        ctx.roundRect(-31, -86, 19, 10, 4);
+        ctx.roundRect(12, -86, 19, 10, 4);
+        ctx.fill();
       } else {
-        rival.v = 0;
-        rival.s = SLOW_BAY_S;
-        rival.offset = SLOW_BAY_OFFSET;
-        rival.charge = 10;
-        rival.braking = false;
-        rival.parked = true;
+        ctx.fillStyle = '#2e3442';
+        ctx.beginPath();
+        ctx.roundRect(-29, -84, 16, 9, 3);
+        ctx.roundRect(13, -84, 16, 9, 3);
+        ctx.fill();
       }
 
-      if (!rival.parked) {
-        rival.s += rival.v * dtSim;
-        if (t >= 3.1 && rival.s > SLOW_BAY_S) {
-          rival.s = SLOW_BAY_S;
-          rival.v = 0;
-          rival.parked = true;
-          rival.braking = false;
-        }
-      }
+      // 5. Rear Fairing / Sculpted Tail Cowl
+      if (isUs) {
+        ctx.fillStyle = '#e04800';
+        ctx.beginPath();
+        ctx.moveTo(-66, -128);
+        ctx.quadraticCurveTo(-54, -92, -35, -84);
+        ctx.lineTo(35, -84);
+        ctx.quadraticCurveTo(54, -92, 66, -128);
+        ctx.lineTo(46, -152);
+        ctx.lineTo(-46, -152);
+        ctx.closePath();
+        ctx.fill();
 
-      // US velocity & inner apex cutting line
-      if (t < 2.1) {
-        const u = t / 2.1;
-        us.v = 24 + 80 * 0.5 * (1 - Math.cos(Math.PI * u)) + 41.9 * Math.sin(Math.PI * u);
-        us.charge = 10;
-      } else if (t < 3.1) {
-        // Maintain brisk world speed inside 0.18x slow-motion
-        us.v = 96;
-        const cU = clamp((t - 2.1) / 0.6, 0, 1);
-        const eased = 1 - Math.pow(1 - cU, 3);
-        us.charge = 10 + 85 * eased;
-      } else if (t < 4.6) {
-        const u = (t - 3.1) / 1.5;
-        us.v = 96 + 52 * Math.sin(u * Math.PI * 0.65);
-        us.charge = 95;
+        ctx.fillStyle = '#141720';
+        ctx.beginPath();
+        ctx.moveTo(-27, -154);
+        ctx.lineTo(27, -154);
+        ctx.lineTo(18, -94);
+        ctx.lineTo(-18, -94);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 210, 155, 0.78)';
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        ctx.moveTo(-62, -126);
+        ctx.lineTo(-42, -150);
+        ctx.moveTo(62, -126);
+        ctx.lineTo(42, -150);
+        ctx.stroke();
+
+        // Boomerang LED Tail Light Bar
+        ctx.fillStyle = '#ff6a14';
+        ctx.beginPath();
+        ctx.moveTo(-56, -112);
+        ctx.quadraticCurveTo(0, -100, 56, -112);
+        ctx.lineTo(50, -101);
+        ctx.quadraticCurveTo(0, -89, -50, -101);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#fff9ee';
+        ctx.beginPath();
+        ctx.moveTo(-43, -109);
+        ctx.quadraticCurveTo(0, -98, 43, -109);
+        ctx.lineTo(39, -103);
+        ctx.quadraticCurveTo(0, -94, -39, -103);
+        ctx.closePath();
+        ctx.fill();
       } else {
-        const u = clamp((t - 4.6) / 1.9, 0, 1);
-        us.v = lerp(138, 62, u);
-        us.charge = 95;
-      }
+        ctx.fillStyle = '#50596a';
+        ctx.beginPath();
+        ctx.roundRect(-58, -144, 116, 56, [16, 16, 12, 12]);
+        ctx.fill();
 
-      us.s += us.v * dtSim;
-      us.offset = innerLaneOffset(us.s);
+        ctx.fillStyle = '#262b36';
+        ctx.beginPath();
+        ctx.roundRect(-42, -138, 84, 34, 10);
+        ctx.fill();
 
-      // Seamless straight-2 loop if user lingers well past 6.5s near 2300m
-      if (us.s >= 2300) {
-        const shift = 1200;
-        us.s -= shift;
-        cam.cx -= shift;
-        cam.lx -= shift;
-        for (let i = 0; i < us.trail.length; i++) us.trail[i].x -= shift;
-        for (let i = 0; i < sparks3D.length; i++) sparks3D[i].x -= shift;
-      }
+        ctx.strokeStyle = 'rgba(210, 222, 242, 0.4)';
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(-52, -134);
+        ctx.lineTo(-52, -102);
+        ctx.moveTo(52, -134);
+        ctx.lineTo(52, -102);
+        ctx.stroke();
 
-      // Continuous sparks while boosting
-      if (us.boosting && t >= 3.1 && t <= 6.2) {
-        spawnSparkBurst(3, 1.15);
-      }
-    }
+        const lampColor = isAlertFlash ? '#ff4034' : isBraking ? '#ff2a20' : '#d62820';
+        ctx.fillStyle = lampColor;
+        ctx.beginPath();
+        ctx.roundRect(-34, -114, 68, 13, 5);
+        ctx.fill();
+        ctx.fillStyle = isAlertFlash ? '#ffe8e5' : '#ff9a92';
+        ctx.fillRect(-20, -111, 40, 5);
 
-    function updateSimulation(dtReal) {
-      if (stage === 0) {
-        standbyElapsed += dtReal;
-        rival.s = 240 - (240 - 135) * Math.exp(-0.05 * standbyElapsed);
-        us.s = 215 - (215 - 110) * Math.exp(-0.05 * standbyElapsed);
-        rival.v = Math.max(0.4, (240 - rival.s) * 0.05);
-        us.v = Math.max(0.4, (215 - us.s) * 0.05);
-        rival.offset = 3.5;
-        us.offset = -3.5;
-        rival.charge = 25 + 5 * Math.exp(-0.08 * standbyElapsed);
-        us.charge = 10;
-      } else if (stage === 1) {
-        beat1Elapsed += dtReal;
-        const k = 1 - Math.exp(-dtReal * 0.28);
-        const rPrev = rival.s;
-        const uPrev = us.s;
-        rival.s += (266 - rival.s) * k;
-        us.s += (241 - us.s) * k;
-        rival.v = Math.max(1.2, (rival.s - rPrev) / (dtReal || 0.016));
-        us.v = Math.max(1.2, (us.s - uPrev) / (dtReal || 0.016));
-        rival.offset = 3.5;
-        us.offset = innerLaneOffset(us.s);
-      } else if (stage >= 2) {
-        beat2RealElapsed += dtReal;
-        const dtSim = dtReal * timeScale;
-        stepBeat2Kinematics(dtReal, dtSim);
-      }
-
-      // Smooth path light band reveal
-      if (pathReveal < pathTarget) {
-        pathReveal = Math.min(pathTarget, pathReveal + dtReal / 1.2);
-      }
-
-      // Update bike world coords & light trails
-      updateBikeWorld(rival);
-      updateBikeWorld(us);
-      if (!rival.parked) recordTrail(rival, 75);
-      recordTrail(us, 145);
-
-      // Update 3D spark particles
-      const dtSim = dtReal * timeScale;
-      for (let i = sparks3D.length - 1; i >= 0; i--) {
-        const p = sparks3D[i];
-        p.life += dtSim;
-        if (p.life >= p.maxLife) {
-          sparks3D.splice(i, 1);
-          continue;
-        }
-        p.x += p.vx * dtSim;
-        p.y += p.vy * dtSim;
-        p.z += p.vz * dtSim;
-        p.vy -= 14 * dtSim;
-        if (p.y < 0.06) {
-          p.y = 0.06;
-          p.vy = Math.abs(p.vy) * 0.35;
-        }
-      }
-
-      // Update ground shockwaves (real time so they bloom visually during slow-mo!)
-      for (let i = shockwaves.length - 1; i >= 0; i--) {
-        const sw = shockwaves[i];
-        sw.age += dtReal;
-        if (sw.age >= sw.delay + sw.dur) {
-          shockwaves.splice(i, 1);
-        }
-      }
-
-      // Smooth camera interpolation: k = 1 - Math.exp(-dt * 3) (faster snap during bullet-time / boost cut)
-      computeDesiredCamera();
-      const camRate = camMode === 'low' ? 6.5 : (camMode === 'boost' ? 4.5 : 3.0);
-      const ck = 1 - Math.exp(-dtReal * camRate);
-      cam.cx += (_desiredCam.cx - cam.cx) * ck;
-      cam.cy += (_desiredCam.cy - cam.cy) * ck;
-      cam.cz += (_desiredCam.cz - cam.cz) * ck;
-      cam.lx += (_desiredCam.lx - cam.lx) * ck;
-      cam.ly += (_desiredCam.ly - cam.ly) * ck;
-      cam.lz += (_desiredCam.lz - cam.lz) * ck;
-      cam.zoom += (targetZoom - cam.zoom) * (1 - Math.exp(-dtReal * 5.0));
-      updateCamBasis();
-    }
-
-    // Rendering layers
-    function renderScene() {
-      if (!ctx) return;
-
-      // 1. Night sky gradient + horizon orange glow + pre-generated city skyline
-      const horizonPtX = cam.cx + cam.fx * 8000;
-      const horizonPtZ = cam.cz + cam.fz * 8000;
-      let horizonY = H * 0.32;
-      if (projectWorld(horizonPtX, 0, horizonPtZ, _proj)) {
-        horizonY = clamp(_proj.sy, 80, H * 0.68);
-      }
-
-      const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY + 30);
-      skyGrad.addColorStop(0, '#06070b');
-      skyGrad.addColorStop(0.68, '#0b0e16');
-      skyGrad.addColorStop(1, '#0e1119');
-      ctx.fillStyle = skyGrad;
-      ctx.fillRect(0, 0, W, horizonY + 10);
-
-      // Ground dark asphalt base below horizon
-      ctx.fillStyle = '#08090e';
-      ctx.fillRect(0, horizonY, W, H - horizonY);
-
-      // City skyline parallax strip
-      const yaw = Math.atan2(cam.fx, cam.fz);
-      const scrollPx = (((yaw / (Math.PI * 2)) * SKYLINE_W) % SKYLINE_W + SKYLINE_W) % SKYLINE_W;
-      const syTop = horizonY - SKYLINE_H + 14;
-      ctx.drawImage(skylineCanvas, scrollPx, 0, SKYLINE_W - scrollPx, SKYLINE_H, 0, syTop, SKYLINE_W - scrollPx, SKYLINE_H);
-      if (SKYLINE_W - scrollPx < W) {
-        ctx.drawImage(skylineCanvas, 0, 0, W - (SKYLINE_W - scrollPx), SKYLINE_H, SKYLINE_W - scrollPx, syTop, W - (SKYLINE_W - scrollPx), SKYLINE_H);
-      }
-
-      // 2. Ground 20m perspective grid lines
-      const gridStep = 20;
-      const gxCenter = Math.round((cam.cx + cam.fx * 180) / gridStep) * gridStep;
-      const gzCenter = Math.round((cam.cz + cam.fz * 180) / gridStep) * gridStep;
-      const gridHalf = 480;
-      ctx.lineWidth = 1;
-      for (let gx = gxCenter - gridHalf; gx <= gxCenter + gridHalf; gx += gridStep) {
-        const d = Math.abs(gx - cam.cx);
-        const alpha = Math.max(0.02, 0.16 * (1 - d / 560));
-        ctx.strokeStyle = 'rgba(130, 155, 195, ' + alpha.toFixed(3) + ')';
-        strokeLine3D(ctx, gx, 0, gzCenter - gridHalf, gx, 0, gzCenter + gridHalf);
-      }
-      for (let gz = gzCenter - gridHalf; gz <= gzCenter + gridHalf; gz += gridStep) {
-        const d = Math.abs(gz - cam.cz);
-        const alpha = Math.max(0.02, 0.16 * (1 - d / 560));
-        ctx.strokeStyle = 'rgba(130, 155, 195, ' + alpha.toFixed(3) + ')';
-        strokeLine3D(ctx, gxCenter - gridHalf, 0, gz, gxCenter + gridHalf, 0, gz);
-      }
-
-      // 3. Track asphalt ribbon, edge lines, dashed centerline, and red/white curbs
-      let sStart = 0;
-      let sEnd = 1050;
-      if (cam.cx > 200) {
-        sStart = Math.max(0, Math.floor((cam.cx - 260 + 368) / 12) * 12);
-        sEnd = Math.min(TOTAL_LEN, sStart + 1000);
-      }
-      let s = sStart;
-      while (s < sEnd) {
-        const inCurveZone = s >= 255 && s <= 535;
-        const step = inCurveZone ? 3 : (s < 750 ? 6 : 12);
-        const sNext = Math.min(sEnd, s + step);
-        sampleTrack(s, _tp);
-        sampleTrack(sNext, _tp2);
-        const dist = Math.hypot(_tp.x - cam.cx, _tp.z - cam.cz);
-        if (dist < 1050) {
-          // Asphalt ribbon (-7m to +7m)
-          if (clipQuadAndPath(ctx,
-            _tp.x - 7 * _tp.nx, 0, _tp.z - 7 * _tp.nz,
-            _tp.x + 7 * _tp.nx, 0, _tp.z + 7 * _tp.nz,
-            _tp2.x + 7 * _tp2.nx, 0, _tp2.z + 7 * _tp2.nz,
-            _tp2.x - 7 * _tp2.nx, 0, _tp2.z - 7 * _tp2.nz
-          )) {
-            ctx.fillStyle = fogRgb(21, 22, 26, dist, 1000);
-            ctx.fill();
-          }
-
-          // White outer/inner edge lines (0.28m wide, alpha 0.6)
-          const edgeFog = clamp(1 - dist / 900, 0.05, 1);
-          ctx.fillStyle = 'rgba(235, 240, 248, ' + (0.6 * edgeFog).toFixed(3) + ')';
-          if (clipQuadAndPath(ctx,
-            _tp.x - 6.85 * _tp.nx, 0.01, _tp.z - 6.85 * _tp.nz,
-            _tp.x - 6.57 * _tp.nx, 0.01, _tp.z - 6.57 * _tp.nz,
-            _tp2.x - 6.57 * _tp2.nx, 0.01, _tp2.z - 6.57 * _tp2.nz,
-            _tp2.x - 6.85 * _tp2.nx, 0.01, _tp2.z - 6.85 * _tp2.nz
-          )) ctx.fill();
-          if (clipQuadAndPath(ctx,
-            _tp.x + 6.57 * _tp.nx, 0.01, _tp.z + 6.57 * _tp.nz,
-            _tp.x + 6.85 * _tp.nx, 0.01, _tp.z + 6.85 * _tp.nz,
-            _tp2.x + 6.85 * _tp2.nx, 0.01, _tp2.z + 6.85 * _tp2.nz,
-            _tp2.x + 6.57 * _tp2.nx, 0.01, _tp2.z + 6.57 * _tp2.nz
-          )) ctx.fill();
-
-          // Center dashed line
-          if (Math.floor(s / 6) % 2 === 0) {
-            ctx.fillStyle = 'rgba(220, 228, 240, ' + (0.42 * edgeFog).toFixed(3) + ')';
-            if (clipQuadAndPath(ctx,
-              _tp.x - 0.14 * _tp.nx, 0.01, _tp.z - 0.14 * _tp.nz,
-              _tp.x + 0.14 * _tp.nx, 0.01, _tp.z + 0.14 * _tp.nz,
-              _tp2.x + 0.14 * _tp2.nx, 0.01, _tp2.z + 0.14 * _tp2.nz,
-              _tp2.x - 0.14 * _tp2.nx, 0.01, _tp2.z - 0.14 * _tp2.nz
-            )) ctx.fill();
-          }
-
-          // Red & white alternating curbs along bend (1.2m wide, 3m pitch)
-          if (s >= 264 && s < 525) {
-            const isRed = Math.floor(s / 3) % 2 === 0;
-            const curbColor = isRed ? fogRgb(224, 53, 43, dist, 950) : fogRgb(234, 238, 245, dist, 950);
-            ctx.fillStyle = curbColor;
-            // Inner curb (-8.2m to -7.0m)
-            if (clipQuadAndPath(ctx,
-              _tp.x - 8.2 * _tp.nx, 0.02, _tp.z - 8.2 * _tp.nz,
-              _tp.x - 7.0 * _tp.nx, 0.02, _tp.z - 7.0 * _tp.nz,
-              _tp2.x - 7.0 * _tp2.nx, 0.02, _tp2.z - 7.0 * _tp2.nz,
-              _tp2.x - 8.2 * _tp2.nx, 0.02, _tp2.z - 8.2 * _tp2.nz
-            )) ctx.fill();
-            // Outer curb (+7.0m to +8.2m), opening gap for Slow-Charge Station apron
-            if (s < 372 || s >= 429) {
-              if (clipQuadAndPath(ctx,
-                _tp.x + 7.0 * _tp.nx, 0.02, _tp.z + 7.0 * _tp.nz,
-                _tp.x + 8.2 * _tp.nx, 0.02, _tp.z + 8.2 * _tp.nz,
-                _tp2.x + 8.2 * _tp2.nx, 0.02, _tp2.z + 8.2 * _tp2.nz,
-                _tp2.x + 7.0 * _tp2.nx, 0.02, _tp2.z + 7.0 * _tp2.nz
-              )) ctx.fill();
-            }
-          }
-        }
-        s = sNext;
-      }
-
-      // 4. Slow-Charge Station (outer curve gray bay + dim cool-white pillars)
-      renderSlowChargeStation(ctx);
-
-      // 4b. Flash-Charge Post (inner apex glowing orange pillar + ground induction ring)
-      renderFlashChargePost(ctx);
-
-      // 5. Inner racing guide ribbon (progressive reveal after Beat 1)
-      if (pathReveal > 0.01) {
-        renderPathGuide(ctx);
-      }
-
-      // 6. Vehicle wet reflections, headlight cones, light trails, scooters, and sparks
-      renderBike(ctx, rival, false);
-      renderBike(ctx, us, true);
-      renderTrail(ctx, rival.trail, false);
-      renderTrail(ctx, us.trail, true);
-      renderSparks3D(ctx);
-
-      // 7. Flash-charge shockwave rings
-      if (shockwaves.length > 0) {
-        renderShockwaves(ctx);
-      }
-
-      // Update floating tracking tags & leader pins
-      updateTagsAndPins(ctx);
-    }
-
-    function renderSlowChargeStation(ctx) {
-      // Gray service apron along outer curve s=375..429, offset=+7.0..+15.6
-      const segs = 9;
-      for (let i = 0; i < segs; i++) {
-        const s0 = 375 + (i / segs) * 54;
-        const s1 = 375 + ((i + 1) / segs) * 54;
-        sampleTrack(s0, _tp);
-        sampleTrack(s1, _tp2);
-        const dist = Math.hypot(_tp.x - cam.cx, _tp.z - cam.cz);
-        if (clipQuadAndPath(ctx,
-          _tp.x + 7.0 * _tp.nx, 0.01, _tp.z + 7.0 * _tp.nz,
-          _tp.x + 15.6 * _tp.nx, 0.01, _tp.z + 15.6 * _tp.nz,
-          _tp2.x + 15.6 * _tp2.nx, 0.01, _tp2.z + 15.6 * _tp2.nz,
-          _tp2.x + 7.0 * _tp2.nx, 0.01, _tp2.z + 7.0 * _tp2.nz
-        )) {
-          ctx.fillStyle = fogRgb(31, 35, 44, dist, 950);
+        if (isAlertFlash) {
+          ctx.fillStyle = '#ff9500';
+          ctx.beginPath();
+          ctx.arc(-50, -104, 7, 0, Math.PI * 2);
+          ctx.arc(50, -104, 7, 0, Math.PI * 2);
           ctx.fill();
         }
       }
-      // Dashed/solid gray box outline around bay
-      ctx.strokeStyle = 'rgba(154, 163, 178, 0.45)';
-      ctx.lineWidth = 2;
-      for (let i = 0; i < segs; i++) {
-        const s0 = 375 + (i / segs) * 54;
-        const s1 = 375 + ((i + 1) / segs) * 54;
-        sampleTrack(s0, _tp);
-        sampleTrack(s1, _tp2);
-        strokeLine3D(ctx, _tp.x + 15.6 * _tp.nx, 0.03, _tp.z + 15.6 * _tp.nz,
-          _tp2.x + 15.6 * _tp2.nx, 0.03, _tp2.z + 15.6 * _tp2.nz);
-        if (i % 2 === 0) {
-          strokeLine3D(ctx, _tp.x + 7.2 * _tp.nx, 0.03, _tp.z + 7.2 * _tp.nz,
-            _tp2.x + 7.2 * _tp2.nx, 0.03, _tp2.z + 7.2 * _tp2.nz);
-        }
-      }
-      sampleTrack(375, _tp);
-      strokeLine3D(ctx, _tp.x + 7.0 * _tp.nx, 0.03, _tp.z + 7.0 * _tp.nz,
-        _tp.x + 15.6 * _tp.nx, 0.03, _tp.z + 15.6 * _tp.nz);
-      sampleTrack(429, _tp);
-      strokeLine3D(ctx, _tp.x + 7.0 * _tp.nx, 0.03, _tp.z + 7.0 * _tp.nz,
-        _tp.x + 15.6 * _tp.nx, 0.03, _tp.z + 15.6 * _tp.nz);
 
-      // 3 dim cool-white slow-charge posts
-      const postS = [388, 404, 420];
-      for (let i = 0; i < postS.length; i++) {
-        sampleTrack(postS[i], _tp);
-        const px = _tp.x + 14.3 * _tp.nx;
-        const pz = _tp.z + 14.3 * _tp.nz;
-        if (projectWorld(px, 0, pz, _proj) && projectWorld(px, 3.1, pz, _proj2)) {
-          const pw = Math.max(3, 0.55 * _proj.scale);
-          ctx.fillStyle = '#38404F';
-          ctx.fillRect(_proj2.sx - pw * 0.5, _proj2.sy, pw, Math.max(2, _proj.sy - _proj2.sy));
-          ctx.fillStyle = 'rgba(185, 200, 222, 0.55)';
-          ctx.fillRect(_proj2.sx - pw * 0.4, _proj2.sy, pw * 0.8, Math.max(2, (_proj.sy - _proj2.sy) * 0.22));
-          ctx.save();
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.globalAlpha = 0.34;
-          const gs = clamp(3.4 * _proj2.scale, 16, 86);
-          ctx.drawImage(sprBlueDim, _proj2.sx - gs * 0.5, _proj2.sy - gs * 0.45, gs, gs);
-          ctx.restore();
+      // 6. Rider Silhouette (Legs, Handlebars, Armored Jacket, Aero Helmet)
+      const crouchY = tuck * 12;
+      const hangX = peek * 13;
+
+      ctx.strokeStyle = '#1b1f29';
+      ctx.lineWidth = 5.5;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(-52, -182 + crouchY);
+      ctx.lineTo(-84, -174 + crouchY);
+      ctx.moveTo(52, -182 + crouchY);
+      ctx.lineTo(84, -174 + crouchY);
+      ctx.stroke();
+
+      ctx.fillStyle = '#12151e';
+      ctx.beginPath();
+      ctx.ellipse(-88, -190 + crouchY, 12, 6.5, -0.2, 0, Math.PI * 2);
+      ctx.ellipse(88, -190 + crouchY, 12, 6.5, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Rider knees / legs
+      ctx.fillStyle = '#0e1118';
+      ctx.beginPath();
+      ctx.moveTo(-42, -142);
+      ctx.quadraticCurveTo(-60 + hangX * 0.4, -116, -40, -68);
+      ctx.lineTo(-24, -74);
+      ctx.lineTo(-22, -138);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(42, -142);
+      ctx.quadraticCurveTo(60 + hangX * 0.4, -116, 40, -68);
+      ctx.lineTo(24, -74);
+      ctx.lineTo(22, -138);
+      ctx.closePath();
+      ctx.fill();
+
+      // Jacket torso
+      ctx.fillStyle = isUs ? '#141721' : '#1c212c';
+      ctx.beginPath();
+      ctx.moveTo(-36 + hangX * 0.5, -138);
+      ctx.quadraticCurveTo(-62 + hangX, -178 + crouchY, -56 + hangX, -206 + crouchY);
+      ctx.quadraticCurveTo(hangX, -226 + crouchY, 56 + hangX, -206 + crouchY);
+      ctx.quadraticCurveTo(62 + hangX, -178 + crouchY, 36 + hangX * 0.5, -138);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = isUs ? '#1d2230' : '#29303d';
+      ctx.beginPath();
+      ctx.ellipse(hangX, -196 + crouchY, 19, 22, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = isUs ? 'rgba(255, 118, 30, 0.88)' : 'rgba(160, 175, 200, 0.5)';
+      ctx.lineWidth = 2.6;
+      ctx.beginPath();
+      ctx.moveTo(-50 + hangX, -202 + crouchY);
+      ctx.quadraticCurveTo(-30 + hangX, -180 + crouchY, -22 + hangX * 0.6, -148);
+      ctx.moveTo(50 + hangX, -202 + crouchY);
+      ctx.quadraticCurveTo(30 + hangX, -180 + crouchY, 22 + hangX * 0.6, -148);
+      ctx.stroke();
+
+      // Helmet
+      const hx = hangX * 1.15;
+      const hy = -246 + crouchY * 1.1;
+      ctx.fillStyle = isUs ? '#11141d' : '#242a36';
+      ctx.beginPath();
+      ctx.ellipse(hx, hy, 31, 35, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = isUs ? '#ff6414' : '#6c778a';
+      ctx.beginPath();
+      ctx.moveTo(hx - 14, hy - 29);
+      ctx.lineTo(hx + 14, hy - 29);
+      ctx.lineTo(hx + 9, hy - 14);
+      ctx.lineTo(hx - 9, hy - 14);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = isUs ? 'rgba(255, 214, 168, 0.78)' : 'rgba(205, 220, 242, 0.46)';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.arc(hx, hy, 29, Math.PI * 1.14, Math.PI * 1.86);
+      ctx.stroke();
+
+      // 7. Additive Sprite Blooms & Plasma Exhaust Jet
+      ctx.globalCompositeOperation = 'lighter';
+      if (isUs) {
+        const bloomSz = 172 + boost * 98;
+        ctx.globalAlpha = 0.74 + boost * 0.26;
+        ctx.drawImage(sprOrangeGlow, -bloomSz * 0.5, -108 - bloomSz * 0.5, bloomSz, bloomSz);
+        ctx.globalAlpha = 0.68 + boost * 0.32;
+        ctx.drawImage(sprFlare, -115 - boost * 55, -132, 230 + boost * 110, 54);
+
+        if (boost > 0.08 || us.charged) {
+          const flameLen = 38 + boost * 82 + Math.sin(wheelPhase * 42) * 8;
+          ctx.globalAlpha = clamp(0.45 + boost * 0.55, 0, 1);
+          ctx.fillStyle = '#ff6a14';
+          ctx.beginPath();
+          ctx.moveTo(-30, -80);
+          ctx.lineTo(-14, -80);
+          ctx.lineTo(-22, -80 + flameLen);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(14, -80);
+          ctx.lineTo(30, -80);
+          ctx.lineTo(22, -80 + flameLen);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.fillStyle = '#fff5df';
+          ctx.beginPath();
+          ctx.moveTo(-25, -80);
+          ctx.lineTo(-19, -80);
+          ctx.lineTo(-22, -80 + flameLen * 0.56);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(19, -80);
+          ctx.lineTo(25, -80);
+          ctx.lineTo(22, -80 + flameLen * 0.56);
+          ctx.closePath();
+          ctx.fill();
         }
+      } else {
+        const rAlpha = isAlertFlash ? 1.0 : isBraking ? 0.78 : 0.48;
+        const rSz = isAlertFlash ? 168 : 124;
+        ctx.globalAlpha = rAlpha;
+        ctx.drawImage(sprRedGlow, -rSz * 0.5, -108 - rSz * 0.5, rSz, rSz);
       }
+
+      ctx.restore();
     }
 
-    function renderFlashChargePost(ctx) {
-      sampleTrack(FLASH_POST_S, _tp);
-      // Ground induction pad right across the inner apex racing line
-      const padX = _tp.x - 5.6 * _tp.nx;
-      const padZ = _tp.z - 5.6 * _tp.nz;
-      const pulse = 0.72 + 0.28 * Math.sin(performance.now() * 0.005);
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.strokeStyle = 'rgba(255, 110, 30, ' + (0.58 * pulse).toFixed(3) + ')';
-      ctx.lineWidth = 2.5;
-      const ringSegs = 20;
-      for (let rIdx = 0; rIdx < 2; rIdx++) {
-        const rad = rIdx === 0 ? 3.2 : 1.9;
-        for (let k = 0; k < ringSegs; k++) {
-          const a0 = (k / ringSegs) * Math.PI * 2;
-          const a1 = ((k + 1) / ringSegs) * Math.PI * 2;
-          strokeLine3D(ctx,
-            padX + Math.cos(a0) * rad, 0.04, padZ + Math.sin(a0) * rad,
-            padX + Math.cos(a1) * rad, 0.04, padZ + Math.sin(a1) * rad);
+    // ---------- Tag Layout with Collision & Safe-Zone Guard ----------
+    function placeTag(el, sx, sy, w, h, avoidBox) {
+      if (!el) return null;
+      let tx = Math.round(sx - w * 0.5);
+      let ty = Math.round(sy - h - 18);
+
+      const topLimit =
+        slide.classList.contains('is-s2') && !slide.classList.contains('is-stamped') ? 106 : 86;
+      if (tx < 560 && ty < 365) {
+        tx = Math.max(tx, 560);
+      }
+      tx = clamp(tx, 48, W - w - 56);
+      ty = clamp(ty, topLimit, H - h - 115);
+
+      if (tx + w > 1510 && ty + h > 800) {
+        ty = 800 - h - 14;
+      }
+
+      if (avoidBox) {
+        const overlapX = tx < avoidBox.x + avoidBox.w + 14 && tx + w + 14 > avoidBox.x;
+        const overlapY = ty < avoidBox.y + avoidBox.h + 10 && ty + h + 10 > avoidBox.y;
+        if (overlapX && overlapY) {
+          ty = avoidBox.y - h - 14;
         }
       }
-      // Energy conduit from pylon to induction pad
-      const postX = _tp.x + FLASH_POST_OFFSET * _tp.nx;
-      const postZ = _tp.z + FLASH_POST_OFFSET * _tp.nz;
-      ctx.strokeStyle = 'rgba(255, 140, 50, 0.65)';
-      ctx.lineWidth = 3;
-      strokeLine3D(ctx, postX, 0.05, postZ, padX, 0.05, padZ);
-      ctx.restore();
 
-      // Glowing orange charging pylon at inner apex curb
-      const baseOk = projectWorld(postX, 0, postZ, _proj);
-      const topOk = projectWorld(postX, 4.8, postZ, _proj2);
-      if (baseOk && topOk) {
-        const pw = Math.max(4, 0.85 * _proj.scale);
-        const ph = Math.max(4, _proj.sy - _proj2.sy);
-        ctx.fillStyle = '#1d1817';
-        ctx.fillRect(_proj2.sx - pw * 0.5, _proj2.sy, pw, ph);
-        // Glowing vertical orange core strip
-        ctx.fillStyle = '#FF6A1A';
-        ctx.fillRect(_proj2.sx - pw * 0.18, _proj2.sy + ph * 0.08, pw * 0.36, ph * 0.82);
-        ctx.fillStyle = '#FFF1DC';
-        ctx.fillRect(_proj2.sx - pw * 0.08, _proj2.sy + ph * 0.1, pw * 0.16, ph * 0.65);
+      el.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+      return { x: tx, y: ty, w: w, h: h };
+    }
+
+    // ---------- Simulation Step ----------
+    function updateSimulation(dtReal) {
+      if (timeScaleTarget < timeScale) {
+        timeScale = timeScaleTarget;
+      } else {
+        timeScale = lerp(timeScale, timeScaleTarget, Math.min(1, dtReal * 18));
+      }
+      const dt = dtReal * timeScale;
+
+      pathReveal = lerp(pathReveal, pathTarget, Math.min(1, dtReal * 3.8));
+      boostIntensity = lerp(boostIntensity, boostTarget, Math.min(1, dtReal * 5.0));
+      mirrorAlpha = lerp(mirrorAlpha, mirrorTarget, Math.min(1, dtReal * 2.6));
+
+      if (gateFlashAlpha > 0) {
+        gateFlashAlpha = Math.max(0, gateFlashAlpha - dtReal * 1.8);
+      }
+      if (shockwaveLife > 0) {
+        shockwaveLife = Math.max(0, shockwaveLife - dtReal * 1.5);
+      }
+
+      if (stage === 0) {
+        us.v = lerp(us.v, 25, Math.min(1, dt * 4));
+        us.z += us.v * SPEED_TO_WORLD * dt;
+        rival.v = us.v;
+        rival.z = us.z + 1650;
+        rival.x = lerp(rival.x, -400, Math.min(1, dt * 3));
+        us.x = lerp(us.x, 360, Math.min(1, dt * 3));
+        us.lean = lerp(us.lean, 0, Math.min(1, dt * 6));
+        rival.lean = lerp(rival.lean, 0, Math.min(1, dt * 6));
+
+        cam.dist = lerp(cam.dist, 1550, Math.min(1, dtReal * 5));
+        cam.z = us.z - cam.dist;
+        cam.xOff = lerp(cam.xOff, 70, Math.min(1, dtReal * 4));
+        cam.x = cam.xOff;
+        cam.y = lerp(cam.y, 1000, Math.min(1, dtReal * 4));
+        cam.fov = lerp(cam.fov, 100, Math.min(1, dtReal * 4));
+        cam.roll = lerp(cam.roll, 0, Math.min(1, dtReal * 4));
+        cam.horizonY = lerp(cam.horizonY, 468, Math.min(1, dtReal * 4));
+      } else if (stage === 1) {
+        us.v = lerp(us.v, 45, Math.min(1, dt * 2.8));
+        us.z += us.v * SPEED_TO_WORLD * dt;
+        rival.v = us.v;
+        rival.z = us.z + 1680;
+        rival.x = lerp(rival.x, -390, Math.min(1, dt * 3));
+        us.x = lerp(us.x, 380, Math.min(1, dt * 3));
+        us.lean = lerp(us.lean, 0, Math.min(1, dt * 6));
+        rival.lean = lerp(rival.lean, 0, Math.min(1, dt * 6));
+
+        // Keep corner & "行业拐点" sign steadily poised 24 segs ahead
+        cornerStartSeg = Math.floor(us.z / SEG_LEN) + 24;
+
+        cam.dist = lerp(cam.dist, 1540, Math.min(1, dtReal * 5));
+        cam.z = us.z - cam.dist;
+        cam.xOff = lerp(cam.xOff, 85, Math.min(1, dtReal * 4));
+        cam.x = cam.xOff;
+        cam.y = lerp(cam.y, 1000, Math.min(1, dtReal * 4));
+        cam.fov = lerp(cam.fov, 100, Math.min(1, dtReal * 4));
+        cam.roll = lerp(cam.roll, 0, Math.min(1, dtReal * 4));
+        cam.horizonY = lerp(cam.horizonY, 468, Math.min(1, dtReal * 4));
+      } else {
+        if (!beat2Done) {
+          beat2RealElapsed += dtReal;
+          // Deterministic beat 2 milestone choreography synced directly to simulation clock
+          if (b2Milestone < 1 && beat2RealElapsed >= 1.2) {
+            b2Milestone = 1;
+            rival.lowAlert = true;
+            if (tagRival) tagRival.classList.add('is-low');
+            Deck.sfx('sting');
+          }
+          if (b2Milestone < 2 && beat2RealElapsed >= 1.85) {
+            b2Milestone = 2;
+            if (!gatePassed) {
+              gatePassed = true;
+              onCrossFlashGate();
+            }
+          }
+          if (b2Milestone < 3 && beat2RealElapsed >= 2.3) {
+            b2Milestone = 3;
+            us.boosting = true;
+            boostTarget = 1.0;
+            Deck.sfx('boost');
+            Deck.fx.shake(1.0);
+            if (motorLoop) motorLoop.set(0.95);
+            spawnSparks(20, W * 0.54, H * 0.87, 1.3);
+          }
+          if (b2Milestone < 4 && beat2RealElapsed >= 2.8) {
+            b2Milestone = 4;
+            timeScaleTarget = 0.25;
+            timeScale = 0.25;
+            Deck.sfx('bullet');
+            Deck.score.duck(true);
+            if (motorLoop) motorLoop.set(0.32);
+          }
+          if (b2Milestone < 5 && beat2RealElapsed >= 3.6) {
+            b2Milestone = 5;
+            timeScaleTarget = 1.0;
+            Deck.sfx('overtake');
+            Deck.score.duck(false);
+            if (motorLoop) motorLoop.set(0.95);
+            spawnSparks(24, W * 0.54, H * 0.87, 1.4);
+          }
+          if (b2Milestone < 6 && beat2RealElapsed >= 4.5) {
+            b2Milestone = 6;
+            mirrorTarget = 1.0;
+            boostTarget = 0.65;
+          }
+          if (b2Milestone < 7 && beat2RealElapsed >= 6.8) {
+            b2Milestone = 7;
+            beat2Done = true;
+          }
+        }
+        beat2SimElapsed += dt;
+
+        // Smooth speed curve: 45 -> 60 (0..1.8s), 60 -> 88 (1.8..2.3s), 88 -> 120 (2.3s+)
+        if (beat2RealElapsed < 1.8) {
+          us.targetV = 45 + (beat2RealElapsed / 1.8) * 15;
+        } else if (beat2RealElapsed < 2.3) {
+          us.targetV = 60 + ((beat2RealElapsed - 1.8) / 0.5) * 28;
+        } else {
+          us.targetV = 120;
+        }
+        us.v = lerp(us.v, us.targetV, Math.min(1, dtReal * 5.8));
+
+        if (us.charged) {
+          us.charge = lerp(us.charge, 95, Math.min(1, dtReal * 5.0));
+          if (usFill) usFill.style.width = us.charge.toFixed(1) + '%';
+        }
+        if (rival.lowAlert) {
+          rival.charge = lerp(rival.charge, 8, Math.min(1, dtReal * 2.5));
+          if (rivalFill) rivalFill.style.width = rival.charge.toFixed(1) + '%';
+        }
+
+        us.z += us.v * SPEED_TO_WORLD * dt;
+
+        if (!beat2Done) {
+          if (beat2RealElapsed < 1.2) {
+            rival.v = lerp(rival.v, 46, Math.min(1, dtReal * 4));
+            rival.gap = lerp(rival.gap, 1650, Math.min(1, dtReal * 4));
+            rival.z = us.z + rival.gap;
+            rival.x = lerp(rival.x, -380, Math.min(1, dt * 3));
+          } else if (beat2RealElapsed < 2.8) {
+            rival.v = lerp(rival.v, 14, Math.min(1, dtReal * 3.5));
+            const desiredGap = lerp(1650, 620, smoothstep(1.2, 2.8, beat2RealElapsed));
+            rival.gap = lerp(rival.gap, desiredGap, Math.min(1, dtReal * 10));
+            rival.z = us.z + rival.gap;
+            rival.x = lerp(rival.x, -420, Math.min(1, dtReal * 2.8));
+          } else if (beat2RealElapsed < 3.6) {
+            // 0.8s Bullet-time (0.25x): rival huge & uncropped alongside us during close pass
+            rival.v = 10;
+            rival.gap -= (us.v - rival.v) * SPEED_TO_WORLD * dt;
+            rival.z = us.z + rival.gap;
+            rival.x = lerp(rival.x, -480, Math.min(1, dtReal * 1.4));
+          } else {
+            rival.v = lerp(rival.v, 0, Math.min(1, dtReal * 3.0));
+            rival.gap -= (us.v - rival.v) * SPEED_TO_WORLD * dt;
+            rival.z = us.z + rival.gap;
+            rival.x = lerp(rival.x, -1250, Math.min(1, dt * 2.0));
+            if (rival.gap < -1700) rival.parked = true;
+          }
+        } else {
+          rival.parked = true;
+          rival.v = 0;
+        }
+
+        // Flash-Charge Energy Gate crossing right at ~1.95s (gateSegIdx = cornerStartSeg + 42)
+        const gateZ = (cornerStartSeg + 42) * SEG_LEN;
+        if (!gatePassed && us.z >= gateZ - 700) {
+          gatePassed = true;
+          onCrossFlashGate();
+        }
+
+        us.x = lerp(us.x, beat2RealElapsed >= 4.4 || beat2Done ? 250 : 280, Math.min(1, dtReal * 4));
+
+        const usCurve = getSegCurve(Math.floor(us.z / SEG_LEN));
+        const rivalCurve = getSegCurve(Math.floor(rival.z / SEG_LEN));
+        us.lean = lerp(us.lean, usCurve * 6.4, Math.min(1, dtReal * 6.5));
+        rival.lean = lerp(rival.lean, rival.lowAlert ? rivalCurve * 1.8 : rivalCurve * 4.5, Math.min(1, dtReal * 5.0));
+
+        // Explicit camera distance & lateral curve tracking (prevents lag & off-screen drift)
+        let targetDist = 1520;
+        let targetCamY = 980;
+        let targetFov = 100;
+        let targetXOff = us.x * 0.25;
+        let targetHorizon = 468;
+
+        if (beat2RealElapsed >= 4.5 || beat2Done) {
+          targetDist = 1480;
+          targetCamY = 1080;
+          targetFov = 106;
+          targetXOff = 60;
+          targetHorizon = 452;
+        } else if (beat2RealElapsed >= 2.8 && beat2RealElapsed < 3.6) {
+          // Close-pass bullet-time framing (rival huge on left, us crisp center-right, both uncropped)
+          targetDist = 1220;
+          targetCamY = 740;
+          targetFov = 112;
+          targetXOff = -70;
+          targetHorizon = 445;
+        } else if (beat2RealElapsed >= 2.25) {
+          targetDist = 1150;
+          targetCamY = 820;
+          targetFov = 118;
+          targetXOff = 85;
+          targetHorizon = 472;
+        }
+
+        cam.dist = lerp(cam.dist, targetDist, Math.min(1, dtReal * 6.0));
+        cam.z = us.z - cam.dist;
+        cam.xOff = lerp(cam.xOff, targetXOff, Math.min(1, dtReal * 5.0));
+        cam.x = computeCurveOffsetAt(us.z) * 0.92 + cam.xOff;
+        cam.y = lerp(cam.y, targetCamY, Math.min(1, dtReal * 4.5));
+        cam.fov = lerp(cam.fov, targetFov, Math.min(1, dtReal * 5.0));
+        cam.horizonY = lerp(cam.horizonY, targetHorizon, Math.min(1, dtReal * 4.5));
+        cam.roll = lerp(cam.roll, -usCurve * 1.15, Math.min(1, dtReal * 4.5)); // up to -2.8 deg roll
+
+        if (beat2RealElapsed >= 3.6 && beat2RealElapsed < 4.35 && Math.random() < dtReal * 28) {
+          spawnSparks(2, W * 0.56, H * 0.85, 0.9);
+        }
+      }
+
+      const curSegCurve = getSegCurve(Math.floor(cam.z / SEG_LEN));
+      cam.skyOffset = (cam.skyOffset + curSegCurve * (us.v / 50) * dt * 115) % SKY_W;
+      if (cam.skyOffset < 0) cam.skyOffset += SKY_W;
+
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const sp = sparks[i];
+        sp.x += sp.vx * dtReal;
+        sp.y += sp.vy * dtReal;
+        sp.vy += 900 * dtReal;
+        sp.life -= sp.decay * dtReal;
+        if (sp.life <= 0) sparks.splice(i, 1);
+      }
+
+      updateSpeedHud(us.v, boostIntensity > 0.35);
+    }
+
+    // ---------- Scene Renderer ----------
+    function renderScene() {
+      if (!ctx) return;
+      const t0 = performance.now();
+
+      const baseSegIdx = Math.floor(cam.z / SEG_LEN);
+      const basePct = (cam.z - baseSegIdx * SEG_LEN) / SEG_LEN;
+      const baseCurve = getSegCurve(baseSegIdx);
+      const focalPx = (W * 0.5) / Math.tan((cam.fov * 0.5 * Math.PI) / 180);
+      const horizonY = cam.horizonY;
+
+      let xAccum = 0;
+      let dx = -(baseCurve * basePct * CURVE_STEP);
+
+      for (let k = 0; k < DRAW_DIST; k++) {
+        const idx = baseSegIdx + k;
+        const c = getSegCurve(idx);
+        const z1 = Math.max(80, k * SEG_LEN - basePct * SEG_LEN);
+        const z2 = Math.max(90, (k + 1) * SEG_LEN - basePct * SEG_LEN);
+        const camX1 = xAccum - cam.x;
+        const camX2 = xAccum + dx - cam.x;
+
+        const sc1 = focalPx / z1;
+        const sc2 = focalPx / z2;
+
+        const ps = projSegs[k];
+        ps.idx = idx;
+        ps.z1 = z1;
+        ps.z2 = z2;
+        ps.camX1 = camX1;
+        ps.camX2 = camX2;
+        ps.sc1 = sc1;
+        ps.sc2 = sc2;
+        ps.sx1 = W * 0.5 + camX1 * sc1;
+        ps.sy1 = horizonY + cam.y * sc1;
+        ps.w1 = ROAD_HALF_W * sc1;
+        ps.sx2 = W * 0.5 + camX2 * sc2;
+        ps.sy2 = horizonY + cam.y * sc2;
+        ps.w2 = ROAD_HALF_W * sc2;
+        ps.curve = c;
+        ps.fogIdx = Math.min(FOG_STEPS - 1, Math.floor((k / DRAW_DIST) * FOG_STEPS));
+
+        xAccum += dx;
+        dx += c * CURVE_STEP;
+      }
+
+      const farSeg = projSegs[DRAW_DIST - 1];
+      const vpX = farSeg.sx2;
+      const vpY = farSeg.sy2;
+
+      ctx.save();
+      if (Math.abs(cam.roll) > 0.02) {
+        ctx.translate(W * 0.5, H * 0.55);
+        ctx.rotate((cam.roll * Math.PI) / 180);
+        ctx.scale(1.06, 1.06);
+        ctx.translate(-W * 0.5, -H * 0.55);
+      }
+
+      // 1. Sky + Distant City Skyline Strip (with parallax wrapping)
+      const skyBottomY = Math.ceil(horizonY + 18);
+      const skyTopY = skyBottomY - SKY_H;
+      if (skyTopY > -40) {
+        ctx.fillStyle = '#030408';
+        ctx.fillRect(-100, -100, W + 200, skyTopY + 110);
+      }
+      const ox = Math.floor((cam.skyOffset + (vpX - W * 0.5) * 0.35) % SKY_W);
+      const wrapX = ox < 0 ? ox + SKY_W : ox;
+      const part1 = Math.min(W + 160, SKY_W - wrapX);
+      ctx.drawImage(skylineCanvas, wrapX, 0, part1, SKY_H, -80, skyTopY, part1, SKY_H);
+      if (part1 < W + 160) {
+        const part2 = W + 160 - part1;
+        ctx.drawImage(skylineCanvas, 0, 0, part2, SKY_H, -80 + part1, skyTopY, part2, SKY_H);
+      }
+
+      // Clean dark night ground plane (no distracting striped background bands)
+      ctx.fillStyle = '#07080d';
+      ctx.fillRect(-120, skyBottomY - 2, W + 240, H - skyBottomY + 140);
+
+      function projectOnRoad(zWorld, offsetX, heightY) {
+        const segFloat = (zWorld - cam.z) / SEG_LEN;
+        if (segFloat <= 0.1 || segFloat >= DRAW_DIST - 1) return null;
+        const k = clamp(Math.floor(segFloat), 0, DRAW_DIST - 2);
+        const f = segFloat - k;
+        const p = projSegs[k];
+        const cz = lerp(p.z1, p.z2, f);
+        const cx = lerp(p.camX1, p.camX2, f) + offsetX;
+        const sc = focalPx / cz;
+        return {
+          sx: W * 0.5 + cx * sc,
+          sy: horizonY + (cam.y - heightY) * sc,
+          sc: sc,
+          cz: cz,
+          k: k
+        };
+      }
+
+      // Landmarks positioned cleanly along corner progression
+      const signSegIdx = cornerStartSeg + 3;
+      const gateSegIdx = cornerStartSeg + 42;
+      const slowBayStart = cornerStartSeg + 56;
+      const slowBayEnd = cornerStartSeg + 112;
+      const slowSignSegIdx = cornerStartSeg + 70;
+
+      const usProj = projectOnRoad(us.z, us.x, 0);
+      const rivalProj = projectOnRoad(rival.z, rival.x, 0);
+      const usSegBucket = usProj ? usProj.k : -1;
+      const rivalSegBucket = rivalProj ? rivalProj.k : -1;
+
+      const lightInterval = 8;
+      const orangeLaneAlpha = pathReveal;
+
+      // 2. Back-to-Front Segmented Road + Roadside Props + Bikes
+      for (let k = DRAW_DIST - 1; k >= 0; k--) {
+        const p = projSegs[k];
+        if (p.sy1 <= horizonY + 1 && p.sy2 <= horizonY + 1) continue;
+
+        const pal = roadPalettes[p.fogIdx];
+        const alt = (p.idx >> 1) & 1;
+        const curbAlt = Math.floor(p.idx / 2) & 1;
+        const dashOn = p.idx % 4 < 2;
+
+        // Slow-charge bay recess on left outside of curve (smooth continuous edge taper)
+        if (p.idx >= slowBayStart && p.idx <= slowBayEnd) {
+          const bayIn1 = smoothstep(slowBayStart, slowBayStart + 12, p.idx);
+          const bayOut1 = 1 - smoothstep(slowBayEnd - 12, slowBayEnd, p.idx);
+          const bayW1 = 960 * Math.min(bayIn1, bayOut1);
+
+          const bayIn2 = smoothstep(slowBayStart, slowBayStart + 12, p.idx + 1);
+          const bayOut2 = 1 - smoothstep(slowBayEnd - 12, slowBayEnd, p.idx + 1);
+          const bayW2 = 960 * Math.min(bayIn2, bayOut2);
+
+          if (bayW1 > 20 || bayW2 > 20) {
+            const bl1 = p.sx1 - p.w1 - bayW1 * p.sc1;
+            const bl2 = p.sx2 - p.w2 - bayW2 * p.sc2;
+            const br1 = p.sx1 - p.w1;
+            const br2 = p.sx2 - p.w2;
+            ctx.fillStyle = pal.bayAsphalt;
+            ctx.beginPath();
+            ctx.moveTo(bl1, p.sy1 + 0.5);
+            ctx.lineTo(br1, p.sy1 + 0.5);
+            ctx.lineTo(br2, p.sy2);
+            ctx.lineTo(bl2, p.sy2);
+            ctx.closePath();
+            ctx.fill();
+
+            if (p.idx % 3 === 0) {
+              ctx.strokeStyle = pal.bayBorder;
+              ctx.lineWidth = Math.max(1, 3 * p.sc1);
+              ctx.beginPath();
+              ctx.moveTo(bl1 + 20 * p.sc1, p.sy1);
+              ctx.lineTo(br1 - 20 * p.sc1, p.sy1);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Asphalt surface quad
+        ctx.fillStyle = alt ? pal.asphaltA : pal.asphaltB;
+        ctx.beginPath();
+        ctx.moveTo(p.sx1 - p.w1, p.sy1 + 0.6);
+        ctx.lineTo(p.sx1 + p.w1, p.sy1 + 0.6);
+        ctx.lineTo(p.sx2 + p.w2, p.sy2);
+        ctx.lineTo(p.sx2 - p.w2, p.sy2);
+        ctx.closePath();
+        ctx.fill();
+
+        // Red-and-white racing rumble curbs
+        const cw1 = p.w1 * 0.11;
+        const cw2 = p.w2 * 0.11;
+        ctx.fillStyle = curbAlt ? pal.curbRed : pal.curbWhite;
+        ctx.beginPath();
+        ctx.moveTo(p.sx1 - p.w1 - cw1, p.sy1 + 0.6);
+        ctx.lineTo(p.sx1 - p.w1, p.sy1 + 0.6);
+        ctx.lineTo(p.sx2 - p.w2, p.sy2);
+        ctx.lineTo(p.sx2 - p.w2 - cw2, p.sy2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(p.sx1 + p.w1, p.sy1 + 0.6);
+        ctx.lineTo(p.sx1 + p.w1 + cw1, p.sy1 + 0.6);
+        ctx.lineTo(p.sx2 + p.w2 + cw2, p.sy2);
+        ctx.lineTo(p.sx2 + p.w2, p.sy2);
+        ctx.closePath();
+        ctx.fill();
+
+        // Orange glowing right fast-charge corridor (Beat 1+)
+        if (orangeLaneAlpha > 0.02) {
+          const laneK = orangeLaneAlpha * (1 - p.fogIdx / (FOG_STEPS * 1.05));
+          if (laneK > 0.02) {
+            const ol1 = p.sx1 + p.w1 * 0.04;
+            const or1 = p.sx1 + p.w1 * 0.9;
+            const ol2 = p.sx2 + p.w2 * 0.04;
+            const or2 = p.sx2 + p.w2 * 0.9;
+            ctx.fillStyle = 'rgba(255, 92, 16, ' + (laneK * 0.18).toFixed(3) + ')';
+            ctx.beginPath();
+            ctx.moveTo(ol1, p.sy1 + 0.5);
+            ctx.lineTo(or1, p.sy1 + 0.5);
+            ctx.lineTo(or2, p.sy2);
+            ctx.lineTo(ol2, p.sy2);
+            ctx.closePath();
+            ctx.fill();
+
+            const stripW1 = Math.max(1, 22 * p.sc1);
+            const stripW2 = Math.max(1, 22 * p.sc2);
+            ctx.fillStyle = 'rgba(255, 138, 48, ' + (laneK * 0.72).toFixed(3) + ')';
+            ctx.beginPath();
+            ctx.moveTo(ol1, p.sy1 + 0.5);
+            ctx.lineTo(ol1 + stripW1, p.sy1 + 0.5);
+            ctx.lineTo(ol2 + stripW2, p.sy2);
+            ctx.lineTo(ol2, p.sy2);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(or1 - stripW1, p.sy1 + 0.5);
+            ctx.lineTo(or1, p.sy1 + 0.5);
+            ctx.lineTo(or2, p.sy2);
+            ctx.lineTo(or2 - stripW2, p.sy2);
+            ctx.closePath();
+            ctx.fill();
+          }
+        }
+
+        // Center dashed lane divider
+        if (dashOn) {
+          const lw1 = Math.max(1, LANE_HALF_W * p.sc1);
+          const lw2 = Math.max(1, LANE_HALF_W * p.sc2);
+          ctx.fillStyle = pal.dashWhite;
+          ctx.beginPath();
+          ctx.moveTo(p.sx1 - lw1, p.sy1 + 0.5);
+          ctx.lineTo(p.sx1 + lw1, p.sy1 + 0.5);
+          ctx.lineTo(p.sx2 + lw2, p.sy2);
+          ctx.lineTo(p.sx2 - lw2, p.sy2);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        // Streetlight poles & warm halos every 8 segments
+        if (p.idx % lightInterval === 0 && p.sc1 > 0.008) {
+          const poleH = 1480 * p.sc1;
+          const poleW = Math.max(1.5, 22 * p.sc1);
+          const armL = 310 * p.sc1;
+          const lx = p.sx1 - p.w1 - 150 * p.sc1;
+          const rx = p.sx1 + p.w1 + 150 * p.sc1;
+          const topY = p.sy1 - poleH;
+          const alphaFog = clamp(1 - p.fogIdx / FOG_STEPS, 0.12, 1);
+
+          ctx.strokeStyle = 'rgba(38, 44, 58, ' + alphaFog.toFixed(2) + ')';
+          ctx.lineWidth = poleW;
+          ctx.beginPath();
+          ctx.moveTo(lx, p.sy1);
+          ctx.lineTo(lx, topY);
+          ctx.lineTo(lx + armL, topY + 28 * p.sc1);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(rx, p.sy1);
+          ctx.lineTo(rx, topY);
+          ctx.lineTo(rx - armL, topY + 28 * p.sc1);
+          ctx.stroke();
+
+          const glowSz = Math.max(14, 380 * p.sc1);
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.globalAlpha = 0.72 * alphaFog;
+          ctx.drawImage(
+            sprWhiteGlow,
+            lx + armL - glowSz * 0.5,
+            topY + 28 * p.sc1 - glowSz * 0.5,
+            glowSz,
+            glowSz
+          );
+          ctx.drawImage(
+            sprWhiteGlow,
+            rx - armL - glowSz * 0.5,
+            topY + 28 * p.sc1 - glowSz * 0.5,
+            glowSz,
+            glowSz
+          );
+          ctx.restore();
+        }
+
+        // 3D Roadside Signboard: "行业拐点"
+        if (p.idx === signSegIdx && p.sc1 > 0.01) {
+          const postX = p.sx1 + p.w1 + 330 * p.sc1;
+          const postH = 1080 * p.sc1;
+          const bw = 1480 * p.sc1;
+          const bh = 540 * p.sc1;
+          const bx = postX - bw * 0.52;
+          const by = p.sy1 - postH - bh * 0.4;
+
+          ctx.strokeStyle = '#323846';
+          ctx.lineWidth = Math.max(2, 34 * p.sc1);
+          ctx.beginPath();
+          ctx.moveTo(postX, p.sy1);
+          ctx.lineTo(postX, p.sy1 - postH);
+          ctx.stroke();
+
+          ctx.drawImage(signCornerCanvas, bx, by, bw, bh);
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.globalAlpha = 0.35;
+          ctx.drawImage(sprOrangeGlow, postX - bw * 0.4, by - bh * 0.4, bw * 0.8, bh * 1.8);
+          ctx.restore();
+        }
+
+        // 3D Roadside Slow-Charge Lightbox: "慢充站" (visible during Beat 2+)
+        if (stage >= 2 && p.idx === slowSignSegIdx && p.sc1 > 0.01) {
+          const postX = p.sx1 - p.w1 - 540 * p.sc1;
+          const postH = 920 * p.sc1;
+          const bw = 1120 * p.sc1;
+          const bh = 410 * p.sc1;
+          const bx = postX - bw * 0.5;
+          const by = p.sy1 - postH - bh * 0.3;
+
+          ctx.strokeStyle = '#2b303c';
+          ctx.lineWidth = Math.max(2, 30 * p.sc1);
+          ctx.beginPath();
+          ctx.moveTo(postX, p.sy1);
+          ctx.lineTo(postX, p.sy1 - postH);
+          ctx.stroke();
+
+          ctx.drawImage(signSlowBayCanvas, bx, by, bw, bh);
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.globalAlpha = 0.25;
+          ctx.drawImage(sprBlueGlow, postX - bw * 0.35, by - bh * 0.2, bw * 0.7, bh * 1.4);
+          ctx.restore();
+        }
+
+        // 3D Spanning Arch: Flash-Charge Energy Gate ("闪充能量门")
+        if (stage >= 2 && p.idx === gateSegIdx && p.sc1 > 0.008) {
+          const glx = p.sx1 - p.w1 - 90 * p.sc1;
+          const grx = p.sx1 + p.w1 + 90 * p.sc1;
+          const colW = Math.max(4, 108 * p.sc1);
+          const colH = 1360 * p.sc1;
+          const topY = p.sy1 - colH;
+          const archRise = 220 * p.sc1;
+
+          ctx.fillStyle = '#181c26';
+          ctx.fillRect(glx - colW * 0.5, topY, colW, colH);
+          ctx.fillRect(grx - colW * 0.5, topY, colW, colH);
+
+          ctx.fillStyle = '#ff7b24';
+          ctx.fillRect(glx - colW * 0.16, topY + 20 * p.sc1, colW * 0.32, colH - 40 * p.sc1);
+          ctx.fillRect(grx - colW * 0.16, topY + 20 * p.sc1, colW * 0.32, colH - 40 * p.sc1);
+
+          ctx.strokeStyle = '#ff6a14';
+          ctx.lineWidth = Math.max(4, 95 * p.sc1);
+          ctx.beginPath();
+          ctx.moveTo(glx, topY + 25 * p.sc1);
+          ctx.quadraticCurveTo((glx + grx) * 0.5, topY - archRise, grx, topY + 25 * p.sc1);
+          ctx.stroke();
+
+          ctx.strokeStyle = '#fff3df';
+          ctx.lineWidth = Math.max(2, 32 * p.sc1);
+          ctx.beginPath();
+          ctx.moveTo(glx, topY + 25 * p.sc1);
+          ctx.quadraticCurveTo((glx + grx) * 0.5, topY - archRise, grx, topY + 25 * p.sc1);
+          ctx.stroke();
+
+          const curtainL = p.sx1 + p.w1 * 0.04;
+          const curtainR = p.sx1 + p.w1 * 0.96;
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.fillStyle = 'rgba(255, 115, 30, 0.14)';
+          ctx.fillRect(curtainL, topY, curtainR - curtainL, colH);
+
+          const pylonGlow = Math.max(40, 920 * p.sc1);
+          ctx.globalAlpha = 0.85;
+          ctx.drawImage(sprOrangeGlow, glx - pylonGlow * 0.5, topY + colH * 0.3 - pylonGlow * 0.5, pylonGlow, pylonGlow);
+          ctx.drawImage(sprOrangeGlow, grx - pylonGlow * 0.5, topY + colH * 0.3 - pylonGlow * 0.5, pylonGlow, pylonGlow);
+          ctx.drawImage(
+            sprOrangeGlow,
+            (glx + grx) * 0.5 - pylonGlow * 0.65,
+            topY - archRise * 0.45 - pylonGlow * 0.5,
+            pylonGlow * 1.3,
+            pylonGlow * 0.9
+          );
+          ctx.restore();
+        }
+
+        // Draw Rival Bike in Z-bucket
+        if (k === rivalSegBucket && rivalProj) {
+          const rH = 540 * rivalProj.sc;
+          const blink = rival.lowAlert && Math.floor(performance.now() / 150) % 2 === 0;
+          drawBike(ctx, rivalProj.sx, rivalProj.sy, rH, rival.lean, {
+            isUs: false,
+            isBraking: rival.lowAlert,
+            isAlertFlash: blink,
+            wheelPhase: (rival.z % 240) / 240,
+            tuck: 0
+          });
+        }
+
+        // Draw Our Bike ("桢昱烽闪充") in Z-bucket
+        if (k === usSegBucket && usProj) {
+          const uH = 540 * usProj.sc;
+          drawBike(ctx, usProj.sx, usProj.sy, uH, us.lean, {
+            isUs: true,
+            boost: boostIntensity,
+            wheelPhase: (us.z % 240) / 240,
+            tuck: clamp(boostIntensity, 0, 1)
+          });
+        }
+      }
+
+      // 3. Expanding Orange Shockwave Ring when piercing Flash Gate
+      if (shockwaveLife > 0) {
+        const p = 1 - shockwaveLife;
+        const rad = 110 + p * 1150;
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.strokeStyle = 'rgba(255, 165, 65, ' + (shockwaveLife * 0.72).toFixed(3) + ')';
+        ctx.lineWidth = 18 * shockwaveLife;
+        ctx.beginPath();
+        ctx.ellipse(usProj ? usProj.sx : W * 0.55, usProj ? usProj.sy - 110 : H * 0.7, rad, rad * 0.58, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // 4. Boost Radial Speed Lines + ±2.5px Red/Cyan Chromatic Aberration
+      if (boostIntensity > 0.04) {
+        const tNow = beat2SimElapsed * 3.6 + us.z * 0.0004;
+        const originX = clamp(vpX, W * 0.35, W * 0.7);
+        const originY = clamp(vpY + 25, H * 0.38, H * 0.55);
 
         ctx.save();
         ctx.globalCompositeOperation = 'lighter';
-        ctx.globalAlpha = 0.82 * pulse;
-        const gTop = clamp(7.2 * _proj2.scale, 28, 190);
-        ctx.drawImage(sprOrangeGlow, _proj2.sx - gTop * 0.5, _proj2.sy - gTop * 0.45, gTop, gTop);
-        ctx.globalAlpha = 0.48 * pulse;
-        const gBase = clamp(6.0 * _proj.scale, 22, 160);
-        ctx.drawImage(sprOrangeGlow, _proj.sx - gBase * 0.5, _proj.sy - gBase * 0.5, gBase, gBase);
+        ctx.lineCap = 'round';
+
+        for (let i = 0; i < speedSeeds.length; i++) {
+          const sd = speedSeeds[i];
+          const prog = (tNow * sd.speed + sd.phase) % 1;
+          const rStart = 210 + prog * 920;
+          const rEnd = rStart + (120 + sd.len * 920) * boostIntensity;
+          const cos = Math.cos(sd.angle);
+          const sin = Math.sin(sd.angle);
+
+          const x0 = originX + cos * rStart;
+          const y0 = originY + sin * rStart;
+          const x1 = originX + cos * rEnd;
+          const y1 = originY + sin * rEnd;
+          const a = boostIntensity * (1 - prog * 0.45) * 0.54;
+
+          ctx.lineWidth = sd.thick;
+          ctx.strokeStyle = 'rgba(255, 50, 50, ' + (a * 0.55).toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.moveTo(x0 - 2.5, y0);
+          ctx.lineTo(x1 - 2.5, y1);
+          ctx.stroke();
+
+          ctx.strokeStyle = 'rgba(40, 235, 255, ' + (a * 0.55).toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.moveTo(x0 + 2.5, y0);
+          ctx.lineTo(x1 + 2.5, y1);
+          ctx.stroke();
+
+          ctx.strokeStyle = sd.warm
+            ? 'rgba(255, 162, 65, ' + a.toFixed(3) + ')'
+            : 'rgba(255, 248, 240, ' + (a * 0.85).toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.moveTo(x0, y0);
+          ctx.lineTo(x1, y1);
+          ctx.stroke();
+        }
         ctx.restore();
       }
-    }
 
-    function renderPathGuide(ctx) {
-      const s0 = Math.max(105, us.s + 1.5);
-      const sMax = 550;
-      const sEnd = s0 + (sMax - s0) * pathReveal;
-      if (sEnd <= s0 + 2) return;
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      const step = 4;
-      for (let s = s0; s < sEnd; s += step) {
-        const sn = Math.min(sEnd, s + step);
-        sampleTrack(s, _tp);
-        sampleTrack(sn, _tp2);
-        const o0 = innerLaneOffset(s);
-        const o1 = innerLaneOffset(sn);
-        const fadeTail = s > 480 ? clamp(1 - (s - 480) / 70, 0, 1) : 1;
-        // Soft wide outer orange strip
-        ctx.fillStyle = 'rgba(255, 85, 0, ' + (0.28 * fadeTail).toFixed(3) + ')';
-        if (clipQuadAndPath(ctx,
-          _tp.x + (o0 - 0.85) * _tp.nx, 0.04, _tp.z + (o0 - 0.85) * _tp.nz,
-          _tp.x + (o0 + 0.85) * _tp.nx, 0.04, _tp.z + (o0 + 0.85) * _tp.nz,
-          _tp2.x + (o1 + 0.85) * _tp2.nx, 0.04, _tp2.z + (o1 + 0.85) * _tp2.nz,
-          _tp2.x + (o1 - 0.85) * _tp2.nx, 0.04, _tp2.z + (o1 - 0.85) * _tp2.nz
-        )) ctx.fill();
-        // Hot core guide strip
-        ctx.fillStyle = 'rgba(255, 195, 110, ' + (0.68 * fadeTail).toFixed(3) + ')';
-        if (clipQuadAndPath(ctx,
-          _tp.x + (o0 - 0.22) * _tp.nx, 0.05, _tp.z + (o0 - 0.22) * _tp.nz,
-          _tp.x + (o0 + 0.22) * _tp.nx, 0.05, _tp.z + (o0 + 0.22) * _tp.nz,
-          _tp2.x + (o1 + 0.22) * _tp2.nx, 0.05, _tp2.z + (o1 + 0.22) * _tp2.nz,
-          _tp2.x + (o1 - 0.22) * _tp2.nx, 0.05, _tp2.z + (o1 - 0.22) * _tp2.nz
-        )) ctx.fill();
-      }
-      ctx.restore();
-    }
-
-    function renderTrail(ctx, trail, isUs) {
-      if (trail.length < 2) return;
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      const n = trail.length;
-      for (let i = 0; i < n - 1; i++) {
-        const p0 = trail[i];
-        const p1 = trail[i + 1];
-        const frac = (i + 1) / n; // 0 at tail -> 1 at head
-        const boostMul = isUs && p1.boost ? 1.55 : 1.0;
-        const tx = p1.x - p0.x;
-        const tz = p1.z - p0.z;
-        const len = Math.hypot(tx, tz) || 1;
-        const nx = -tz / len;
-        const nz = tx / len;
-
-        const wOuter = (isUs ? (0.2 + frac * 0.86) : (0.06 + frac * 0.36)) * boostMul;
-        const aOuter = Math.pow(frac, 1.3) * (isUs ? (p1.boost ? 0.72 : 0.6) : 0.22);
-        ctx.fillStyle = isUs
-          ? 'rgba(255, 92, 16, ' + aOuter.toFixed(3) + ')'
-          : 'rgba(135, 155, 185, ' + aOuter.toFixed(3) + ')';
-        if (clipQuadAndPath(ctx,
-          p0.x - nx * wOuter, 0.34, p0.z - nz * wOuter,
-          p0.x + nx * wOuter, 0.34, p0.z + nz * wOuter,
-          p1.x + nx * wOuter, 0.34, p1.z + nz * wOuter,
-          p1.x - nx * wOuter, 0.34, p1.z - nz * wOuter
-        )) ctx.fill();
-
-        if (frac > 0.16) {
-          const wCore = (isUs ? (0.07 + frac * 0.32) : (0.02 + frac * 0.12)) * boostMul;
-          const aCore = Math.pow(frac, 1.65) * (isUs ? 0.94 : 0.38);
-          ctx.fillStyle = isUs
-            ? 'rgba(255, 236, 200, ' + aCore.toFixed(3) + ')'
-            : 'rgba(210, 224, 244, ' + aCore.toFixed(3) + ')';
-          if (clipQuadAndPath(ctx,
-            p0.x - nx * wCore, 0.36, p0.z - nz * wCore,
-            p0.x + nx * wCore, 0.36, p0.z + nz * wCore,
-            p1.x + nx * wCore, 0.36, p1.z + nz * wCore,
-            p1.x - nx * wCore, 0.36, p1.z - nz * wCore
-          )) ctx.fill();
+      // 5. Flying Sparks
+      if (sparks.length > 0) {
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < sparks.length; i++) {
+          const sp = sparks[i];
+          ctx.globalAlpha = clamp(sp.life, 0, 1);
+          ctx.drawImage(sprSpark, sp.x - sp.size * 0.5, sp.y - sp.size * 0.5, sp.size, sp.size);
         }
+        ctx.restore();
       }
-      ctx.restore();
-    }
 
-    function renderBike(ctx, bike, isUs) {
-      const bx = bike.wx;
-      const bz = bike.wz;
-      const tx = bike.tx;
-      const tz = bike.tz;
-      const nx = bike.nx;
-      const nz = bike.nz;
+      // 6. Brief subtle orange energy glow on gate pass
+      if (gateFlashAlpha > 0.01) {
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = 'rgba(255, 145, 50, ' + (gateFlashAlpha * 0.18).toFixed(3) + ')';
+        ctx.fillRect(-100, -100, W + 200, H + 200);
+        ctx.restore();
+      }
 
-      // 1. Wet-road elongated reflection behind vehicle
-      const reflLen = isUs ? 6.8 : 4.6;
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = isUs
-        ? 'rgba(255, 95, 25, 0.22)'
-        : (bike.braking ? 'rgba(255, 59, 48, 0.28)' : 'rgba(130, 148, 175, 0.14)');
-      if (clipQuadAndPath(ctx,
-        bx - tx * 0.9 - nx * 0.32, 0.02, bz - tz * 0.9 - nz * 0.32,
-        bx - tx * 0.9 + nx * 0.32, 0.02, bz - tz * 0.9 + nz * 0.32,
-        bx - tx * reflLen + nx * 0.16, 0.02, bz - tz * reflLen + nz * 0.16,
-        bx - tx * reflLen - nx * 0.16, 0.02, bz - tz * reflLen - nz * 0.16
-      )) ctx.fill();
-
-      // 2. Headlight cone fan projected on ground ahead
-      const beamLen = isUs ? (bike.boosting ? 24 : 18) : (bike.parked ? 6 : 14);
-      const beamSpread = isUs ? 3.2 : 2.3;
-      ctx.fillStyle = isUs
-        ? 'rgba(255, 196, 128, 0.24)'
-        : (bike.parked ? 'rgba(160, 178, 205, 0.08)' : 'rgba(195, 212, 236, 0.15)');
-      if (clipQuadAndPath(ctx,
-        bx + tx * 1.1 - nx * 0.22, 0.03, bz + tz * 1.1 - nz * 0.22,
-        bx + tx * 1.1 + nx * 0.22, 0.03, bz + tz * 1.1 + nz * 0.22,
-        bx + tx * beamLen + nx * beamSpread, 0.03, bz + tz * beamLen + nz * beamSpread,
-        bx + tx * beamLen - nx * beamSpread, 0.03, bz + tz * beamLen - nz * beamSpread
-      )) ctx.fill();
       ctx.restore();
 
-      // 3. Soft dark ground contact shadow (2.2m x 0.8m footprint)
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.68)';
-      if (clipQuadAndPath(ctx,
-        bx - tx * 1.15 - nx * 0.45, 0.02, bz - tz * 1.15 - nz * 0.45,
-        bx - tx * 1.15 + nx * 0.45, 0.02, bz - tz * 1.15 + nz * 0.45,
-        bx + tx * 1.15 + nx * 0.45, 0.02, bz + tz * 1.15 + nz * 0.45,
-        bx + tx * 1.15 - nx * 0.45, 0.02, bz + tz * 1.15 - nz * 0.45
-      )) ctx.fill();
+      // 7. Sleek Top-Center Rear-View Mirror in Lead Phase (4.5s+)
+      if (mirrorAlpha > 0.04) {
+        const mw = 310;
+        const mh = 72;
+        const mx = (W - mw) * 0.5;
+        const my = 108;
 
-      // 4. Streamlined 2-wheel EV silhouette (with inward lean during curves)
-      const leanShift = -bike.lean * 0.42; // inward toward -normal
-      const midX = bx + nx * leanShift;
-      const midZ = bz + nz * leanShift;
-      if (!projectWorld(midX, 0.65, midZ, _proj)) return;
-      const sc = _proj.scale;
+        ctx.save();
+        ctx.globalAlpha = mirrorAlpha;
+        ctx.beginPath();
+        ctx.roundRect(mx, my, mw, mh, 14);
+        ctx.fillStyle = 'rgba(8, 10, 16, 0.88)';
+        ctx.fill();
+        ctx.lineWidth = 1.8;
+        ctx.strokeStyle = 'rgba(255, 130, 45, 0.72)';
+        ctx.stroke();
 
-      // Project nose, tail, top fairing, handlebar ends
-      const noseOk = projectWorld(bx + tx * 1.1 + nx * leanShift * 0.7, 0.48, bz + tz * 1.1 + nz * leanShift * 0.7, _proj2);
-      const tailOk = projectWorld(bx - tx * 1.1 + nx * leanShift * 0.7, 0.68, bz - tz * 1.1 + nz * leanShift * 0.7, { sx: 0, sy: 0, cz: 0, scale: 1 });
-      // Dedicated points via helper object
-      const pNose = { sx: 0, sy: 0, cz: 0, scale: 1 };
-      const pTail = { sx: 0, sy: 0, cz: 0, scale: 1 };
-      const pTop = { sx: 0, sy: 0, cz: 0, scale: 1 };
-      const pBarL = { sx: 0, sy: 0, cz: 0, scale: 1 };
-      const pBarR = { sx: 0, sy: 0, cz: 0, scale: 1 };
-      const pBaseF = { sx: 0, sy: 0, cz: 0, scale: 1 };
-      const pBaseR = { sx: 0, sy: 0, cz: 0, scale: 1 };
+        ctx.clip();
+        ctx.fillStyle = '#0c101a';
+        ctx.fillRect(mx, my, mw, mh * 0.42);
+        ctx.fillStyle = '#1b1f2a';
+        ctx.beginPath();
+        ctx.moveTo(mx + mw * 0.42, my + mh * 0.42);
+        ctx.lineTo(mx + mw * 0.58, my + mh * 0.42);
+        ctx.lineTo(mx + mw * 0.88, my + mh);
+        ctx.lineTo(mx + mw * 0.12, my + mh);
+        ctx.closePath();
+        ctx.fill();
 
-      if (!projectWorld(bx + tx * 1.1 + nx * leanShift * 0.7, 0.56, bz + tz * 1.1 + nz * leanShift * 0.7, pNose)) return;
-      if (!projectWorld(bx - tx * 1.1 + nx * leanShift * 0.7, 0.74, bz - tz * 1.1 + nz * leanShift * 0.7, pTail)) return;
-      if (!projectWorld(bx + tx * 0.35 + nx * leanShift * 1.15, 1.18, bz + tz * 0.35 + nz * leanShift * 1.15, pTop)) return;
-      if (!projectWorld(bx + tx * 0.52 + nx * (leanShift * 1.15 + 0.42), 1.08, bz + tz * 0.52 + nz * (leanShift * 1.15 + 0.42), pBarL)) return;
-      if (!projectWorld(bx + tx * 0.52 + nx * (leanShift * 1.15 - 0.42), 1.08, bz + tz * 0.52 + nz * (leanShift * 1.15 - 0.42), pBarR)) return;
-      if (!projectWorld(bx + tx * 0.95, 0.18, bz + tz * 0.95, pBaseF)) return;
-      if (!projectWorld(bx - tx * 0.95, 0.18, bz - tz * 0.95, pBaseR)) return;
-
-      const bw = clamp(0.4 * sc, 2.5, 46);
-
-      // Tires
-      ctx.strokeStyle = '#0c0d11';
-      ctx.lineWidth = clamp(0.24 * sc, 2, 18);
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(pBaseR.sx, pBaseR.sy);
-      ctx.lineTo(pTail.sx, pTail.sy);
-      ctx.moveTo(pBaseF.sx, pBaseF.sy);
-      ctx.lineTo(pNose.sx, pNose.sy);
-      ctx.stroke();
-
-      // Streamlined capsule chassis polygon
-      ctx.fillStyle = isUs ? '#FF6A1A' : '#586274';
-      ctx.beginPath();
-      ctx.moveTo(pNose.sx, pNose.sy);
-      ctx.quadraticCurveTo(pTop.sx, pTop.sy - bw * 0.35, pTail.sx, pTail.sy - bw * 0.15);
-      ctx.lineTo(pBaseR.sx, pBaseR.sy);
-      ctx.lineTo(pBaseF.sx, pBaseF.sy);
-      ctx.closePath();
-      ctx.fill();
-
-      // Top cowl highlight & cockpit capsule
-      ctx.fillStyle = isUs ? '#FFF3E2' : '#9AA4B5';
-      ctx.beginPath();
-      ctx.moveTo(pNose.sx, pNose.sy - bw * 0.12);
-      ctx.quadraticCurveTo(pTop.sx, pTop.sy - bw * 0.42, pTail.sx, pTail.sy - bw * 0.25);
-      ctx.lineTo((pTail.sx + pBaseR.sx) * 0.5, (pTail.sy + pBaseR.sy) * 0.5);
-      ctx.closePath();
-      ctx.fill();
-
-      // Handlebar crossbar
-      ctx.strokeStyle = isUs ? '#FFE4C4' : '#B8C2D2';
-      ctx.lineWidth = clamp(0.11 * sc, 1.5, 8);
-      ctx.beginPath();
-      ctx.moveTo(pBarL.sx, pBarL.sy);
-      ctx.lineTo(pBarR.sx, pBarR.sy);
-      ctx.stroke();
-
-      // Additive glow sprites: aura, headlight, and taillight
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      if (isUs) {
-        const auraR = clamp((bike.boosting ? 4.4 : 3.4) * sc, 24, 210);
-        ctx.globalAlpha = bike.charged ? 0.92 : 0.72;
-        ctx.drawImage(sprOrangeGlow, _proj.sx - auraR * 0.5, _proj.sy - auraR * 0.5, auraR, auraR);
-        const headR = clamp(1.8 * sc, 12, 95);
-        ctx.globalAlpha = 0.85;
-        ctx.drawImage(sprOrangeGlow, pNose.sx - headR * 0.5, pNose.sy - headR * 0.5, headR, headR);
-      } else {
-        const bodyR = clamp(2.4 * sc, 16, 120);
-        ctx.globalAlpha = 0.35;
-        ctx.drawImage(sprWhiteGlow, _proj.sx - bodyR * 0.5, _proj.sy - bodyR * 0.5, bodyR, bodyR);
-        if (bike.braking || bike.parked) {
-          const tailR = clamp((bike.braking ? 2.4 : 1.5) * sc, 14, 120);
-          ctx.globalAlpha = bike.braking ? 0.95 : 0.45;
-          ctx.drawImage(sprRedGlow, pTail.sx - tailR * 0.5, pTail.sy - tailR * 0.5, tailR, tailR);
-        }
-      }
-      ctx.restore();
-    }
-
-    function renderSparks3D(ctx) {
-      if (!sparks3D.length) return;
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      for (let i = 0; i < sparks3D.length; i++) {
-        const p = sparks3D[i];
-        if (!projectWorld(p.x, p.y, p.z, _proj)) continue;
-        const alpha = 1 - p.life / p.maxLife;
-        const sz = clamp(p.size * _proj.scale * 2.2, 4, 34);
-        ctx.globalAlpha = alpha;
-        ctx.drawImage(sprSpark, _proj.sx - sz * 0.5, _proj.sy - sz * 0.5, sz, sz);
-      }
-      ctx.restore();
-    }
-
-    function renderShockwaves(ctx) {
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      const segs = 28;
-      for (let i = 0; i < shockwaves.length; i++) {
-        const sw = shockwaves[i];
-        if (sw.age < sw.delay) continue;
-        const p = clamp((sw.age - sw.delay) / sw.dur, 0, 1);
-        const eased = 1 - Math.pow(1 - p, 2.2);
-        const rad = 2.0 + eased * sw.maxR;
-        const alpha = (1 - p) * 0.92;
-        ctx.strokeStyle = 'rgba(255, 132, 42, ' + alpha.toFixed(3) + ')';
-        ctx.lineWidth = Math.max(1.5, 6 * (1 - p));
-        for (let k = 0; k < segs; k++) {
-          const a0 = (k / segs) * Math.PI * 2;
-          const a1 = ((k + 1) / segs) * Math.PI * 2;
-          strokeLine3D(ctx,
-            sw.x + Math.cos(a0) * rad, 0.08, sw.z + Math.sin(a0) * rad,
-            sw.x + Math.cos(a1) * rad, 0.08, sw.z + Math.sin(a1) * rad);
-        }
-        ctx.strokeStyle = 'rgba(255, 245, 225, ' + (alpha * 0.72).toFixed(3) + ')';
-        ctx.lineWidth = Math.max(1, 2.4 * (1 - p));
-        for (let k = 0; k < segs; k++) {
-          const a0 = (k / segs) * Math.PI * 2;
-          const a1 = ((k + 1) / segs) * Math.PI * 2;
-          strokeLine3D(ctx,
-            sw.x + Math.cos(a0) * (rad * 0.96), 0.09, sw.z + Math.sin(a0) * (rad * 0.96),
-            sw.x + Math.cos(a1) * (rad * 0.96), 0.09, sw.z + Math.sin(a1) * (rad * 0.96));
-        }
-      }
-      ctx.restore();
-    }
-
-    function placeTagBox(el, anchorX, anchorY, preferOffsetX, preferOffsetY, occupied) {
-      if (!el) return null;
-      const w = el.offsetWidth || 176;
-      const h = el.offsetHeight || 60;
-      let x = anchorX - w * 0.5 + preferOffsetX;
-      let y = preferOffsetY < 0 ? anchorY + preferOffsetY - h : anchorY + preferOffsetY;
-
-      // Clamp to safe canvas stage (stay clear of right rail)
-      x = clamp(x, 42, W - w - 62);
-      y = clamp(y, 92, H - h - 76);
-
-      // Avoid left title zone (x < 690, y in [265, 650])
-      if (x < 695 && y + h > 265 && y < 650) {
-        if (anchorX > 500) {
-          x = 700;
-        } else {
-          y = anchorY < 460 ? 245 - h : 660;
-          y = clamp(y, 92, H - h - 76);
-        }
+        const blinkOn = Math.floor(performance.now() / 220) % 2 === 0;
+        const dotX = mx + mw * 0.46;
+        const dotY = my + mh * 0.54;
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = mirrorAlpha * (blinkOn ? 1.0 : 0.45);
+        ctx.drawImage(sprRedGlow, dotX - 24, dotY - 24, 48, 48);
+        ctx.restore();
       }
 
-      // Avoid stamp-wrap lower-right zone when stamped or Beat 2/3 pull shot
-      if (stage >= 2 && x + w > 1135 && y + h > 605) {
-        if (y + h - 605 < 180) {
-          y = 595 - h;
-        } else {
-          x = 1125 - w;
-        }
-        x = clamp(x, 42, W - w - 62);
-        y = clamp(y, 92, H - h - 76);
+      // 8. Update DOM Follower Tags cleanly synced to bike screen coordinates
+      let usBox = null;
+      if (tagUs && usProj) {
+        const uH = 540 * usProj.sc;
+        tagUs.classList.add('is-show');
+        tagUs.style.opacity = '';
+        usBox = placeTag(tagUs, usProj.sx, usProj.sy - uH, 198, 78, null);
+      } else if (tagUs) {
+        tagUs.classList.remove('is-show');
       }
 
-      // Avoid overlap with previously placed tags
-      for (let i = 0; i < occupied.length; i++) {
-        const b = occupied[i];
-        const pad = 12;
-        if (x < b.x + b.w + pad && x + w + pad > b.x && y < b.y + b.h + pad && y + h + pad > b.y) {
-          const shiftUp = b.y - h - pad;
-          const shiftDown = b.y + b.h + pad;
-          const shiftRight = b.x + b.w + pad;
-          if (shiftUp >= 92) {
-            y = shiftUp;
-          } else if (shiftDown + h <= H - 80 && !(stage >= 2 && x + w > 1135 && shiftDown + h > 605)) {
-            y = shiftDown;
-          } else if (shiftRight + w <= W - 62) {
-            x = shiftRight;
-          } else {
-            x = clamp(b.x - w - pad, 42, W - w - 62);
-          }
-        }
-      }
-
-      const box = { x, y, w, h };
-      occupied.push(box);
-      el.style.transform = 'translate3d(' + Math.round(x) + 'px,' + Math.round(y) + 'px,0)';
-      return box;
-    }
-
-    function drawLeaderPin(ctx, ax, ay, box, color) {
-      if (!box) return;
-      const bx = clamp(ax, box.x + 12, box.x + box.w - 12);
-      const by = ay < box.y ? box.y : (ay > box.y + box.h ? box.y + box.h : box.y + box.h * 0.5);
-      ctx.save();
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(ax, ay);
-      ctx.lineTo(bx, by);
-      ctx.stroke();
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(ax, ay, 3.2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function updateTagsAndPins(ctx) {
-      const occupied = [];
-
-      // Update battery fills & low/parked state
-      if (rivalFill) rivalFill.style.width = clamp(rival.charge, 4, 100).toFixed(1) + '%';
-      if (usFill) usFill.style.width = clamp(us.charge, 4, 100).toFixed(1) + '%';
       if (tagRival) {
-        tagRival.classList.toggle('is-low', rival.charge < 18 || rival.braking || rival.parked);
-        tagRival.classList.toggle('is-parked', rival.parked);
-      }
-
-      // 1. US vehicle tag
-      if (tagUs) {
-        if (projectWorld(us.wx, 1.4, us.wz, _proj) && _proj.sx > -80 && _proj.sx < W + 80 && _proj.sy > -60 && _proj.sy < H + 60) {
-          tagUs.classList.add('is-show');
-          const uBox = placeTagBox(tagUs, _proj.sx, _proj.sy, 0, -36, occupied);
-          drawLeaderPin(ctx, _proj.sx, _proj.sy, uBox, 'rgba(255, 110, 34, 0.72)');
-        } else {
-          tagUs.classList.remove('is-show');
-        }
-      }
-
-      // 2. Rival vehicle tag
-      let rivalBox = null;
-      if (tagRival) {
-        if (projectWorld(rival.wx, 1.4, rival.wz, _proj) && _proj.sx > -80 && _proj.sx < W + 80 && _proj.sy > -60 && _proj.sy < H + 60) {
+        if (rivalProj && !rival.parked && rivalProj.cz > 420 && rivalProj.sx > 140) {
+          const rH = 540 * rivalProj.sc;
           tagRival.classList.add('is-show');
-          rivalBox = placeTagBox(tagRival, _proj.sx, _proj.sy, 0, -36, occupied);
-          drawLeaderPin(ctx, _proj.sx, _proj.sy, rivalBox, rival.charge < 18 ? 'rgba(255, 75, 65, 0.72)' : 'rgba(154, 163, 178, 0.65)');
+          tagRival.style.opacity = '';
+          const hTag = rival.lowAlert ? 116 : 92;
+          placeTag(tagRival, rivalProj.sx, rivalProj.sy - rH, 192, hTag, usBox);
         } else {
           tagRival.classList.remove('is-show');
         }
       }
 
-      // 3. Alert tag (only show when Rival is visible in frame)
-      if (tagAlert) {
-        if (tagAlert.classList.contains('is-on') && rivalBox) {
-          tagAlert.classList.add('is-show');
-          const ax = rivalBox.x + rivalBox.w * 0.5;
-          const ay = rivalBox.y;
-          placeTagBox(tagAlert, ax, ay, 0, -10, occupied);
-        } else {
-          tagAlert.classList.remove('is-show');
-        }
-      }
+      const dtMs = performance.now() - t0;
+      frameTimes.push(dtMs);
+      if (frameTimes.length > 60) frameTimes.shift();
+      let sum = 0;
+      for (let i = 0; i < frameTimes.length; i++) sum += frameTimes[i];
+      avgFrameMs = sum / frameTimes.length;
+    }
 
-      // 4. Turn apex tag ("行业拐点") — hide cleanly if apex exits viewport during boost chase
-      if (tagTurn) {
-        if (tagTurn.classList.contains('is-on')) {
-          sampleTrack(APEX_S, _tp);
-          const apexX = _tp.x - 6.0 * _tp.nx;
-          const apexZ = _tp.z - 6.0 * _tp.nz;
-          if (projectWorld(apexX, 2.0, apexZ, _proj) && _proj.sx > 80 && _proj.sx < W - 80 && _proj.sy > 60 && _proj.sy < H - 40) {
-            tagTurn.classList.add('is-show');
-            const isPull = camMode === 'pull';
-            const ox = isPull ? 132 : 0;
-            const oy = isPull ? 26 : -44;
-            const tBox = placeTagBox(tagTurn, _proj.sx, _proj.sy, ox, oy, occupied);
-            drawLeaderPin(ctx, _proj.sx, _proj.sy, tBox, 'rgba(255, 130, 50, 0.75)');
-          } else {
-            tagTurn.classList.remove('is-show');
-          }
-        } else {
-          tagTurn.classList.remove('is-show');
-        }
-      }
+    function onCrossFlashGate() {
+      us.charged = true;
+      gateFlashAlpha = 1.0;
+      shockwaveLife = 1.0;
+      if (tagUs) tagUs.classList.add('is-charged');
+      Deck.fx.flash('rgba(255,160,60,0.42)');
+      Deck.sfx('ignite');
+      spawnSparks(18, W * 0.54, H * 0.85, 1.2);
     }
 
     function frame(ts) {
@@ -6465,16 +6886,15 @@
       rafId = requestAnimationFrame(frame);
     }
 
+    // ---------- Beat Transitions ----------
     function triggerBeat1() {
       if (stage >= 1) return;
       stage = 1;
-      beat1Elapsed = 0;
+      cornerStartSeg = Math.floor(us.z / SEG_LEN) + 24;
       slide.classList.add('is-s1');
       Deck.sfx('whoosh');
       pathTarget = 1;
       Deck.sfx('zap');
-      if (tagTurn) tagTurn.classList.add('is-on');
-      camMode = 'chase';
       if (motorLoop) motorLoop.set(0.55);
     }
 
@@ -6483,133 +6903,74 @@
       beat2Started = true;
       if (stage < 1) {
         slide.classList.add('is-s1');
-        if (tagTurn) tagTurn.classList.add('is-on');
+        cornerStartSeg = Math.floor(us.z / SEG_LEN) + 24;
       }
       stage = 2;
       pathReveal = 1;
       pathTarget = 1;
       beat2RealElapsed = 0;
+      beat2SimElapsed = 0;
+      b2Milestone = 0;
       timeScale = 1.0;
+      timeScaleTarget = 1.0;
 
-      // Deterministic sprint start
-      rival.s = 230;
-      rival.offset = 3.5;
-      rival.v = 24;
-      rival.charge = 28;
-      rival.braking = false;
-      rival.parked = false;
-      updateBikeWorld(rival);
-      seedTrail(rival, 14, 1.1);
-
-      us.s = 205;
-      us.offset = -3.5;
-      us.v = 24;
-      us.charge = 10;
-      us.boosting = false;
-      us.charged = false;
-      updateBikeWorld(us);
-      seedTrail(us, 14, 1.1);
-
-      camMode = 'chase';
       slide.classList.add('is-s2');
       Deck.score.cue('race');
-      Deck.sfx('riser', 2200);
-
-      // 1.4s: Rival reaches corner entrance -> low battery alert & braking into slow-charge bay
-      addTimer(() => {
-        rival.braking = true;
-        rival.charge = 12;
-        if (tagAlert) tagAlert.classList.add('is-on');
-        Deck.sfx('sting');
-      }, 1400);
-
-      // 2.1s: US hits apex flash-charge post -> ignite + shockwaves + charge + 0.18x bullet time
-      addTimer(() => {
-        us.charged = true;
-        if (tagUs) tagUs.classList.add('is-charged');
-        spawnShockwaves();
-        Deck.fx.flash('rgba(255,120,40,0.45)');
-        Deck.sfx('ignite');
-        Deck.sfx('bullet');
-        Deck.score.duck(true);
-        if (motorLoop) motorLoop.set(0.15);
-        camMode = 'low';
-      }, 2100);
-
-      // 3.1s: Bullet-time release slingshot boost overtake!
-      addTimer(() => {
-        us.boosting = true;
-        camMode = 'boost';
-        slide.classList.add('is-boost');
-        Deck.sfx('boost');
-        Deck.fx.shake(1.1);
-        Deck.score.duck(false);
-        if (motorLoop) motorLoop.set(0.9);
-        spawnSparkBurst(16, 1.3);
-        addTimer(() => {
-          Deck.sfx('overtake');
-        }, 120);
-        addTimer(() => {
-          slide.classList.remove('is-boost');
-        }, 950);
-      }, 3100);
-
-      // 4.6s: Pull-back wide panoramic contrast shot
-      addTimer(() => {
-        camMode = 'pull';
-        if (motorLoop) motorLoop.set(0.6);
-      }, 4600);
-
-      // 6.5s: Beat 2 main cinematic sequence settled into straight cruise
-      addTimer(() => {
-        beat2Done = true;
-        us.boosting = false;
-      }, 6500);
+      Deck.sfx('riser', 2000);
     }
 
     function fastForwardBeat2ToEnd() {
       clearAllTimers();
       Deck.score.duck(false);
-      slide.classList.remove('is-boost');
       slide.classList.add('is-s1', 'is-s2');
-      if (tagTurn) tagTurn.classList.add('is-on');
-      if (tagAlert) tagAlert.classList.add('is-on');
-      pathReveal = 1;
-      pathTarget = 1;
-      timeScale = 1.0;
+      if (tagRival) tagRival.classList.add('is-low');
+      if (tagUs) tagUs.classList.add('is-charged');
+
+      stage = 2;
+      if (cornerStartSeg > 9000000) {
+        cornerStartSeg = Math.floor(us.z / SEG_LEN) + 10;
+      }
       beat2Started = true;
       beat2Done = true;
-      beat2RealElapsed = 6.2;
+      b2Milestone = 7;
+      beat2RealElapsed = 7.0;
+      timeScale = 1.0;
+      timeScaleTarget = 1.0;
+      pathReveal = 1;
+      pathTarget = 1;
+      gatePassed = true;
+      boostIntensity = 0.55;
+      boostTarget = 0.55;
+      mirrorAlpha = 1.0;
+      mirrorTarget = 1.0;
 
-      rival.s = SLOW_BAY_S;
-      rival.offset = SLOW_BAY_OFFSET;
-      rival.v = 0;
-      rival.charge = 10;
-      rival.braking = false;
-      rival.parked = true;
-      updateBikeWorld(rival);
-
-      if (us.s < 615) {
-        us.s = 615;
-      }
-      us.offset = innerLaneOffset(us.s);
-      us.v = 62;
+      us.z = Math.max(us.z, (cornerStartSeg + 165) * SEG_LEN);
+      us.x = 250;
+      us.v = 120;
+      us.targetV = 120;
       us.charge = 95;
       us.charged = true;
-      us.boosting = false;
-      if (tagUs) tagUs.classList.add('is-charged');
-      updateBikeWorld(us);
-      seedTrail(us, 72, 2.7);
+      us.boosting = true;
+      if (usFill) usFill.style.width = '95%';
 
-      camMode = 'pull';
-      computeDesiredCamera();
-      cam.cx = _desiredCam.cx;
-      cam.cy = _desiredCam.cy;
-      cam.cz = _desiredCam.cz;
-      cam.lx = _desiredCam.lx;
-      cam.ly = _desiredCam.ly;
-      cam.lz = _desiredCam.lz;
-      updateCamBasis();
+      rival.z = us.z - 2600;
+      rival.x = -1250;
+      rival.v = 0;
+      rival.charge = 8;
+      rival.lowAlert = true;
+      rival.parked = true;
+      if (rivalFill) rivalFill.style.width = '8%';
+
+      cam.dist = 1480;
+      cam.z = us.z - cam.dist;
+      cam.xOff = 60;
+      cam.x = computeCurveOffsetAt(us.z) * 0.92 + cam.xOff;
+      cam.y = 1080;
+      cam.fov = 106;
+      cam.roll = 0;
+      cam.horizonY = 452;
+
+      updateSpeedHud(120, true);
     }
 
     function triggerBeat3() {
@@ -6618,8 +6979,7 @@
         fastForwardBeat2ToEnd();
       }
       stage = 3;
-      targetZoom = 1.05;
-      if (motorLoop) motorLoop.set(0.45);
+      if (motorLoop) motorLoop.set(0.65);
       slide.classList.add('is-stamped');
       Deck.sfx('stamp');
       Deck.fx.sparks(sealEl, { count: 24, color: '#FF5500' });
@@ -6629,20 +6989,40 @@
       Deck.score.cue('drums');
     }
 
+    slide.__p21Perf = function () {
+      return {
+        avgFrameMs: avgFrameMs,
+        stage: stage,
+        speed: us.v,
+        b2Elapsed: beat2RealElapsed,
+        timeScale: timeScale,
+        rivalGap: rival.gap,
+        rivalCz: rival.z - cam.z,
+        rivalX: rival.x,
+        camDist: cam.dist
+      };
+    };
+
     Deck.register('p21', {
       enter(el) {
         resetAllState();
         void el.offsetWidth;
         motorLoop = Deck.loop('motor');
-        if (motorLoop) motorLoop.set(0.3);
+        if (motorLoop) motorLoop.set(0.35);
         lastTs = 0;
         renderScene();
         rafId = requestAnimationFrame(frame);
       },
       beats: [
-        function () { triggerBeat1(); },
-        function () { triggerBeat2(); },
-        function () { triggerBeat3(); }
+        function () {
+          triggerBeat1();
+        },
+        function () {
+          triggerBeat2();
+        },
+        function () {
+          triggerBeat3();
+        }
       ],
       leave(el) {
         if (rafId) {
@@ -6650,7 +7030,9 @@
           rafId = null;
         }
         if (motorLoop) {
-          try { motorLoop.stop(); } catch (_) {}
+          try {
+            motorLoop.stop();
+          } catch (_) {}
           motorLoop = null;
         }
         Deck.score.duck(false);
@@ -6802,17 +7184,23 @@
     const H_START = 1080 - BASE_Y - 12;
     const H_END = 1080 - 48;
     const EAGLE_T0 = 3000;
+    const EAGLE_COUNT = 7;
+    const EAGLE_CY = TIP_Y + 170;
     const LINE_A = ['桢', '昱', '烽', '闪', '充'];
     const LINE_B = ['闪', '充', '领', '导', '者'];
 
     let timers = [];
+    let intervals = [];
     let flipInterval = null;
     let sparkInterval = null;
+    let crownSparkInterval = null;
     let rafId = null;
     let chargeLoop = null;
     let particles = null;
     let ignited = false;
     let eagles = [];
+    let haloSprite = null;
+    let dustSprite = null;
 
     function makeRng(seed) {
       let s = seed >>> 0;
@@ -6838,10 +7226,135 @@
       return 1 - Math.pow(1 - t, 3);
     }
 
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function lerpRgb(c1, c2, t) {
+      const k = clamp01(t);
+      return 'rgb(' +
+        Math.round(lerp(c1[0], c2[0], k)) + ',' +
+        Math.round(lerp(c1[1], c2[1], k)) + ',' +
+        Math.round(lerp(c1[2], c2[2], k)) + ')';
+    }
+
     function lerpAngle(a, b, t) {
       let d = ((b - a + Math.PI) % (Math.PI * 2)) - Math.PI;
       if (d < -Math.PI) d += Math.PI * 2;
       return a + d * t;
+    }
+
+    function addInterval(fn, ms) {
+      const id = setInterval(fn, ms);
+      intervals.push(id);
+      return id;
+    }
+
+    function removeInterval(id) {
+      if (!id) return;
+      clearInterval(id);
+      const idx = intervals.indexOf(id);
+      if (idx >= 0) intervals.splice(idx, 1);
+    }
+
+    function ensureSprites() {
+      if (!haloSprite) {
+        const hc = document.createElement('canvas');
+        hc.width = 256;
+        hc.height = 256;
+        const hctx = hc.getContext('2d');
+        if (hctx) {
+          const g = hctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+          g.addColorStop(0.0, 'rgba(255, 224, 145, 0.36)');
+          g.addColorStop(0.25, 'rgba(255, 200, 90, 0.30)');
+          g.addColorStop(0.56, 'rgba(255, 180, 62, 0.11)');
+          g.addColorStop(0.84, 'rgba(255, 165, 42, 0.025)');
+          g.addColorStop(1.0, 'rgba(255, 160, 40, 0)');
+          hctx.fillStyle = g;
+          hctx.fillRect(0, 0, 256, 256);
+        }
+        haloSprite = hc;
+      }
+      if (!dustSprite) {
+        const dc = document.createElement('canvas');
+        dc.width = 64;
+        dc.height = 64;
+        const dctx = dc.getContext('2d');
+        if (dctx) {
+          const g = dctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+          g.addColorStop(0.0, 'rgba(255, 252, 232, 1.0)');
+          g.addColorStop(0.28, 'rgba(255, 230, 148, 0.78)');
+          g.addColorStop(0.58, 'rgba(255, 195, 82, 0.30)');
+          g.addColorStop(0.84, 'rgba(255, 165, 48, 0.07)');
+          g.addColorStop(1.0, 'rgba(255, 160, 40, 0)');
+          dctx.fillStyle = g;
+          dctx.fillRect(0, 0, 64, 64);
+        }
+        dustSprite = dc;
+      }
+    }
+
+    function getLedAvoidAlpha(x, y, margin) {
+      const m = margin || 0;
+      const x0 = 880 - m;
+      const x1 = 1040 + m;
+      const y0 = 330 - m;
+      const y1 = 620 + m;
+      const dx = x < x0 ? x0 - x : x > x1 ? x - x1 : 0;
+      const dy = y < y0 ? y0 - y : y > y1 ? y - y1 : 0;
+      const norm = Math.max(dx / 36, dy / (y < y0 ? 22 : 36));
+      if (norm <= 0) return 0.15;
+      if (norm >= 1) return 1.0;
+      return 0.15 + 0.85 * smoothstep(norm);
+    }
+
+    function sampleOrbitState(eg, tMs) {
+      const theta = eg.theta0 + eg.omega * (tMs / 1000);
+      const cosT = Math.cos(theta);
+      const sinT = Math.sin(theta);
+      const dx = eg.rx * cosT;
+      const x = eg.cx + dx;
+
+      // Gentle upward thermal glide when passing in front of the upper spire so LED facade stays clear
+      const sPos = sinT > 0 ? sinT : 0;
+      const sig = 115;
+      const g = Math.exp(-(dx * dx) / (2 * sig * sig));
+      const lift = eg.liftAmp * sPos * sPos * g;
+      const y = eg.cy + eg.ry * sinT - lift;
+
+      const dgDtheta = g * (dx * eg.rx * sinT) / (sig * sig);
+      const dLiftDtheta = eg.liftAmp * (2 * sPos * cosT * g + sPos * sPos * dgDtheta);
+      const vx = -eg.rx * sinT;
+      const vy = eg.ry * cosT - dLiftDtheta;
+      const heading = Math.atan2(vy, vx);
+      const depth = sinT;
+      const scale = eg.baseScale0 * (0.85 + 0.15 * depth);
+      const bank = (0.24 + 0.56 * Math.abs(cosT)) * (cosT >= 0 ? 1 : -1);
+
+      return { x: x, y: y, heading: heading, depth: depth, scale: scale, bank: bank };
+    }
+
+    function sampleTrailAt(trail, targetT) {
+      if (!trail || trail.length === 0) return null;
+      if (targetT <= trail[0].t) return trail[0];
+      const last = trail[trail.length - 1];
+      if (targetT >= last.t) return last;
+      for (let i = trail.length - 2; i >= 0; i--) {
+        const a = trail[i];
+        const b = trail[i + 1];
+        if (targetT >= a.t && targetT <= b.t) {
+          const span = b.t - a.t;
+          const u = span > 0 ? (targetT - a.t) / span : 0;
+          return {
+            x: lerp(a.x, b.x, u),
+            y: lerp(a.y, b.y, u),
+            heading: lerpAngle(a.heading, b.heading, u),
+            scale: lerp(a.scale, b.scale, u),
+            avoidAlpha: lerp(a.avoidAlpha, b.avoidAlpha, u)
+          };
+        }
+      }
+      return null;
     }
 
     function buildLed(ledEl) {
@@ -6872,37 +7385,53 @@
     }
 
     function initEagles() {
-      const rng = makeRng(20261123);
+      ensureSprites();
+      const rng = makeRng(20261124);
       const cx = TIP_X;
-      const cy = TIP_Y + 150;
+      const cy = EAGLE_CY;
       const list = [];
 
-      for (let i = 0; i < 9; i++) {
+      for (let i = 0; i < EAGLE_COUNT; i++) {
         const tier = i % 3;
-        const rx = 250 + tier * 110;
-        const ry = 55 + tier * 30;
-        const theta0 = i * ((Math.PI * 2) / 9);
-        const omega = 0.14 + tier * 0.035;
-        const delay = EAGLE_T0 + i * 110;
-        const dur = 2300 + (i % 4) * 250;
-        const thetaArr = theta0 + omega * ((delay + dur) / 1000);
-        const tx = cx + rx * Math.cos(thetaArr);
-        const ty = cy + ry * Math.sin(thetaArr);
+        const rx = 280 + tier * 120;
+        const ry = 60 + tier * 26;
+        const liftAmp = tier === 2 ? 84 : tier === 1 ? 58 : 34;
+        const theta0 = i * ((Math.PI * 2) / EAGLE_COUNT) + (rng() - 0.5) * 0.16;
+        const omega = 0.135 + tier * 0.032;
+        const delay = EAGLE_T0 + i * 115;
+        const dur = 2250 + (i % 4) * 240;
+        const arriveT = delay + dur;
 
+        const baseScale0 = 0.50 + tier * 0.22;
+        const tempEg = {
+          cx: cx,
+          cy: cy,
+          rx: rx,
+          ry: ry,
+          liftAmp: liftAmp,
+          theta0: theta0,
+          omega: omega,
+          baseScale0: baseScale0
+        };
+        const arr = sampleOrbitState(tempEg, arriveT);
+        const tx = arr.x;
+        const ty = arr.y;
+
+        // Route fly-in on the same side or above the skyline so birds never cut across the central LED
         let sx, sy;
-        if (i === 2 || i === 6) {
-          sx = 340 + rng() * 1240;
-          sy = -150;
-        } else if (i % 2 === 0) {
+        if (i === 2 || i === 5) {
+          sx = tx < cx ? 240 + rng() * 440 : 1240 + rng() * 440;
+          sy = -140;
+        } else if (tx < cx) {
           sx = -200;
-          sy = 120 + rng() * 400;
+          sy = 80 + rng() * 220;
         } else {
           sx = 2120;
-          sy = 80 + rng() * 400;
+          sy = 80 + rng() * 220;
         }
 
         const mx = (sx + tx) * 0.5;
-        const my = (sy + ty) * 0.5 - 180;
+        const my = Math.min(sy, ty) - (85 + rng() * 90);
 
         list.push({
           idx: i,
@@ -6911,61 +7440,98 @@
           ry: ry,
           cx: cx,
           cy: cy,
+          liftAmp: liftAmp,
           theta0: theta0,
-          thetaArr: thetaArr,
           omega: omega,
           delay: delay,
           dur: dur,
+          arriveT: arriveT,
           sx: sx,
           sy: sy,
           mx: mx,
           my: my,
           tx: tx,
           ty: ty,
-          baseScale0: 0.45 + tier * 0.22,
+          arrHeading: arr.heading,
+          arrDepth: arr.depth,
+          arrScale: arr.scale,
+          baseScale0: baseScale0,
           flapPhase0: rng() * Math.PI * 2,
-          nextBurstT: delay + dur + 1400 + rng() * 2400,
-          burstGapBase: 3200 + rng() * 2600,
-          burstBeats: rng() > 0.45 ? 3 : 2,
-          burstEndT: 0
+          nextBurstT: arriveT + 1800 + rng() * 2800,
+          burstGapBase: 5400 + rng() * 3200,
+          burstBeats: 2,
+          burstEndT: 0,
+          trail: []
         });
       }
       eagles = list;
     }
 
-    function drawEagle(ctx, x, y, heading, scale, phase, alpha, tone, bank, isLit) {
+    function drawEagle(ctx, x, y, heading, scale, phase, alpha, tone, bank, avoidAlpha, isLit) {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(heading);
-      ctx.scale(scale, scale * (0.92 + 0.08 * Math.cos(bank)));
+      ctx.scale(scale, scale * (0.88 + 0.12 * Math.cos(bank)));
 
-      const rCol = Math.round(28 - 20 * tone);
-      const gCol = Math.round(32 - 24 * tone);
-      const bCol = Math.round(42 - 32 * tone);
-      const fillCol = 'rgba(' + rCol + ',' + gCol + ',' + bCol + ',' + alpha.toFixed(3) + ')';
+      const sExt = 0.64 + 0.36 * Math.cos(phase);
+      const wristShift = -5.5 * Math.sin(phase);
+      const tipShift = -11 * Math.sin(phase + 0.55);
+      const wristSpan = 31.5 * (0.87 + 0.13 * Math.cos(phase));
+      const handSpan = wristSpan + 29 * sExt;
 
-      const sExt = 0.62 + 0.38 * Math.cos(phase);
-      const wristShift = -6 * Math.sin(phase);
-      const tipShift = -12 * Math.sin(phase + 0.6);
-      const wristSpan = 31 * (0.86 + 0.14 * Math.cos(phase));
-      const handSpan = wristSpan + 28 * sExt;
+      const wx = 11.2 + wristShift;
+      const hx = 1.8 + tipShift;
+      const fingerLens = [13.8, 16.4, 15.6, 13.0, 10.4];
+      const fingerAngles = [1.45, 1.58, 1.71, 1.84, 1.97];
 
-      const wx = 10.5 + wristShift;
-      const hx = 1.5 + tipShift;
-      const fingerLens = [13.5, 16.0, 15.2, 12.8, 10.2];
-      const fingerAngles = [1.46, 1.59, 1.72, 1.85, 1.98]; // ~83.6° to 113.4° (~7.4° apart, within 6..8°)
+      // Natural upward wing dihedral projected across oblique soaring perspective
+      const roll = 0.86 * Math.cos(heading);
+      const cosRoll = Math.cos(roll);
+      const sinRoll = Math.sin(roll);
+      const dihedralArch = 10.5;
+      const flapLift = -8.5 * Math.sin(phase);
+
+      function proj(lx, ly, isWing) {
+        if (!isWing) {
+          return [lx, ly * cosRoll];
+        }
+        const wingT = Math.max(0, (Math.abs(ly) - 4.2) / 58);
+        const lz = dihedralArch * Math.pow(wingT, 1.35) + flapLift * Math.pow(wingT, 1.15);
+        return [lx - lz * 0.20, ly * cosRoll - lz * sinRoll];
+      }
+
+      function pMove(lx, ly, isWing) {
+        const p = proj(lx, ly, isWing);
+        ctx.moveTo(p[0], p[1]);
+      }
+
+      function pLine(lx, ly, isWing) {
+        const p = proj(lx, ly, isWing);
+        ctx.lineTo(p[0], p[1]);
+      }
+
+      function pQuad(cx1, cy1, lx, ly, isWing) {
+        const c = proj(cx1, cy1, isWing);
+        const p = proj(lx, ly, isWing);
+        ctx.quadraticCurveTo(c[0], c[1], p[0], p[1]);
+      }
+
+      function pBez(cx1, cy1, cx2, cy2, lx, ly, isWing) {
+        const c1 = proj(cx1, cy1, isWing);
+        const c2 = proj(cx2, cy2, isWing);
+        const p = proj(lx, ly, isWing);
+        ctx.bezierCurveTo(c1[0], c1[1], c2[0], c2[1], p[0], p[1]);
+      }
 
       function buildHalfWing(side, startFromHead) {
         const wy = side * wristSpan;
         const hy = side * handSpan;
 
         if (startFromHead) {
-          // Neck -> shoulder -> curved wrist -> outer hand leading edge
-          ctx.bezierCurveTo(17, side * 4.4, 13, side * 4.2, 9, side * 4.2);
-          ctx.bezierCurveTo(11, side * (wristSpan * 0.42), wx + 1.5, side * (wristSpan * 0.78), wx, wy);
-          ctx.bezierCurveTo(wx - 0.5, side * (wristSpan + (handSpan - wristSpan) * 0.42), hx + 3.8, side * (handSpan - 6), hx + 1.2, hy);
+          pBez(17, side * 4.4, 13, side * 4.2, 9, side * 4.2, true);
+          pBez(11.5, side * (wristSpan * 0.42), wx + 2.2, side * (wristSpan * 0.78), wx, wy, true);
+          pBez(wx - 0.5, side * (wristSpan + (handSpan - wristSpan) * 0.42), hx + 4.2, side * (handSpan - 5.5), hx + 1.2, hy, true);
 
-          // 5 separated slotted primary "fingers" fanning outward-to-backward
           for (let f = 0; f < 5; f++) {
             const frac = f / 4;
             const bx = (hx + 0.8) - frac * 11.5;
@@ -6976,31 +7542,30 @@
             const dx = Math.cos(ang), dy = Math.sin(ang);
             const tipX = bx + dx * len;
             const tipY = by + dy * len;
-            // Leading (+x) normal orthogonal to finger shaft
             const lx = Math.sin(absAng);
             const ly = -side * Math.cos(absAng);
 
-            ctx.quadraticCurveTo(bx + dx * len * 0.55 + lx * 1.15, by + dy * len * 0.55 + ly * 1.15, tipX, tipY);
+            pQuad(bx + dx * len * 0.55 + lx * 1.15, by + dy * len * 0.55 + ly * 1.15, tipX, tipY, true);
             const nextFrac = (f + 0.5) / 4;
             const notchX = f < 4 ? (hx + 0.8) - nextFrac * 11.5 - 0.8 : hx - 12.6;
             const notchY = f < 4 ? side * (handSpan - nextFrac * 7.5 - 2.2) : side * (handSpan - 9.2);
-            ctx.quadraticCurveTo(bx + dx * len * 0.50 - lx * 1.15, by + dy * len * 0.50 - ly * 1.15, notchX, notchY);
+            pQuad(bx + dx * len * 0.50 - lx * 1.15, by + dy * len * 0.50 - ly * 1.15, notchX, notchY, true);
           }
 
-          // Broad rounded secondary trailing edge back into tail root
-          ctx.bezierCurveTo(
+          pBez(
             hx - 16.5, side * (wristSpan + (handSpan - wristSpan) * 0.48),
             -12 + wristShift * 0.45, side * (wristSpan * 0.98),
-            -13.5, side * (wristSpan * 0.48)
+            -13.5, side * (wristSpan * 0.48),
+            true
           );
-          ctx.quadraticCurveTo(-14.5, side * 10.5, -13.0, side * 3.4);
+          pQuad(-14.5, side * 10.5, -13.0, side * 3.4, true);
         } else {
-          // Tail root -> trailing edge -> 5 fingers reverse -> wrist -> shoulder -> neck
-          ctx.quadraticCurveTo(-14.5, side * 10.5, -13.5, side * (wristSpan * 0.48));
-          ctx.bezierCurveTo(
+          pQuad(-14.5, side * 10.5, -13.5, side * (wristSpan * 0.48), true);
+          pBez(
             -12 + wristShift * 0.45, side * (wristSpan * 0.98),
             hx - 16.5, side * (wristSpan + (handSpan - wristSpan) * 0.48),
-            hx - 12.6, side * (handSpan - 9.2)
+            hx - 12.6, side * (handSpan - 9.2),
+            true
           );
 
           for (let f = 4; f >= 0; f--) {
@@ -7016,41 +7581,57 @@
             const lx = Math.sin(absAng);
             const ly = -side * Math.cos(absAng);
 
-            ctx.quadraticCurveTo(bx + dx * len * 0.50 - lx * 1.15, by + dy * len * 0.50 - ly * 1.15, tipX, tipY);
+            pQuad(bx + dx * len * 0.50 - lx * 1.15, by + dy * len * 0.50 - ly * 1.15, tipX, tipY, true);
             const prevFrac = (f - 0.5) / 4;
             const notchX = f > 0 ? (hx + 0.8) - prevFrac * 11.5 - 0.8 : hx + 1.2;
             const notchY = f > 0 ? side * (handSpan - prevFrac * 7.5 - 2.2) : hy;
-            ctx.quadraticCurveTo(bx + dx * len * 0.55 + lx * 1.15, by + dy * len * 0.55 + ly * 1.15, notchX, notchY);
+            pQuad(bx + dx * len * 0.55 + lx * 1.15, by + dy * len * 0.55 + ly * 1.15, notchX, notchY, true);
           }
 
-          ctx.bezierCurveTo(hx + 3.8, side * (handSpan - 6), wx - 0.5, side * (wristSpan + (handSpan - wristSpan) * 0.42), wx, wy);
-          ctx.bezierCurveTo(wx + 1.5, side * (wristSpan * 0.78), 11, side * (wristSpan * 0.42), 9, side * 4.2);
-          ctx.bezierCurveTo(13, side * 4.2, 17, side * 4.4, 21.8, side * 2.2);
+          pBez(hx + 4.2, side * (handSpan - 5.5), wx - 0.5, side * (wristSpan + (handSpan - wristSpan) * 0.42), wx, wy, true);
+          pBez(wx + 2.2, side * (wristSpan * 0.78), 11.5, side * (wristSpan * 0.42), 9, side * 4.2, true);
+          pBez(13, side * 4.2, 17, side * 4.4, 21.8, side * 2.2, true);
         }
       }
 
-      // Unified single closed silhouette: beak -> head -> right wing -> fanned tail -> left wing -> head
       ctx.beginPath();
-      ctx.moveTo(29.2, 1.8);
-      ctx.quadraticCurveTo(25.8, 1.9, 21.8, 2.2);
+      pMove(29.2, 1.8, false);
+      pQuad(25.8, 1.9, 21.8, 2.2, false);
       buildHalfWing(1, true);
-      // Fanned tail (length 16, ±18 deg spread, straight-slightly-curved fan end)
-      ctx.lineTo(-28.0, 8.4);
-      ctx.quadraticCurveTo(-30.2, 0, -28.0, -8.4);
-      ctx.lineTo(-13.0, -3.4);
+      pLine(-28.0, 8.4, false);
+      pQuad(-30.2, 0, -28.0, -8.4, false);
+      pLine(-13.0, -3.4, false);
       buildHalfWing(-1, false);
-      // Hooked raptor beak tip closure
-      ctx.quadraticCurveTo(27.2, -1.6, 29.2, 1.8);
+      pQuad(27.2, -1.6, 29.2, 1.8, false);
       ctx.closePath();
 
-      // Stroke outer halo BEFORE fill so rim light only hugs outside edge without cutting into thin feathers
-      if (isLit) {
-        ctx.strokeStyle = 'rgba(255,150,70,0.35)';
-        ctx.lineWidth = 1.4 / Math.max(0.25, scale);
-        ctx.lineJoin = 'round';
-        ctx.stroke();
-      }
-      ctx.fillStyle = fillCol;
+      // Golden wingtip-to-root linear gradient modulated by depth tone
+      const tipPos = proj(hx, handSpan + 13, true)[1];
+      const tipNeg = proj(hx, -(handSpan + 13), true)[1];
+      const yMin = Math.min(tipPos, tipNeg, -12);
+      const yMax = Math.max(tipPos, tipNeg, 12);
+      const tBody = Math.min(0.84, Math.max(0.16, -yMin / Math.max(1, yMax - yMin)));
+
+      const rootCol = lerpRgb([96, 62, 14], [138, 90, 18], tone);   // -> #8A5A12
+      const midCol  = lerpRgb([178, 134, 48], [233, 181, 74], tone); // -> #E9B54A
+      const tipCol  = lerpRgb([220, 190, 120], [255, 231, 163], tone); // -> #FFE7A3
+
+      const grad = ctx.createLinearGradient(0, yMin, 0, yMax);
+      grad.addColorStop(0.0, tipCol);
+      grad.addColorStop(tBody * 0.46, midCol);
+      grad.addColorStop(tBody, rootCol);
+      grad.addColorStop(tBody + (1 - tBody) * 0.54, midCol);
+      grad.addColorStop(1.0, tipCol);
+
+      // Luminous ~1px gold-white backlit contour before fill so primaries remain razor-sharp
+      const rimAlpha = clamp01((0.55 + 0.30 * tone) * avoidAlpha * (isLit ? 1.0 : 0.72));
+      ctx.strokeStyle = 'rgba(255, 236, 180, ' + rimAlpha.toFixed(3) + ')';
+      ctx.lineWidth = 1.6 / Math.max(0.3, scale);
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      ctx.globalAlpha = clamp01(0.92 * alpha * avoidAlpha);
+      ctx.fillStyle = grad;
       ctx.fill();
 
       ctx.restore();
@@ -7060,15 +7641,15 @@
       ctx.clearRect(0, 0, 1920, 1080);
       if (elapsed < EAGLE_T0) return;
 
+      ensureSprites();
       const drawQueue = [];
       for (let i = 0; i < eagles.length; i++) {
         const eg = eagles[i];
         if (elapsed < eg.delay) continue;
 
         let x, y, heading, scale, phase, depth, bank;
-        const arriveT = eg.delay + eg.dur;
 
-        if (elapsed < arriveT) {
+        if (elapsed < eg.arriveT) {
           const rawP = (elapsed - eg.delay) / eg.dur;
           const u = easeOutCubic(rawP);
           const omt = 1 - u;
@@ -7078,48 +7659,64 @@
           const dxdt = 2 * omt * (eg.mx - eg.sx) + 2 * u * (eg.tx - eg.mx);
           const dydt = 2 * omt * (eg.my - eg.sy) + 2 * u * (eg.ty - eg.my);
           const bezAngle = Math.atan2(dydt, dxdt);
-          const ellAngle = Math.atan2(
-            eg.ry * Math.cos(eg.thetaArr),
-            -eg.rx * Math.sin(eg.thetaArr)
-          );
-          const blend = rawP > 0.78 ? smoothstep((rawP - 0.78) / 0.22) : 0;
-          heading = lerpAngle(bezAngle, ellAngle, blend);
+          const blend = rawP > 0.76 ? smoothstep((rawP - 0.76) / 0.24) : 0;
+          heading = lerpAngle(bezAngle, eg.arrHeading, blend);
 
-          depth = Math.sin(eg.thetaArr);
-          const arrScale = eg.baseScale0 * (0.85 + 0.15 * depth);
-          scale = arrScale * (0.6 + 0.4 * u);
-          phase = eg.flapPhase0 + ((elapsed - eg.delay) / 1000) * Math.PI * 2 * 2.6;
-          bank = 0.18 * Math.sin(rawP * Math.PI);
+          depth = eg.arrDepth;
+          scale = eg.arrScale * (0.62 + 0.38 * u);
+          const flapTaper = 1 - 0.78 * smoothstep((rawP - 0.55) / 0.45);
+          phase = (eg.flapPhase0 + ((elapsed - eg.delay) / 1000) * Math.PI * 2 * 2.1) * flapTaper;
+          bank = 0.22 * Math.sin(rawP * Math.PI);
         } else {
-          const theta = eg.theta0 + eg.omega * (elapsed / 1000);
-          x = eg.cx + eg.rx * Math.cos(theta);
-          y = eg.cy + eg.ry * Math.sin(theta);
-          const vx = -eg.rx * Math.sin(theta);
-          const vy = eg.ry * Math.cos(theta);
-          heading = Math.atan2(vy, vx);
-          depth = Math.sin(theta);
-          scale = eg.baseScale0 * (0.85 + 0.15 * depth);
+          const st = sampleOrbitState(eg, elapsed);
+          x = st.x;
+          y = st.y;
+          heading = st.heading;
+          depth = st.depth;
+          scale = st.scale;
+          bank = st.bank;
 
           if (elapsed >= eg.nextBurstT) {
-            const burstDur = (eg.burstBeats / 2.2) * 1000;
+            const burstDur = (eg.burstBeats / 1.6) * 1000;
             eg.burstEndT = eg.nextBurstT + burstDur;
             eg.nextBurstT = eg.burstEndT + eg.burstGapBase;
           }
           if (elapsed < eg.burstEndT) {
-            const bt = (elapsed - (eg.burstEndT - (eg.burstBeats / 2.2) * 1000)) / 1000;
-            phase = bt * Math.PI * 2 * 2.2;
+            const bt = (elapsed - (eg.burstEndT - (eg.burstBeats / 1.6) * 1000)) / 1000;
+            const env = Math.sin(clamp01(bt / (eg.burstBeats / 1.6)) * Math.PI);
+            phase = Math.sin(bt * Math.PI * 2 * 1.6) * 0.72 * env;
           } else {
-            phase = 0.08 * Math.sin(elapsed * 0.0045 + eg.idx * 1.7);
+            phase = 0.09 * Math.sin(elapsed * 0.0038 + eg.idx * 1.7);
           }
-
-          bank = (0.24 + 0.56 * Math.abs(Math.cos(theta))) * (Math.cos(theta) >= 0 ? 1 : -1);
         }
 
         if (y >= 560) y = 559;
 
-        const alpha = 0.70 + 0.30 * (0.5 + 0.5 * depth);
-        const tone = clamp01((scale - 0.30) / 0.58);
+        const sExt = 0.64 + 0.36 * Math.cos(phase);
+        const wristSpan = 31.5 * (0.87 + 0.13 * Math.cos(phase));
+        const handSpan = wristSpan + 29 * sExt;
+        const wingspan = (handSpan + 13) * 2 * scale;
+        const avoidAlpha = getLedAvoidAlpha(x, y, Math.round(wingspan * 0.35));
+
+        const trail = eg.trail;
+        if (trail.length === 0 || elapsed - trail[trail.length - 1].t >= 26) {
+          trail.push({
+            t: elapsed,
+            x: x,
+            y: y,
+            heading: heading,
+            scale: scale,
+            avoidAlpha: avoidAlpha
+          });
+        }
+        while (trail.length > 0 && elapsed - trail[0].t > 640) {
+          trail.shift();
+        }
+
+        const alpha = 0.72 + 0.28 * (0.5 + 0.5 * depth);
+        const tone = clamp01((scale - 0.40) / 0.62);
         drawQueue.push({
+          eg: eg,
           x: x,
           y: y,
           heading: heading,
@@ -7127,14 +7724,50 @@
           phase: phase,
           alpha: alpha,
           tone: tone,
-          bank: bank
+          bank: bank,
+          avoidAlpha: avoidAlpha,
+          wingspan: wingspan
         });
       }
 
       drawQueue.sort(function (a, b) { return a.scale - b.scale; });
+
+      const trailAges = [75, 200, 360, 540];
       for (let i = 0; i < drawQueue.length; i++) {
         const d = drawQueue[i];
-        drawEagle(ctx, d.x, d.y, d.heading, d.scale, d.phase, d.alpha, d.tone, d.bank, isLit);
+
+        // Pre-rendered golden dust trail & halo sprite (zero per-frame shadowBlur)
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (let k = 0; k < trailAges.length; k++) {
+          const age = trailAges[k];
+          const pt = sampleTrailAt(d.eg.trail, elapsed - age);
+          if (!pt) continue;
+          const ageFrac = age / 600;
+          const decay = Math.exp(-age / 250);
+          const cosH = Math.cos(pt.heading);
+          const sinH = Math.sin(pt.heading);
+          const nx = -sinH;
+          const ny = cosH;
+          // Drift smoothly out past the tail & wingtips with gentle wind drop
+          const backOff = (28 + ageFrac * 38) * pt.scale;
+          const sideOff = Math.sin(k * 2.35 + d.eg.idx * 1.9 + elapsed * 0.0024) * (6 + k * 4.5) * pt.scale;
+          const dropY = ageFrac * 15 * pt.scale;
+          const fx = pt.x - cosH * backOff + nx * sideOff;
+          const fy = pt.y - sinH * backOff + ny * sideOff + dropY;
+          const fleckAvoid = Math.min(pt.avoidAlpha, getLedAvoidAlpha(fx, fy, 12));
+          const fleckR = (10.5 - k * 1.6) * pt.scale;
+          ctx.globalAlpha = clamp01(0.95 * decay * (0.65 + 0.35 * d.tone) * fleckAvoid);
+          ctx.drawImage(dustSprite, fx - fleckR, fy - fleckR, fleckR * 2, fleckR * 2);
+        }
+
+        const haloR = d.wingspan * 0.6;
+        ctx.globalAlpha = clamp01((0.55 + 0.45 * d.tone) * d.alpha * d.avoidAlpha * (isLit ? 1.0 : 0.65));
+        ctx.drawImage(haloSprite, d.x - haloR, d.y - haloR, haloR * 2, haloR * 2);
+        ctx.restore();
+
+        drawEagle(ctx, d.x, d.y, d.heading, d.scale, d.phase, d.alpha, d.tone, d.bank, d.avoidAlpha, isLit);
       }
     }
 
@@ -7143,6 +7776,10 @@
         clearTimeout(timers[i]);
       }
       timers = [];
+      for (let i = 0; i < intervals.length; i++) {
+        clearInterval(intervals[i]);
+      }
+      intervals = [];
       if (flipInterval) {
         clearInterval(flipInterval);
         flipInterval = null;
@@ -7150,6 +7787,10 @@
       if (sparkInterval) {
         clearInterval(sparkInterval);
         sparkInterval = null;
+      }
+      if (crownSparkInterval) {
+        clearInterval(crownSparkInterval);
+        crownSparkInterval = null;
       }
       if (rafId) {
         cancelAnimationFrame(rafId);
@@ -7289,7 +7930,7 @@
           chargeLoop = Deck.loop('charge');
           if (front) {
             Deck.fx.sparks(front, { count: 6, color: '#FFB15C' });
-            sparkInterval = setInterval(function () {
+            sparkInterval = addInterval(function () {
               Deck.fx.sparks(front, { count: 6, color: '#FFB15C' });
             }, 380);
           }
@@ -7301,13 +7942,13 @@
           Deck.score.duck(true);
         }, 1400));
 
-        // 2600ms: IGNITE tower crown once
+        // 2600ms: IGNITE tower crown once + continuous golden sparks every 1.2s
         timers.push(setTimeout(function () {
           if (ignited) return;
           ignited = true;
 
           if (sparkInterval) {
-            clearInterval(sparkInterval);
+            removeInterval(sparkInterval);
             sparkInterval = null;
           }
           if (chargeLoop) {
@@ -7327,7 +7968,12 @@
           Deck.sfx('ignite');
           Deck.sfx('impact');
           Deck.fx.shake(0.5);
-          if (core) Deck.fx.sparks(core, { count: 26, color: '#FFD08A' });
+          if (core) {
+            Deck.fx.sparks(core, { count: 26, color: '#FFD08A' });
+            crownSparkInterval = addInterval(function () {
+              if (ignited) Deck.fx.sparks(core, { count: 8, color: '#FFD27A' });
+            }, 1200);
+          }
           particles = Deck.fx.particles(el, 'gold');
         }, 2600));
 
@@ -7377,7 +8023,7 @@
           if (led) {
             led.classList.toggle('flip');
             Deck.sfx('pop');
-            flipInterval = setInterval(function () {
+            flipInterval = addInterval(function () {
               led.classList.toggle('flip');
               Deck.sfx('pop');
             }, 4500);

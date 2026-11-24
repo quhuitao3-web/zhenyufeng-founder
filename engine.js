@@ -2511,6 +2511,7 @@
         var entry = inlineEntries[i];
         if (entry.slideEl === activeSlide && entry.videoEl) {
           var v = entry.videoEl;
+          if (v.hasAttribute('data-no-duck')) continue;
           if (!v.muted && (!v.paused || entry.unmutedIntent) && !v.ended) {
             return true;
           }
@@ -2899,19 +2900,42 @@
       addTimer(function () {
         if (stopped || !ctx) return;
         while (dgNext < ctx.currentTime + 0.32) {
-          playNote(110.0, dgNext, 0.07, 'sawtooth', 0.11, dgLp, 0.004);
+          playNote(110.0, dgNext, 0.07, 'sawtooth', 0.14, dgLp, 0.004);
           if (dgStep % 4 === 0) {
             playNote(220.0, dgNext, 0.06, 'sawtooth', 0.07, dgLp, 0.004);
           }
           if (dgStep % 8 === 0) {
-            playKick(dgNext, 120, 40, 0.22, 0.3);
-            playKick(dgNext + 0.18, 105, 38, 0.18, 0.22);
+            playKick(dgNext, 120, 40, 0.22, 0.36);
+            playKick(dgNext + 0.18, 105, 38, 0.18, 0.27);
           }
           if (dgStep % 32 === 0) {
             playNote(466.16, dgNext, 0.4, 'square', 0.035, trackGain, 0.01);
             playNote(659.25, dgNext, 0.4, 'square', 0.035, trackGain, 0.01);
             playNoiseHit(dgNext, 1.3, 'bandpass', 1800, 1.0, 0.06);
             playNote(1864.66, dgNext, 3.0, 'sine', 0.016, trackGain, 0.6);
+          }
+          if (dgStep % 64 === 16) {
+            var srO = ctx.createOscillator();
+            srO.type = 'sawtooth';
+            srO.frequency.setValueAtTime(620, dgNext);
+            srO.frequency.linearRampToValueAtTime(980, dgNext + 0.8);
+            srO.frequency.linearRampToValueAtTime(620, dgNext + 1.6);
+            srO.frequency.linearRampToValueAtTime(980, dgNext + 2.4);
+            srO.frequency.linearRampToValueAtTime(620, dgNext + 3.2);
+            var srBp = ctx.createBiquadFilter();
+            srBp.type = 'bandpass';
+            srBp.frequency.value = 1200;
+            srBp.Q.value = 0.9;
+            var srG = ctx.createGain();
+            srG.gain.setValueAtTime(0.0001, dgNext);
+            srG.gain.linearRampToValueAtTime(0.05, dgNext + 0.2);
+            srG.gain.setValueAtTime(0.05, dgNext + 2.85);
+            srG.gain.exponentialRampToValueAtTime(0.0001, dgNext + 3.2);
+            srO.connect(srBp);
+            srBp.connect(srG);
+            srG.connect(trackGain);
+            srO.start(dgNext);
+            srO.stop(dgNext + 3.3);
           }
           dgNext += 0.1;
           dgStep++;
