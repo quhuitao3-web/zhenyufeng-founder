@@ -161,6 +161,8 @@ body {
 }
 
 #deckControls .deck-ctrl-btn {
+  box-sizing: border-box;
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;

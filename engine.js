@@ -12,6 +12,12 @@
   var SCORE_CROSSFADE_SEC = 1.5;
   var SCORE_DUCK_GAIN = 0.16;
 
+  var VALID_CUES = [
+    'tension', 'silence', 'rise', 'drive', 'dark', 'danger',
+    'race', 'epic', 'warm', 'drums', 'drop', 'anthem', 'lounge',
+    'wuxia', 'piano'
+  ];
+
   var SILENT_WAV =
     'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
 
@@ -520,23 +526,43 @@
 
     switch (name) {
       case 'whoosh': {
-        var dur = 0.28;
-        var nSrc = createNoiseSource(now, dur);
-        var bp = ctx.createBiquadFilter();
-        bp.type = 'bandpass';
-        bp.Q.value = 1.8;
-        bp.frequency.setValueAtTime(220, now);
-        bp.frequency.exponentialRampToValueAtTime(1800, now + 0.11);
-        bp.frequency.exponentialRampToValueAtTime(400, now + dur);
+        // 清脆权威的双气口“唰—呼”翻页气流转场：0.32s 中高频锐扫 + 0.18s 暖低频收尾
+        var whDur1 = 0.32;
+        var whN1 = createNoiseSource(now, whDur1);
+        var whBp1 = ctx.createBiquadFilter();
+        whBp1.type = 'bandpass';
+        whBp1.Q.value = 2.0;
+        whBp1.frequency.setValueAtTime(520, now);
+        whBp1.frequency.exponentialRampToValueAtTime(2400, now + 0.095);
+        whBp1.frequency.exponentialRampToValueAtTime(640, now + whDur1);
 
-        var g = ctx.createGain();
-        g.gain.setValueAtTime(0.001, now);
-        g.gain.linearRampToValueAtTime(0.42, now + 0.08);
-        g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        var whG1 = ctx.createGain();
+        whG1.gain.setValueAtTime(0.0001, now);
+        whG1.gain.linearRampToValueAtTime(0.28, now + 0.055);
+        whG1.gain.linearRampToValueAtTime(0.14, now + 0.16);
+        whG1.gain.exponentialRampToValueAtTime(0.0001, now + whDur1);
 
-        nSrc.connect(bp);
-        bp.connect(g);
-        g.connect(masterGain);
+        whN1.connect(whBp1);
+        whBp1.connect(whG1);
+        whG1.connect(masterGain);
+
+        var whT2 = now + 0.13;
+        var whDur2 = 0.18;
+        var whN2 = createNoiseSource(whT2, whDur2);
+        var whBp2 = ctx.createBiquadFilter();
+        whBp2.type = 'bandpass';
+        whBp2.Q.value = 1.15;
+        whBp2.frequency.setValueAtTime(460, whT2);
+        whBp2.frequency.exponentialRampToValueAtTime(190, whT2 + whDur2);
+
+        var whG2 = ctx.createGain();
+        whG2.gain.setValueAtTime(0.0001, whT2);
+        whG2.gain.linearRampToValueAtTime(0.2, whT2 + 0.045);
+        whG2.gain.exponentialRampToValueAtTime(0.0001, whT2 + whDur2);
+
+        whN2.connect(whBp2);
+        whBp2.connect(whG2);
+        whG2.connect(masterGain);
         break;
       }
 
@@ -1886,6 +1912,253 @@
         break;
       }
 
+      case 'phoenix': {
+        var phxSources = [];
+        var phxOut = ctx.createGain();
+        phxOut.gain.setValueAtTime(0.92, now);
+        phxOut.connect(masterGain);
+
+        var phxBus = ctx.createGain();
+        phxBus.gain.value = 1;
+        var phxDry = ctx.createGain();
+        phxDry.gain.value = 0.78;
+        phxBus.connect(phxDry);
+        phxDry.connect(phxOut);
+
+        var phxRevBuf = ensureGloryReverbBuffer();
+        if (phxRevBuf) {
+          var phxConv = ctx.createConvolver();
+          phxConv.buffer = phxRevBuf;
+          var phxWet = ctx.createGain();
+          phxWet.gain.value = 0.42;
+          phxBus.connect(phxConv);
+          phxConv.connect(phxWet);
+          phxWet.connect(phxOut);
+        }
+
+        // 1) Soaring Crystalline Phoenix Cry (0.0s .. 1.45s)
+        var phxDur = 1.45;
+        var phxLead1 = ctx.createOscillator();
+        var phxLead2 = ctx.createOscillator();
+        var phxSaw = ctx.createOscillator();
+        phxLead1.type = 'sine';
+        phxLead2.type = 'triangle';
+        phxSaw.type = 'sawtooth';
+
+        var contour = [
+          { f: 1174.66, t: 0 },
+          { f: 2349.32, t: 0.22 },
+          { f: 1975.53, t: 0.52 },
+          { f: 2637.02, t: 0.72 },
+          { f: 2217.46, t: 1.42 }
+        ];
+        phxLead1.frequency.setValueAtTime(contour[0].f, now);
+        phxLead2.frequency.setValueAtTime(contour[0].f * 2, now);
+        phxSaw.frequency.setValueAtTime(contour[0].f, now);
+        for (var ci = 1; ci < contour.length; ci++) {
+          var cf = contour[ci].f;
+          var ct = now + contour[ci].t;
+          phxLead1.frequency.exponentialRampToValueAtTime(cf, ct);
+          phxLead2.frequency.exponentialRampToValueAtTime(cf * 2, ct);
+          phxSaw.frequency.exponentialRampToValueAtTime(cf, ct);
+        }
+
+        var phxVib = ctx.createOscillator();
+        phxVib.type = 'sine';
+        phxVib.frequency.value = 6.8;
+        var phxVibG = ctx.createGain();
+        phxVibG.gain.setValueAtTime(0, now);
+        phxVibG.gain.setValueAtTime(0, now + 0.18);
+        phxVibG.gain.linearRampToValueAtTime(30, now + 0.36);
+        phxVibG.gain.linearRampToValueAtTime(16, now + phxDur);
+        phxVib.connect(phxVibG);
+        phxVibG.connect(phxLead1.frequency);
+        phxVibG.connect(phxSaw.frequency);
+        var phxVibG2 = ctx.createGain();
+        phxVibG2.gain.setValueAtTime(0, now);
+        phxVibG2.gain.setValueAtTime(0, now + 0.18);
+        phxVibG2.gain.linearRampToValueAtTime(60, now + 0.36);
+        phxVibG2.gain.linearRampToValueAtTime(32, now + phxDur);
+        phxVib.connect(phxVibG2);
+        phxVibG2.connect(phxLead2.frequency);
+
+        var phxLead1G = ctx.createGain();
+        phxLead1G.gain.setValueAtTime(0.0001, now);
+        phxLead1G.gain.linearRampToValueAtTime(0.28, now + 0.06);
+        phxLead1G.gain.linearRampToValueAtTime(0.22, now + 0.82);
+        phxLead1G.gain.exponentialRampToValueAtTime(0.0001, now + phxDur);
+
+        var phxLead2G = ctx.createGain();
+        phxLead2G.gain.setValueAtTime(0.0001, now);
+        phxLead2G.gain.linearRampToValueAtTime(0.09, now + 0.08);
+        phxLead2G.gain.exponentialRampToValueAtTime(0.0001, now + phxDur * 0.9);
+
+        var phxFormant = ctx.createBiquadFilter();
+        phxFormant.type = 'bandpass';
+        phxFormant.Q.value = 4.5;
+        phxFormant.frequency.setValueAtTime(1750, now);
+        phxFormant.frequency.exponentialRampToValueAtTime(3500, now + 0.34);
+        phxFormant.frequency.exponentialRampToValueAtTime(2450, now + phxDur);
+        var phxSawG = ctx.createGain();
+        phxSawG.gain.setValueAtTime(0.0001, now);
+        phxSawG.gain.linearRampToValueAtTime(0.11, now + 0.09);
+        phxSawG.gain.exponentialRampToValueAtTime(0.0001, now + phxDur * 0.95);
+
+        phxLead1.connect(phxLead1G);
+        phxLead2.connect(phxLead2G);
+        phxSaw.connect(phxFormant);
+        phxFormant.connect(phxSawG);
+        phxLead1G.connect(phxBus);
+        phxLead2G.connect(phxBus);
+        phxSawG.connect(phxBus);
+
+        phxLead1.start(now);
+        phxLead2.start(now);
+        phxSaw.start(now);
+        phxVib.start(now);
+        phxLead1.stop(now + phxDur + 0.04);
+        phxLead2.stop(now + phxDur + 0.04);
+        phxSaw.stop(now + phxDur + 0.04);
+        phxVib.stop(now + phxDur + 0.04);
+        phxSources.push(phxLead1, phxLead2, phxSaw, phxVib);
+
+        // 2) Celestial Golden Shimmer Glissando (0.06s .. 1.85s)
+        var glissNotes = [1174.66, 1318.51, 1479.98, 1760.0, 2349.32, 2959.96];
+        for (var gi = 0; gi < glissNotes.length; gi++) {
+          var gt = now + 0.06 + gi * 0.055;
+          var bOsc = ctx.createOscillator();
+          bOsc.type = 'sine';
+          bOsc.frequency.setValueAtTime(glissNotes[gi], gt);
+          var bGain = ctx.createGain();
+          bGain.gain.setValueAtTime(0.0001, gt);
+          bGain.gain.linearRampToValueAtTime(0.095 - gi * 0.008, gt + 0.008);
+          bGain.gain.exponentialRampToValueAtTime(0.0001, gt + 0.65);
+          bOsc.connect(bGain);
+          bGain.connect(phxBus);
+          bOsc.start(gt);
+          bOsc.stop(gt + 0.68);
+          phxSources.push(bOsc);
+        }
+
+        // 3) Fiery Wing Surge (0.0s .. 0.80s)
+        var wingN = createNoiseSource(now, 0.8);
+        phxSources.push(wingN);
+        var wingBp = ctx.createBiquadFilter();
+        wingBp.type = 'bandpass';
+        wingBp.Q.value = 1.6;
+        wingBp.frequency.setValueAtTime(280, now);
+        wingBp.frequency.exponentialRampToValueAtTime(1850, now + 0.28);
+        wingBp.frequency.exponentialRampToValueAtTime(460, now + 0.8);
+        var wingG = ctx.createGain();
+        wingG.gain.setValueAtTime(0.0001, now);
+        wingG.gain.linearRampToValueAtTime(0.24, now + 0.18);
+        wingG.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+        wingN.connect(wingBp);
+        wingBp.connect(wingG);
+        wingG.connect(phxBus);
+
+        var swellO = ctx.createOscillator();
+        swellO.type = 'sine';
+        swellO.frequency.setValueAtTime(110, now);
+        swellO.frequency.exponentialRampToValueAtTime(58, now + 0.78);
+        var swellG = ctx.createGain();
+        swellG.gain.setValueAtTime(0.0001, now);
+        swellG.gain.linearRampToValueAtTime(0.22, now + 0.08);
+        swellG.gain.exponentialRampToValueAtTime(0.0001, now + 0.78);
+        swellO.connect(swellG);
+        swellG.connect(phxBus);
+        swellO.start(now);
+        swellO.stop(now + 0.82);
+        phxSources.push(swellO);
+
+        registerSlideCleanup(null, function () {
+          try {
+            phxOut.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.04);
+          } catch (_) {}
+          setTimeout(function () {
+            for (var si = 0; si < phxSources.length; si++) {
+              try {
+                phxSources[si].stop();
+              } catch (_) {}
+            }
+            try {
+              phxOut.disconnect();
+            } catch (_) {}
+          }, 90);
+        });
+        break;
+      }
+
+      case 'telegraph': {
+        var telSources = [];
+        var telOut = ctx.createGain();
+        telOut.gain.setValueAtTime(0.85, now);
+        telOut.connect(masterGain);
+
+        var telDur = 0.055;
+        var telFreq = Math.random() < 0.5 ? 880 : 920;
+
+        var telOsc = ctx.createOscillator();
+        telOsc.type = 'sine';
+        telOsc.frequency.setValueAtTime(telFreq, now);
+
+        var telHarm = ctx.createOscillator();
+        telHarm.type = 'triangle';
+        telHarm.frequency.setValueAtTime(telFreq * 2, now);
+
+        var telToneG = ctx.createGain();
+        telToneG.gain.setValueAtTime(0.0001, now);
+        telToneG.gain.linearRampToValueAtTime(0.26, now + 0.003);
+        telToneG.gain.setValueAtTime(0.24, now + telDur - 0.012);
+        telToneG.gain.exponentialRampToValueAtTime(0.0001, now + telDur);
+
+        var telHarmG = ctx.createGain();
+        telHarmG.gain.setValueAtTime(0.0001, now);
+        telHarmG.gain.linearRampToValueAtTime(0.045, now + 0.003);
+        telHarmG.gain.exponentialRampToValueAtTime(0.0001, now + telDur * 0.85);
+
+        telOsc.connect(telToneG);
+        telHarm.connect(telHarmG);
+        telToneG.connect(telOut);
+        telHarmG.connect(telOut);
+        telOsc.start(now);
+        telHarm.start(now);
+        telOsc.stop(now + telDur + 0.015);
+        telHarm.stop(now + telDur + 0.015);
+        telSources.push(telOsc, telHarm);
+
+        var telClick = createNoiseSource(now, 0.026);
+        telSources.push(telClick);
+        var telBp = ctx.createBiquadFilter();
+        telBp.type = 'bandpass';
+        telBp.frequency.value = 2400;
+        telBp.Q.value = 2.4;
+        var telClickG = ctx.createGain();
+        telClickG.gain.setValueAtTime(0.0001, now);
+        telClickG.gain.linearRampToValueAtTime(0.24, now + 0.002);
+        telClickG.gain.exponentialRampToValueAtTime(0.0001, now + 0.024);
+        telClick.connect(telBp);
+        telBp.connect(telClickG);
+        telClickG.connect(telOut);
+
+        registerSlideCleanup(null, function () {
+          try {
+            telOut.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.015);
+          } catch (_) {}
+          setTimeout(function () {
+            for (var si = 0; si < telSources.length; si++) {
+              try {
+                telSources[si].stop();
+              } catch (_) {}
+            }
+            try {
+              telOut.disconnect();
+            } catch (_) {}
+          }, 70);
+        });
+        break;
+      }
+
       default:
         break;
     }
@@ -2312,52 +2585,117 @@
   }
 
   function startPoemAmbient() {
+    var t0 = ctx.currentTime;
     var ambGain = ctx.createGain();
-    ambGain.gain.setValueAtTime(0.0001, ctx.currentTime);
-    ambGain.gain.linearRampToValueAtTime(0.36, ctx.currentTime + 0.6);
+    ambGain.gain.setValueAtTime(0.0001, t0);
+    ambGain.gain.linearRampToValueAtTime(0.38, t0 + 0.35);
     ambGain.connect(masterGain);
+
+    var poemBus = ctx.createGain();
+    poemBus.gain.value = 1;
+
+    var poemDry = ctx.createGain();
+    poemDry.gain.value = 0.78;
+    poemBus.connect(poemDry);
+    poemDry.connect(ambGain);
+
+    var poemConv = null;
+    var poemWet = null;
+    var revBuf = ensureGloryReverbBuffer();
+    if (revBuf) {
+      poemConv = ctx.createConvolver();
+      poemConv.buffer = revBuf;
+      poemWet = ctx.createGain();
+      poemWet.gain.value = 0.42;
+      poemBus.connect(poemConv);
+      poemConv.connect(poemWet);
+      poemWet.connect(ambGain);
+    }
 
     var padFilter = ctx.createBiquadFilter();
     padFilter.type = 'lowpass';
-    padFilter.Q.value = 1.4;
-    padFilter.frequency.setValueAtTime(340, ctx.currentTime);
-    padFilter.connect(ambGain);
+    padFilter.Q.value = 0.9;
+    padFilter.frequency.setValueAtTime(760, t0);
+    padFilter.connect(poemBus);
 
     var breathLfo = ctx.createOscillator();
     var breathDepth = ctx.createGain();
     breathLfo.type = 'sine';
-    breathLfo.frequency.value = 0.14;
-    breathDepth.gain.value = 190;
+    breathLfo.frequency.value = 0.16;
+    breathDepth.gain.value = 260;
     breathLfo.connect(breathDepth);
     breathDepth.connect(padFilter.frequency);
-    breathLfo.start(ctx.currentTime);
+    breathLfo.start(t0);
 
-    var progressions = [
-      [73.42, 110.0, 146.83, 174.61],
-      [65.41, 98.0, 130.81, 164.81],
-      [58.27, 87.31, 116.54, 146.83],
-      [55.0, 82.41, 110.0, 164.81]
+    var bars = [
+      {
+        bell: 587.33,
+        pad: [73.42, 146.83, 220.0, 293.66, 329.63],
+        guqin: [
+          { offset: 0.0, f: 146.83, slide: false, amp: 0.24 },
+          { offset: 0.8, f: 220.0, slide: true, amp: 0.2 },
+          { offset: 1.6, f: 293.66, slide: false, amp: 0.22 },
+          { offset: 2.4, f: 329.63, slide: true, amp: 0.18 }
+        ],
+        drum: 73.42
+      },
+      {
+        bell: 466.16,
+        pad: [58.27, 116.54, 174.61, 233.08, 293.66],
+        guqin: [
+          { offset: 0.0, f: 116.54, slide: false, amp: 0.23 },
+          { offset: 0.8, f: 174.61, slide: false, amp: 0.19 },
+          { offset: 1.6, f: 293.66, slide: true, amp: 0.22 },
+          { offset: 2.4, f: 261.63, slide: false, amp: 0.19 }
+        ],
+        drum: null
+      },
+      {
+        bell: 523.25,
+        pad: [65.41, 130.81, 196.0, 261.63, 329.63],
+        guqin: [
+          { offset: 0.0, f: 130.81, slide: false, amp: 0.24 },
+          { offset: 0.8, f: 196.0, slide: true, amp: 0.2 },
+          { offset: 1.6, f: 261.63, slide: false, amp: 0.21 },
+          { offset: 2.4, f: 293.66, slide: false, amp: 0.2 }
+        ],
+        drum: 65.41
+      },
+      {
+        bell: 440.0,
+        pad: [55.0, 110.0, 164.81, 220.0, 329.63],
+        guqin: [
+          { offset: 0.0, f: 110.0, slide: false, amp: 0.24 },
+          { offset: 0.8, f: 164.81, slide: false, amp: 0.19 },
+          { offset: 1.6, f: 220.0, slide: true, amp: 0.22 },
+          { offset: 2.4, f: 293.66, slide: false, amp: 0.18 }
+        ],
+        drum: null
+      }
     ];
 
-    var barSec = 3.6;
+    var barSec = 3.2;
     var barIdx = 0;
-    var nextTime = ctx.currentTime + 0.05;
+    var nextTime = t0 + 0.03;
     var timer = null;
     var stopped = false;
 
-    function triggerStrings(freqs, t, dur) {
+    function triggerStringsBrass(freqs, t, dur) {
       for (var i = 0; i < freqs.length; i++) {
         var o1 = ctx.createOscillator();
         var o2 = ctx.createOscillator();
         o1.type = 'sawtooth';
-        o2.type = 'triangle';
+        o2.type = i === 0 ? 'sine' : 'triangle';
         o1.frequency.setValueAtTime(freqs[i], t);
-        o2.frequency.setValueAtTime(freqs[i] * 1.003, t);
+        o2.frequency.setValueAtTime(freqs[i] * 1.0028, t);
+
         var g = ctx.createGain();
+        var amp = i < 2 ? 0.082 : 0.068;
         g.gain.setValueAtTime(0.0001, t);
-        g.gain.linearRampToValueAtTime(0.07, t + 0.9);
-        g.gain.linearRampToValueAtTime(0.055, t + dur - 0.6);
+        g.gain.linearRampToValueAtTime(amp, t + 0.45);
+        g.gain.linearRampToValueAtTime(amp * 0.82, t + dur - 0.55);
         g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.25);
+
         o1.connect(g);
         o2.connect(g);
         g.connect(padFilter);
@@ -2368,28 +2706,122 @@
       }
     }
 
+    function triggerBronzeBell(freq, t) {
+      var partials = [
+        { m: 1.0, a: 0.22, d: 2.5 },
+        { m: 1.5, a: 0.09, d: 2.0 },
+        { m: 2.0, a: 0.1, d: 1.7 },
+        { m: 2.76, a: 0.055, d: 1.3 },
+        { m: 3.62, a: 0.03, d: 0.95 }
+      ];
+      for (var i = 0; i < partials.length; i++) {
+        var p = partials[i];
+        var bo = ctx.createOscillator();
+        bo.type = i === 0 ? 'triangle' : 'sine';
+        bo.frequency.setValueAtTime(freq * p.m, t);
+        var bg = ctx.createGain();
+        bg.gain.setValueAtTime(0.0001, t);
+        bg.gain.linearRampToValueAtTime(p.a, t + 0.01);
+        bg.gain.exponentialRampToValueAtTime(0.0001, t + p.d);
+        bo.connect(bg);
+        bg.connect(poemBus);
+        bo.start(t);
+        bo.stop(t + p.d + 0.04);
+      }
+      var mallet = createNoiseSource(t, 0.07);
+      var mBp = ctx.createBiquadFilter();
+      mBp.type = 'bandpass';
+      mBp.frequency.value = 620;
+      mBp.Q.value = 1.6;
+      var mG = ctx.createGain();
+      mG.gain.setValueAtTime(0.14, t);
+      mG.gain.exponentialRampToValueAtTime(0.0001, t + 0.065);
+      mallet.connect(mBp);
+      mBp.connect(mG);
+      mG.connect(poemBus);
+    }
+
+    function triggerGuqin(freq, t, slide, amp) {
+      var lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.Q.value = 1.2;
+      lp.frequency.setValueAtTime(Math.min(3400, freq * 6.5), t);
+      lp.frequency.exponentialRampToValueAtTime(Math.max(240, freq * 1.45), t + 0.95);
+      lp.connect(poemBus);
+
+      var o1 = ctx.createOscillator();
+      var o2 = ctx.createOscillator();
+      o1.type = 'triangle';
+      o2.type = 'sine';
+      if (slide) {
+        o1.frequency.setValueAtTime(freq * 0.891, t);
+        o1.frequency.exponentialRampToValueAtTime(freq, t + 0.12);
+        o2.frequency.setValueAtTime(freq * 0.891 * 2, t);
+        o2.frequency.exponentialRampToValueAtTime(freq * 2, t + 0.12);
+      } else {
+        o1.frequency.setValueAtTime(freq, t);
+        o2.frequency.setValueAtTime(freq * 2, t);
+      }
+
+      var g1 = ctx.createGain();
+      g1.gain.setValueAtTime(0.0001, t);
+      g1.gain.linearRampToValueAtTime(amp, t + 0.012);
+      g1.gain.exponentialRampToValueAtTime(0.0001, t + 1.9);
+
+      var g2 = ctx.createGain();
+      g2.gain.setValueAtTime(0.0001, t);
+      g2.gain.linearRampToValueAtTime(amp * 0.42, t + 0.008);
+      g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.85);
+
+      o1.connect(g1);
+      o2.connect(g2);
+      g1.connect(lp);
+      g2.connect(lp);
+      o1.start(t);
+      o2.start(t);
+      o1.stop(t + 1.95);
+      o2.stop(t + 0.9);
+
+      var pluckN = createNoiseSource(t, 0.032);
+      var pBp = ctx.createBiquadFilter();
+      pBp.type = 'bandpass';
+      pBp.frequency.value = Math.min(2600, freq * 3.5);
+      pBp.Q.value = 1.8;
+      var pNg = ctx.createGain();
+      pNg.gain.setValueAtTime(0.075, t);
+      pNg.gain.exponentialRampToValueAtTime(0.0001, t + 0.028);
+      pluckN.connect(pBp);
+      pBp.connect(pNg);
+      pNg.connect(poemBus);
+    }
+
     function triggerTimpani(freq, t) {
       var o = ctx.createOscillator();
       o.type = 'sine';
-      o.frequency.setValueAtTime(freq * 1.25, t);
-      o.frequency.exponentialRampToValueAtTime(freq, t + 0.14);
+      o.frequency.setValueAtTime(freq * 1.32, t);
+      o.frequency.exponentialRampToValueAtTime(freq, t + 0.15);
       var g = ctx.createGain();
       g.gain.setValueAtTime(0.0001, t);
-      g.gain.linearRampToValueAtTime(0.28, t + 0.025);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.35);
+      g.gain.linearRampToValueAtTime(0.36, t + 0.018);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.55);
       o.connect(g);
-      g.connect(ambGain);
+      g.connect(poemBus);
       o.start(t);
-      o.stop(t + 1.4);
+      o.stop(t + 1.6);
     }
 
     function schedule() {
       if (stopped || !ctx) return;
-      while (nextTime < ctx.currentTime + 0.5) {
-        var chord = progressions[barIdx % progressions.length];
-        triggerStrings(chord, nextTime, barSec);
-        if (barIdx % 2 === 0) {
-          triggerTimpani(chord[0], nextTime);
+      while (nextTime < ctx.currentTime + 0.55) {
+        var bar = bars[barIdx % bars.length];
+        triggerStringsBrass(bar.pad, nextTime, barSec);
+        triggerBronzeBell(bar.bell, nextTime);
+        for (var qi = 0; qi < bar.guqin.length; qi++) {
+          var q = bar.guqin[qi];
+          triggerGuqin(q.f, nextTime + q.offset, q.slide, q.amp);
+        }
+        if (bar.drum) {
+          triggerTimpani(bar.drum, nextTime);
         }
         nextTime += barSec;
         barIdx++;
@@ -2414,9 +2846,13 @@
           breathLfo.disconnect();
           breathDepth.disconnect();
           padFilter.disconnect();
+          poemDry.disconnect();
+          if (poemWet) poemWet.disconnect();
+          if (poemConv) poemConv.disconnect();
+          poemBus.disconnect();
           ambGain.disconnect();
         } catch (_) {}
-      }, 250);
+      }, 260);
     };
   }
 
@@ -2436,6 +2872,13 @@
     }
     stopAmbient();
 
+    if (!Deck.audioReady || !ctx) {
+      unlockAudio();
+    }
+    if (userMuted) {
+      userMuted = false;
+      syncMuteUI();
+    }
     if (!ctx) {
       if (btn) btn.classList.add('on');
       currentAmbient = { name: name, btn: btn, stop: null };
@@ -2443,7 +2886,7 @@
       return true;
     }
 
-    if (ctx.state === 'suspended' && !Deck.isMuted()) {
+    if (ctx.state === 'suspended') {
       ctx.resume().catch(function () {});
     }
 
@@ -2978,6 +3421,375 @@
           lgStep++;
         }
       }, 100);
+    } else if (name === 'wuxia') {
+      // 侠客江湖配乐（D大调五声音阶 D E F# A B）：竹笛/箫 + 古筝扫弦琶音 + 雄浑战鼓
+      var wxBus = ctx.createGain();
+      wxBus.gain.value = 1;
+      var wxDry = ctx.createGain();
+      wxDry.gain.value = 0.8;
+      wxBus.connect(wxDry);
+      wxDry.connect(trackGain);
+      extraNodes.push(wxBus, wxDry);
+
+      var wxRevBuf = ensureGloryReverbBuffer();
+      if (wxRevBuf) {
+        var wxConv = ctx.createConvolver();
+        wxConv.buffer = wxRevBuf;
+        var wxWet = ctx.createGain();
+        wxWet.gain.value = 0.38;
+        wxBus.connect(wxConv);
+        wxConv.connect(wxWet);
+        wxWet.connect(trackGain);
+        extraNodes.push(wxConv, wxWet);
+      }
+
+      // 苍茫弓弦长音底（仅 sine/triangle，绝无电子合成器锯齿）
+      scheduleDrone([73.42, 110.0, 146.83], 'triangle', 260, 0.14, 70, 0.085);
+
+      var wxXiaoLp = ctx.createBiquadFilter();
+      wxXiaoLp.type = 'lowpass';
+      wxXiaoLp.frequency.value = 2300;
+      wxXiaoLp.connect(wxBus);
+      extraNodes.push(wxXiaoLp);
+
+      function playXiao(freq, t, dur, slideFrom, amp) {
+        var mainOsc = ctx.createOscillator();
+        var harmOsc = ctx.createOscillator();
+        mainOsc.type = 'sine';
+        harmOsc.type = 'triangle';
+
+        if (slideFrom) {
+          mainOsc.frequency.setValueAtTime(slideFrom, t);
+          mainOsc.frequency.exponentialRampToValueAtTime(freq, t + 0.075);
+          harmOsc.frequency.setValueAtTime(slideFrom * 2, t);
+          harmOsc.frequency.exponentialRampToValueAtTime(freq * 2, t + 0.075);
+        } else {
+          mainOsc.frequency.setValueAtTime(freq, t);
+          harmOsc.frequency.setValueAtTime(freq * 2, t);
+        }
+
+        if (dur >= 0.52) {
+          var vib = ctx.createOscillator();
+          var vibG = ctx.createGain();
+          vib.type = 'sine';
+          vib.frequency.value = 5.2;
+          vibG.gain.setValueAtTime(0, t);
+          vibG.gain.setValueAtTime(0, t + 0.14);
+          vibG.gain.linearRampToValueAtTime(freq * 0.0085, t + 0.32);
+          vib.connect(vibG);
+          vibG.connect(mainOsc.frequency);
+          vib.start(t);
+          vib.stop(t + dur + 0.04);
+        }
+
+        var g1 = ctx.createGain();
+        g1.gain.setValueAtTime(0.0001, t);
+        g1.gain.linearRampToValueAtTime(amp, t + 0.065);
+        g1.gain.linearRampToValueAtTime(amp * 0.84, t + Math.max(0.08, dur - 0.12));
+        g1.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+
+        var g2 = ctx.createGain();
+        g2.gain.setValueAtTime(0.0001, t);
+        g2.gain.linearRampToValueAtTime(amp * 0.14, t + 0.06);
+        g2.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.9);
+
+        mainOsc.connect(g1);
+        harmOsc.connect(g2);
+        g1.connect(wxXiaoLp);
+        g2.connect(wxXiaoLp);
+        mainOsc.start(t);
+        harmOsc.start(t);
+        mainOsc.stop(t + dur + 0.04);
+        harmOsc.stop(t + dur + 0.04);
+
+        // 箫笛柔和气声
+        var br = ctx.createBufferSource();
+        br.buffer = ensureNoiseBuffer();
+        br.loop = true;
+        var brBp = ctx.createBiquadFilter();
+        brBp.type = 'bandpass';
+        brBp.frequency.value = Math.min(2600, freq * 1.45);
+        brBp.Q.value = 2.6;
+        var brG = ctx.createGain();
+        brG.gain.setValueAtTime(0.0001, t);
+        brG.gain.linearRampToValueAtTime(0.022, t + 0.045);
+        brG.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        br.connect(brBp);
+        brBp.connect(brG);
+        brG.connect(wxBus);
+        br.start(t, Math.random() * 0.5);
+        br.stop(t + dur + 0.03);
+      }
+
+      function playGuzheng(freq, t, amp, dur) {
+        var d = dur || 0.78;
+        var pLp = ctx.createBiquadFilter();
+        pLp.type = 'lowpass';
+        pLp.Q.value = 1.1;
+        pLp.frequency.setValueAtTime(Math.min(3800, freq * 5.2), t);
+        pLp.frequency.exponentialRampToValueAtTime(Math.max(300, freq * 1.5), t + d * 0.72);
+        pLp.connect(wxBus);
+
+        var s1 = ctx.createOscillator();
+        var s2 = ctx.createOscillator();
+        s1.type = 'triangle';
+        s2.type = 'sine';
+        s1.frequency.setValueAtTime(freq, t);
+        s2.frequency.setValueAtTime(freq * 2, t);
+
+        var sg1 = ctx.createGain();
+        sg1.gain.setValueAtTime(0.0001, t);
+        sg1.gain.linearRampToValueAtTime(amp, t + 0.005);
+        sg1.gain.exponentialRampToValueAtTime(0.0001, t + d);
+
+        var sg2 = ctx.createGain();
+        sg2.gain.setValueAtTime(0.0001, t);
+        sg2.gain.linearRampToValueAtTime(amp * 0.35, t + 0.004);
+        sg2.gain.exponentialRampToValueAtTime(0.0001, t + d * 0.45);
+
+        s1.connect(sg1);
+        s2.connect(sg2);
+        sg1.connect(pLp);
+        sg2.connect(pLp);
+        s1.start(t);
+        s2.start(t);
+        s1.stop(t + d + 0.03);
+        s2.stop(t + d + 0.03);
+
+        var pN = ctx.createBufferSource();
+        pN.buffer = ensureNoiseBuffer();
+        pN.loop = true;
+        var pBp = ctx.createBiquadFilter();
+        pBp.type = 'bandpass';
+        pBp.frequency.value = Math.min(3200, freq * 2.8);
+        pBp.Q.value = 1.6;
+        var pNg = ctx.createGain();
+        pNg.gain.setValueAtTime(amp * 0.32, t);
+        pNg.gain.exponentialRampToValueAtTime(0.0001, t + 0.02);
+        pN.connect(pBp);
+        pBp.connect(pNg);
+        pNg.connect(wxBus);
+        pN.start(t, Math.random() * 0.5);
+        pN.stop(t + 0.028);
+      }
+
+      function playWarDrum(t, amp) {
+        var sub = ctx.createOscillator();
+        sub.type = 'sine';
+        sub.frequency.setValueAtTime(98, t);
+        sub.frequency.exponentialRampToValueAtTime(42, t + 0.18);
+        var subG = ctx.createGain();
+        subG.gain.setValueAtTime(0.0001, t);
+        subG.gain.linearRampToValueAtTime(amp, t + 0.008);
+        subG.gain.exponentialRampToValueAtTime(0.0001, t + 0.85);
+        sub.connect(subG);
+        subG.connect(wxBus);
+        sub.start(t);
+        sub.stop(t + 0.9);
+
+        var head = ctx.createOscillator();
+        head.type = 'triangle';
+        head.frequency.setValueAtTime(185, t);
+        head.frequency.exponentialRampToValueAtTime(62, t + 0.065);
+        var headG = ctx.createGain();
+        headG.gain.setValueAtTime(amp * 0.45, t);
+        headG.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+        head.connect(headG);
+        headG.connect(wxBus);
+        head.start(t);
+        head.stop(t + 0.11);
+
+        var skin = ctx.createBufferSource();
+        skin.buffer = ensureNoiseBuffer();
+        skin.loop = true;
+        var skLp = ctx.createBiquadFilter();
+        skLp.type = 'lowpass';
+        skLp.frequency.value = 420;
+        var skG = ctx.createGain();
+        skG.gain.setValueAtTime(amp * 0.38, t);
+        skG.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+        skin.connect(skLp);
+        skLp.connect(skG);
+        skG.connect(wxBus);
+        skin.start(t, Math.random() * 0.5);
+        skin.stop(t + 0.19);
+      }
+
+      var wxArpBars = [
+        [146.83, 220.0, 293.66, 369.99, 440.0, 369.99, 293.66, 220.0],
+        [185.0, 220.0, 293.66, 329.63, 440.0, 329.63, 293.66, 220.0],
+        [123.47, 185.0, 246.94, 293.66, 369.99, 293.66, 246.94, 185.0],
+        [164.81, 220.0, 293.66, 329.63, 440.0, 369.99, 329.63, 220.0]
+      ];
+      var wxMelody = {
+        0: { f: 587.33, d: 1.08, s: 493.88, a: 0.145 },
+        3: { f: 659.25, d: 0.38, s: null, a: 0.12 },
+        4: { f: 739.99, d: 0.72, s: null, a: 0.135 },
+        6: { f: 880.0, d: 1.46, s: 739.99, a: 0.155 },
+        10: { f: 739.99, d: 0.38, s: null, a: 0.12 },
+        11: { f: 659.25, d: 0.38, s: null, a: 0.12 },
+        12: { f: 587.33, d: 1.44, s: 659.25, a: 0.14 },
+        16: { f: 493.88, d: 0.72, s: 440.0, a: 0.135 },
+        18: { f: 587.33, d: 0.72, s: null, a: 0.135 },
+        20: { f: 659.25, d: 0.72, s: null, a: 0.135 },
+        22: { f: 739.99, d: 0.72, s: null, a: 0.14 },
+        24: { f: 880.0, d: 0.74, s: 739.99, a: 0.15 },
+        26: { f: 739.99, d: 0.38, s: null, a: 0.125 },
+        27: { f: 659.25, d: 0.38, s: null, a: 0.125 },
+        28: { f: 587.33, d: 1.46, s: null, a: 0.15 }
+      };
+      var wxGliss = [293.66, 329.63, 369.99, 440.0, 493.88, 587.33];
+
+      var wxStepSec = 0.38;
+      var wxStep = 0;
+      var wxNext = now + 0.05;
+      addTimer(function () {
+        if (stopped || !ctx) return;
+        while (wxNext < ctx.currentTime + 0.38) {
+          var cyclePos = wxStep % 32;
+          var bar = Math.floor(cyclePos / 8);
+          var pos = cyclePos % 8;
+
+          playGuzheng(wxArpBars[bar][pos], wxNext, pos === 0 ? 0.115 : 0.075, pos === 0 ? 1.15 : 0.75);
+
+          if (cyclePos === 15 || cyclePos === 31) {
+            for (var gi = 0; gi < wxGliss.length; gi++) {
+              playGuzheng(wxGliss[gi], wxNext + 0.05 + gi * 0.044, 0.055, 0.65);
+            }
+          }
+
+          var mel = wxMelody[cyclePos];
+          if (mel) {
+            playXiao(mel.f, wxNext, mel.d, mel.s, mel.a);
+          }
+
+          if (pos === 0) {
+            playWarDrum(wxNext, 0.38);
+          } else if (pos === 4) {
+            playWarDrum(wxNext, 0.25);
+          } else if ((bar === 1 || bar === 3) && (pos === 6 || pos === 7)) {
+            playWarDrum(wxNext, pos === 6 ? 0.18 : 0.24);
+          }
+
+          wxNext += wxStepSec;
+          wxStep++;
+        }
+      }, 110);
+    } else if (name === 'piano') {
+      // 温情故事页舒缓毛毡钢琴（C major / A minor 柔和低通 950Hz + 立体声混响）
+      var pnLp = ctx.createBiquadFilter();
+      pnLp.type = 'lowpass';
+      pnLp.Q.value = 0.7;
+      pnLp.frequency.value = 950;
+
+      var pnBus = ctx.createGain();
+      pnBus.gain.value = 1;
+      pnLp.connect(pnBus);
+
+      var pnDry = ctx.createGain();
+      pnDry.gain.value = 0.68;
+      pnBus.connect(pnDry);
+      pnDry.connect(trackGain);
+      extraNodes.push(pnLp, pnBus, pnDry);
+
+      var pnRevBuf = ensureGloryReverbBuffer();
+      if (pnRevBuf) {
+        var pnConv = ctx.createConvolver();
+        pnConv.buffer = pnRevBuf;
+        var pnWet = ctx.createGain();
+        pnWet.gain.value = 0.44;
+        pnBus.connect(pnConv);
+        pnConv.connect(pnWet);
+        pnWet.connect(trackGain);
+        extraNodes.push(pnConv, pnWet);
+      }
+
+      function playFeltPiano(freq, t, dur, amp) {
+        var o1 = ctx.createOscillator();
+        var o2 = ctx.createOscillator();
+        o1.type = 'sine';
+        o2.type = 'triangle';
+        o1.frequency.setValueAtTime(freq, t);
+        o2.frequency.setValueAtTime(freq * 2, t);
+
+        var g1 = ctx.createGain();
+        g1.gain.setValueAtTime(0.0001, t);
+        g1.gain.linearRampToValueAtTime(amp, t + 0.022);
+        g1.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+
+        var g2 = ctx.createGain();
+        g2.gain.setValueAtTime(0.0001, t);
+        g2.gain.linearRampToValueAtTime(amp * 0.22, t + 0.016);
+        g2.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.55);
+
+        o1.connect(g1);
+        o2.connect(g2);
+        g1.connect(pnLp);
+        g2.connect(pnLp);
+        o1.start(t);
+        o2.start(t);
+        o1.stop(t + dur + 0.04);
+        o2.stop(t + dur * 0.58 + 0.04);
+
+        var feltN = ctx.createBufferSource();
+        feltN.buffer = ensureNoiseBuffer();
+        feltN.loop = true;
+        var fLp = ctx.createBiquadFilter();
+        fLp.type = 'lowpass';
+        fLp.frequency.value = 340;
+        var fG = ctx.createGain();
+        fG.gain.setValueAtTime(amp * 0.14, t);
+        fG.gain.exponentialRampToValueAtTime(0.0001, t + 0.024);
+        feltN.connect(fLp);
+        fLp.connect(fG);
+        fG.connect(pnLp);
+        feltN.start(t, Math.random() * 0.5);
+        feltN.stop(t + 0.032);
+      }
+
+      var pnBars = [
+        {
+          bass: 130.81,
+          top: 523.25,
+          arp: [130.81, 196.0, 261.63, 329.63, 293.66, 261.63, 196.0, 329.63]
+        },
+        {
+          bass: 123.47,
+          top: 493.88,
+          arp: [123.47, 196.0, 246.94, 293.66, 392.0, 293.66, 246.94, 196.0]
+        },
+        {
+          bass: 110.0,
+          top: 440.0,
+          arp: [110.0, 164.81, 220.0, 261.63, 329.63, 261.63, 220.0, 164.81]
+        },
+        {
+          bass: 87.31,
+          top: 392.0,
+          arp: [87.31, 174.61, 220.0, 261.63, 329.63, 261.63, 220.0, 174.61]
+        }
+      ];
+
+      var pnStepSec = 0.44;
+      var pnStep = 0;
+      var pnNext = now + 0.05;
+      addTimer(function () {
+        if (stopped || !ctx) return;
+        while (pnNext < ctx.currentTime + 0.4) {
+          var bar = Math.floor(pnStep / 8) % pnBars.length;
+          var pos = pnStep % 8;
+          var ch = pnBars[bar];
+          if (pos === 0) {
+            playFeltPiano(ch.bass, pnNext, 2.7, 0.082);
+            playFeltPiano(ch.top, pnNext + 0.015, 2.0, 0.044);
+          } else if (bar === 3 && pos === 4) {
+            playFeltPiano(349.23, pnNext, 1.7, 0.04);
+          }
+          playFeltPiano(ch.arp[pos], pnNext, 1.35, pos % 4 === 0 ? 0.062 : 0.046);
+          pnNext += pnStepSec;
+          pnStep++;
+        }
+      }, 120);
     }
 
     return {
@@ -3108,10 +3920,16 @@
     return createSynthScoreTrack(name, fadeInSec);
   }
 
+  function isValidCue(cueName) {
+    if (!cueName) return false;
+    if (VALID_CUES.indexOf(cueName) !== -1) return true;
+    return Boolean(resolveManifestUrl(cueName));
+  }
+
   function scoreCue(name) {
     if (!name || typeof name !== 'string') return;
     var cueName = name.trim();
-    if (!cueName) return;
+    if (!isValidCue(cueName)) return;
 
     if (cueName === currentCueName) {
       if (
@@ -4436,6 +5254,27 @@
     goTo(currentIndex + 1);
   }
 
+  function prewarmVideosAround(idx) {
+    if (!slides || !slides.length) return;
+    var startIdx = Math.max(0, idx);
+    var endIdx = Math.min(slides.length - 1, idx + 2);
+    for (var i = startIdx; i <= endIdx; i++) {
+      var slideEl = slides[i];
+      if (!slideEl) continue;
+      var vids = slideEl.querySelectorAll('video');
+      for (var j = 0; j < vids.length; j++) {
+        var v = vids[j];
+        try {
+          v.preload = 'auto';
+          if (!v.__prewarmed) {
+            v.__prewarmed = true;
+            v.load();
+          }
+        } catch (_) {}
+      }
+    }
+  }
+
   function activateInitialSlide(initIdx, fromGate) {
     var firstEl = slides[initIdx];
     currentIndex = initIdx;
@@ -4459,6 +5298,7 @@
       scoreCue(initCue);
     }
 
+    prewarmVideosAround(initIdx);
     startInlineVideosForSlide(firstEl);
 
     var firstHook = firstEl.id ? hooks[firstEl.id] : null;
@@ -4529,6 +5369,7 @@
       scoreCue(slideCue.trim());
     }
 
+    prewarmVideosAround(currentIndex);
     startInlineVideosForSlide(newEl);
 
     var newHook = newEl.id ? hooks[newEl.id] : null;
@@ -4806,6 +5647,13 @@
     enumerable: true,
     get: function () {
       return isDucked;
+    }
+  });
+
+  Object.defineProperty(scoreApi, 'cues', {
+    enumerable: true,
+    get: function () {
+      return VALID_CUES.slice();
     }
   });
 
