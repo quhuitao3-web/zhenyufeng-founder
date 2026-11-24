@@ -1816,6 +1816,20 @@
       text-shadow: 0 0 36px rgba(255,85,0,0.85), 0 0 80px rgba(255,85,0,0.42);
     }
   }
+  #p20.is-glory .line2 .orange {
+    animation: p20glory 2.4s ease-out 1 forwards;
+  }
+  @keyframes p20glory {
+    0% {
+      text-shadow: 0 0 0 rgba(255,140,40,0);
+    }
+    25% {
+      text-shadow: 0 0 34px rgba(255,170,80,0.95), 0 0 70px rgba(255,90,0,0.6);
+    }
+    100% {
+      text-shadow: 0 0 18px rgba(255,110,30,0.45);
+    }
+  }
 </style>
 <section id="p20" class="slide dark on-photo" data-ch="肆 · 利群计划" data-cue="warm">
   <img class="fullbleed" src="assets/founder_flash_china.jpg" alt="">
@@ -1830,21 +1844,239 @@
 </section>
 
 <style>
-  #p21 .grid {
+  #p21 {
+    background: #06070b;
+  }
+  #p21 .p21-world {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 120px 120px;
-    background-position: 0 0;
-    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 40% 50%, #000 30%, transparent 90%);
-    mask-image: radial-gradient(ellipse 80% 70% at 40% 50%, #000 30%, transparent 90%);
+    width: 1920px;
+    height: 1080px;
+    z-index: 1;
+    pointer-events: none;
+    display: block;
+  }
+  #p21 .p21-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.55) 30%, transparent 55%);
+  }
+  #p21 .p21-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(ellipse 84% 80% at 54% 50%, transparent 50%, rgba(4,5,8,0.62) 100%);
+  }
+  #p21 .p21-speedlines {
+    position: absolute;
+    left: -14%;
+    top: -14%;
+    width: 128%;
+    height: 128%;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.96);
+    background: repeating-conic-gradient(
+      from 0deg at 56% 52%,
+      rgba(255, 142, 56, 0.36) 0deg 1.15deg,
+      transparent 1.15deg 4.8deg,
+      rgba(255, 255, 255, 0.24) 4.8deg 5.6deg,
+      transparent 5.6deg 10.6deg
+    );
+    -webkit-mask-image: radial-gradient(circle at 56% 52%, transparent 0%, transparent 22%, rgba(0,0,0,0.52) 45%, #000 74%);
+    mask-image: radial-gradient(circle at 56% 52%, transparent 0%, transparent 22%, rgba(0,0,0,0.52) 45%, #000 74%);
+  }
+  #p21.is-boost .p21-speedlines {
+    animation: p21_speed_burst 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes p21_speed_burst {
+    0% { opacity: 0; transform: scale(0.92); }
+    20% { opacity: 0.95; transform: scale(1.0); }
+    62% { opacity: 0.78; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(1.1); }
+  }
+  #p21 .p21-tags {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  #p21 .tag {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 9px 14px;
+    border-radius: 10px;
+    background: rgba(12, 14, 20, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    pointer-events: none;
+  }
+  #p21 .tag.is-show {
+    opacity: 1;
+  }
+  #p21 .tag-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  #p21 .tag-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex: none;
+  }
+  #p21 .tag.rival {
+    border-color: rgba(154, 163, 178, 0.42);
+  }
+  #p21 .tag.rival .tag-dot {
+    background: #9AA3B2;
+    box-shadow: 0 0 8px rgba(154, 163, 178, 0.65);
+  }
+  #p21 .tag.rival .tag-title {
+    color: #D2D8E2;
+  }
+  #p21 .tag.rival.is-low {
+    border-color: rgba(255, 59, 48, 0.65);
+  }
+  #p21 .tag.rival.is-low .tag-dot {
+    background: #FF3B30;
+    box-shadow: 0 0 10px rgba(255, 59, 48, 0.85);
+  }
+  #p21 .tag.us {
+    border-color: rgba(255, 85, 0, 0.58);
+  }
+  #p21 .tag.us .tag-dot {
+    background: #FF5500;
+    box-shadow: 0 0 10px rgba(255, 85, 0, 0.9);
+  }
+  #p21 .tag.us.is-charged {
+    border-color: rgba(255, 108, 34, 0.95);
+    box-shadow: 0 10px 30px rgba(255, 85, 0, 0.32), inset 0 0 18px rgba(255, 85, 0, 0.16);
+  }
+  #p21 .tag-bar {
+    width: 144px;
+    height: 6px;
+    margin-top: 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+  #p21 .tag-fill {
+    height: 100%;
+    width: 10%;
+    border-radius: 999px;
+    transition: background-color 0.25s ease;
+  }
+  #p21 .tag.rival .tag-fill {
+    width: 30%;
+    background: linear-gradient(90deg, #6E7685, #9AA3B2);
+  }
+  #p21 .tag.rival.is-low .tag-fill {
+    background: linear-gradient(90deg, #CC221B, #FF3B30);
+  }
+  #p21 .tag.us .tag-fill {
+    width: 10%;
+    background: linear-gradient(90deg, #FF5500, #FF9933);
+    box-shadow: 0 0 10px rgba(255, 85, 0, 0.75);
+  }
+  #p21 .tag-sub {
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  #p21 .tag.rival .tag-sub {
+    color: rgba(154, 163, 178, 0.78);
+  }
+  #p21 .tag.rival.is-parked .tag-sub {
+    color: #B4BCC9;
+  }
+  #p21 .tag.us .tag-sub {
+    color: #FFB07A;
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transform: translateY(-4px) scale(0.9);
+    transition: opacity 0.28s ease, max-height 0.28s ease, margin-top 0.28s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #p21 .tag.us.is-charged .tag-sub {
+    opacity: 1;
+    max-height: 28px;
+    margin-top: 6px;
+    color: #FF7A2F;
+    text-shadow: 0 0 14px rgba(255, 85, 0, 0.72);
+    transform: translateY(0) scale(1);
+  }
+  #p21 .tag.turn {
+    padding: 8px 16px;
+    border-color: rgba(255, 130, 50, 0.72);
+    background: rgba(18, 12, 10, 0.82);
+    box-shadow: 0 0 24px rgba(255, 85, 0, 0.28);
+  }
+  #p21 .tag.turn .tag-head {
+    font-size: 16px;
+    color: #FFD3B0;
+  }
+  #p21 .tag.turn .tag-dot {
+    background: #FF6B1A;
+    box-shadow: 0 0 12px #FF5500;
+  }
+  #p21 .tag.turn.is-on.is-show {
+    opacity: 1;
+    animation: p21_turn_pulse 2.1s ease-in-out infinite;
+  }
+  @keyframes p21_turn_pulse {
+    0%, 100% { box-shadow: 0 0 18px rgba(255, 85, 0, 0.24); border-color: rgba(255, 130, 50, 0.62); }
+    50% { box-shadow: 0 0 34px rgba(255, 85, 0, 0.56); border-color: rgba(255, 150, 75, 0.96); }
+  }
+  #p21 .tag.alert {
+    padding: 6px 13px;
+    border-color: rgba(255, 59, 48, 0.92);
+    background: rgba(42, 10, 12, 0.88);
+    box-shadow: 0 0 24px rgba(255, 59, 48, 0.45);
+  }
+  #p21 .tag.alert .tag-head {
+    font-size: 15px;
+    font-weight: 800;
+    color: #FF6B63;
+  }
+  #p21 .tag.alert .tag-dot {
+    background: #FF3B30;
+    box-shadow: 0 0 12px #FF3B30;
+  }
+  #p21 .tag.alert.is-on.is-show {
+    opacity: 1;
+    animation: p21_alert_blink 0.55s ease-in-out infinite;
+  }
+  @keyframes p21_alert_blink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 26px rgba(255, 59, 48, 0.58); }
+    50% { opacity: 0.48; box-shadow: 0 0 10px rgba(255, 59, 48, 0.2); }
   }
   #p21 .words {
     position: absolute;
-    left: 120px;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 96px;
+    top: 300px;
+    transform: none;
+    z-index: 12;
     pointer-events: none;
   }
   #p21 .streaks {
@@ -1865,17 +2097,19 @@
   }
   #p21 .row {
     position: relative;
-    font-size: 168px;
+    font-size: 132px;
     font-weight: 900;
-    line-height: 1.14;
+    line-height: 1.15;
     letter-spacing: 0.02em;
     z-index: 1;
     opacity: 0;
     transform: translateX(-110px);
+    text-shadow: 0 10px 42px rgba(0, 0, 0, 0.85);
   }
   #p21 .row.r2 {
     margin-left: 0;
     transform: translateX(-220px);
+    color: #fff;
   }
   #p21.is-s1 .s-r1 {
     animation: p21_streak_in 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -1910,9 +2144,10 @@
   }
   #p21 .stamp-wrap {
     position: absolute;
-    left: 1140px;
-    top: 50%;
-    transform: translateY(-50%) rotate(-8deg) scale(1.65);
+    left: 1180px;
+    top: 640px;
+    z-index: 15;
+    transform: rotate(-8deg) scale(1.65);
     opacity: 0;
     pointer-events: none;
   }
@@ -1920,55 +2155,56 @@
     animation: p21_stamp_slam 0.26s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   @keyframes p21_stamp_slam {
-    0% { opacity: 0; transform: translateY(-50%) rotate(-8deg) scale(1.65); }
-    42% { opacity: 1; transform: translateY(-50%) rotate(-8deg) scale(0.95); }
-    74% { opacity: 1; transform: translateY(-50%) rotate(-8deg) scale(1.015); }
-    100% { opacity: 1; transform: translateY(-50%) rotate(-8deg) scale(1); }
+    0% { opacity: 0; transform: rotate(-8deg) scale(1.65); }
+    42% { opacity: 1; transform: rotate(-8deg) scale(0.95); }
+    74% { opacity: 1; transform: rotate(-8deg) scale(1.015); }
+    100% { opacity: 1; transform: rotate(-8deg) scale(1); }
   }
   #p21 .halo {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 820px;
-    height: 820px;
+    width: 780px;
+    height: 780px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,85,0,0.16) 0%, rgba(255,85,0,0.05) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,85,0,0.2) 0%, rgba(255,85,0,0.06) 42%, transparent 72%);
     pointer-events: none;
   }
   #p21 .stamp {
-    width: 660px;
-    height: 250px;
+    width: 610px;
+    height: 228px;
     border-radius: 18px;
-    border: 14px solid var(--orange);
+    border: 13px solid var(--orange);
+    background: rgba(12, 10, 10, 0.42);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 0 60px rgba(255,85,0,0.45), inset 0 0 40px rgba(255,85,0,0.25);
+    box-shadow: 0 0 60px rgba(255,85,0,0.5), inset 0 0 40px rgba(255,85,0,0.28);
   }
   #p21 .stamp::before {
     content: "";
     position: absolute;
-    inset: 14px;
+    inset: 13px;
     border-radius: 8px;
     border: 3px solid var(--orange);
     opacity: 0.9;
   }
   #p21 .stamp-text {
     color: var(--orange);
-    font-size: 100px;
+    font-size: 92px;
     font-weight: 900;
     line-height: 1;
     text-align: center;
     letter-spacing: 0.08em;
     white-space: nowrap;
     margin-right: -0.08em;
-    text-shadow: 0 0 30px rgba(255,85,0,0.55);
+    text-shadow: 0 0 30px rgba(255,85,0,0.58);
   }
   #p21 .grain {
     position: absolute;
-    inset: -14px;
+    inset: -13px;
     border-radius: 18px;
     background: radial-gradient(circle at 30% 70%, rgba(10,10,11,0.55) 0 3px, transparent 4px),
                 radial-gradient(circle at 72% 24%, rgba(10,10,11,0.5) 0 2px, transparent 3px),
@@ -1977,16 +2213,37 @@
   }
 </style>
 <section id="p21" class="slide dark" data-ch="终章 · 表演系" data-cue="drums" data-chapter="终">
-  <div class="grid"></div>
+  <canvas class="p21-world" width="1920" height="1080"></canvas>
+  <div class="p21-scrim"></div>
+  <div class="p21-vignette"></div>
+  <div class="p21-speedlines"></div>
+  <div class="p21-tags">
+    <div class="tag turn">
+      <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">行业拐点</span></div>
+    </div>
+    <div class="tag alert">
+      <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">电量告急</span></div>
+    </div>
+    <div class="tag rival">
+      <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">传统慢充</span></div>
+      <div class="tag-bar"><div class="tag-fill"></div></div>
+      <div class="tag-sub">充满需 8 小时</div>
+    </div>
+    <div class="tag us">
+      <div class="tag-head"><span class="tag-dot"></span><span class="tag-title">桢昱烽闪充</span></div>
+      <div class="tag-bar"><div class="tag-fill"></div></div>
+      <div class="tag-sub">3 分钟满电</div>
+    </div>
+  </div>
   <div class="chrome-ch">终章 · 表演系</div>
   <div class="words">
     <div class="streaks">
-      <div class="s s-r1" style="top:46px;left:-40px;width:460px"></div>
-      <div class="s s-r1" style="top:96px;left:30px;width:300px"></div>
-      <div class="s s-r1" style="top:150px;left:-80px;width:400px"></div>
-      <div class="s s-r2" style="top:236px;left:-20px;width:520px"></div>
-      <div class="s s-r2" style="top:292px;left:60px;width:280px"></div>
-      <div class="s s-r2" style="top:344px;left:-60px;width:440px"></div>
+      <div class="s s-r1" style="top:36px;left:-40px;width:420px"></div>
+      <div class="s s-r1" style="top:80px;left:24px;width:280px"></div>
+      <div class="s s-r1" style="top:124px;left:-70px;width:360px"></div>
+      <div class="s s-r2" style="top:194px;left:-20px;width:460px"></div>
+      <div class="s s-r2" style="top:238px;left:50px;width:260px"></div>
+      <div class="s s-r2" style="top:280px;left:-50px;width:400px"></div>
     </div>
     <div class="row r1">属性定位</div>
     <div class="row r2">弯道超车</div>
@@ -2147,64 +2404,328 @@
 </section>
 
 <style>
-  #p23 .bg-img {
+  #p23 .p23-cam {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 1;
+    pointer-events: none;
+    transform-origin: 960px 100px;
     transform: scale(1);
-    transform-origin: 50% 38%;
     will-change: transform;
   }
-  #p23.active .bg-img {
-    animation: p23_kenburns 14s ease-out forwards;
+  #p23.active .p23-cam {
+    animation: p23_kenburns 16s ease-out forwards;
   }
   @keyframes p23_kenburns {
     from { transform: scale(1); }
     to   { transform: scale(1.05); }
   }
+  #p23 .p23-dark {
+    z-index: 1;
+    pointer-events: none;
+  }
+  #p23 .p23-litcity {
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    -webkit-mask-image: radial-gradient(circle at 960px 838px, #000 var(--r, 0px), transparent calc(var(--r, 0px) + 260px));
+    mask-image: radial-gradient(circle at 960px 838px, #000 var(--r, 0px), transparent calc(var(--r, 0px) + 260px));
+  }
+  #p23 .p23-littower {
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    clip-path: polygon(960px 52px, 980px 96px, 970px 140px, 1009px 154px, 1020px 280px, 1035px 838px, 885px 838px, 900px 280px, 911px 154px, 950px 140px, 940px 96px);
+    -webkit-mask-image: linear-gradient(0deg, #000 0, #000 var(--h, 0px), transparent calc(var(--h, 0px) + 40px));
+    mask-image: linear-gradient(0deg, #000 0, #000 var(--h, 0px), transparent calc(var(--h, 0px) + 40px));
+  }
+  #p23 .p23-front-clip {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    clip-path: polygon(960px 52px, 980px 96px, 970px 140px, 1009px 154px, 1020px 280px, 1035px 838px, 885px 838px, 900px 280px, 911px 154px, 950px 140px, 940px 96px);
+  }
+  #p23 .p23-front {
+    position: absolute;
+    left: 0;
+    top: 1080px;
+    width: 100%;
+    height: 22px;
+    opacity: 0;
+    pointer-events: none;
+    background: linear-gradient(0deg, transparent, rgba(255,240,215,1), transparent);
+    box-shadow: 0 0 28px 8px rgba(255,120,40,0.8);
+    filter: blur(3px);
+  }
+  #p23 .p23-bloom {
+    z-index: 5;
+    pointer-events: none;
+    filter: blur(14px) brightness(1.5);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  #p23.p23-on .p23-bloom {
+    opacity: 0.32;
+  }
+  #p23 .p23-sky {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    background: radial-gradient(ellipse 52% 38% at 960px 100px, rgba(255,160,72,0.22) 0%, rgba(255,105,30,0.08) 46%, transparent 78%);
+  }
+  #p23.p23-on .p23-sky {
+    opacity: 1;
+  }
+  #p23 .p23-fog {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 220px;
+    height: 520px;
+    z-index: 6;
+    overflow: hidden;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.12;
+    filter: none;
+    transition: opacity 1.6s ease, filter 1.6s ease;
+  }
+  #p23.p23-on .p23-fog {
+    opacity: 0.28;
+    filter: sepia(0.4) saturate(1.6) hue-rotate(-10deg);
+  }
+  #p23 .p23-fog i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4800px;
+    height: 520px;
+    display: block;
+    background: url('assets/p23_fog.png') repeat-x 0 0 / 2400px 520px;
+    will-change: transform;
+  }
+  #p23 .p23-fog i.f1 {
+    animation: p23fogA 70s linear infinite;
+  }
+  #p23 .p23-fog i.f2 {
+    opacity: 0.65;
+    animation: p23fogB 110s linear infinite;
+  }
+  @keyframes p23fogA {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-2400px, 0, 0); }
+  }
+  @keyframes p23fogB {
+    from { transform: translate3d(-2400px, 0, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
+  #p23 .p23-search {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.6s ease;
+  }
+  #p23 .p23-search.lit {
+    opacity: 0.70;
+  }
+  #p23 .p23-search i {
+    position: absolute;
+    display: block;
+    width: 260px;
+    height: 1300px;
+    left: 830px;
+    top: -1200px;
+    transform-origin: 50% 100%;
+    clip-path: polygon(48% 100%, 52% 100%, 100% 0, 0 0);
+    background: linear-gradient(0deg, rgba(255,226,170,0.55), rgba(255,200,130,0.10) 70%, transparent);
+    will-change: transform;
+  }
+  #p23 .p23-search.lit i:first-child {
+    animation: p23sweepA 7s ease-in-out infinite alternate;
+  }
+  #p23 .p23-search.lit i:last-child {
+    animation: p23sweepB 9s ease-in-out infinite alternate;
+  }
+  @keyframes p23sweepA {
+    from { transform: rotate(-55deg); }
+    to   { transform: rotate(35deg); }
+  }
+  @keyframes p23sweepB {
+    from { transform: rotate(50deg); }
+    to   { transform: rotate(-30deg); }
+  }
+  #p23 .p23-core {
+    position: absolute;
+    left: 947px;
+    top: 87px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    z-index: 8;
+    pointer-events: none;
+    background: #FFFFFF;
+    box-shadow: 0 0 30px 12px rgba(255,220,160,0.9), 0 0 90px 40px rgba(255,120,40,0.45);
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 1.6, 0.4, 1);
+    will-change: transform, opacity;
+  }
+  #p23 .p23-core.lit {
+    opacity: 1;
+    transform: scale(1);
+    animation: p23pulse 2.2s ease-in-out 0.5s infinite;
+  }
+  @keyframes p23pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.18); }
+  }
+  #p23 .p23-core .streak {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 900px;
+    height: 3px;
+    margin-left: -450px;
+    margin-top: -1.5px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(255,214,160,0.9), transparent);
+    filter: blur(1.5px);
+    transform: scaleX(0.8);
+    will-change: transform;
+  }
+  #p23 .p23-core.lit .streak {
+    animation: p23streak 2.2s ease-in-out 0.5s infinite;
+  }
+  @keyframes p23streak {
+    0%, 100% { transform: scaleX(0.8); }
+    50%      { transform: scaleX(1.1); }
+  }
+  #p23 .p23-led {
+    position: absolute;
+    left: 941px;
+    top: 374px;
+    width: 38px;
+    height: 199px;
+    z-index: 9;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    font-family: var(--sans);
+    font-weight: 900;
+    color: #FFE7C2;
+    text-shadow: 0 0 8px rgba(255,170,80,0.95), 0 0 24px rgba(255,100,20,0.7);
+  }
+  #p23 .p23-led .ln {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    line-height: 1.08;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #p23 .p23-led .ln.a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #p23 .p23-led .ln.b {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  #p23 .p23-led.flip .ln.a {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  #p23 .p23-led.flip .ln.b {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #p23 .p23-led span {
+    display: block;
+    opacity: 0;
+    text-align: center;
+  }
+  #p23 .p23-led span.on {
+    opacity: 1;
+    animation: p23ledOn 0.12s linear forwards;
+  }
+  @keyframes p23ledOn {
+    0%   { opacity: 0; }
+    35%  { opacity: 0.95; }
+    65%  { opacity: 0.45; }
+    100% { opacity: 1; }
+  }
+  #p23 .p23-eagles {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 6;
+    pointer-events: none;
+  }
   #p23 .vig {
     position: absolute;
     inset: 0;
+    z-index: 8;
     pointer-events: none;
     background: radial-gradient(ellipse at 50% 35%, rgba(0,0,0,0) 40%, rgba(0,0,0,.45) 100%);
+  }
+  #p23 .scrim-bottom {
+    z-index: 9;
+    pointer-events: none;
   }
   #p23 .scrim-deep {
     position: absolute;
     inset: 0;
+    z-index: 10;
     pointer-events: none;
     background: linear-gradient(0deg, rgba(10,10,11,.96) 0%, rgba(10,10,11,.7) 18%, rgba(10,10,11,0) 42%);
   }
-  #p23 .sign-zone {
-    position: absolute;
-    left: 756px;
-    top: 154px;
-    width: 408px;
-    height: 131px;
-    border-radius: 6px;
-    pointer-events: none;
-    z-index: 4;
-  }
   #p23 .fx-sweep-beam {
-    width: 54%;
+    width: 60%;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 224, 178, 0.08) 22%,
-      rgba(255, 244, 220, 0.44) 50%,
-      rgba(255, 160, 72, 0.18) 76%,
+      rgba(255, 224, 178, 0.10) 22%,
+      rgba(255, 244, 220, 0.55) 50%,
+      rgba(255, 160, 72, 0.22) 76%,
       transparent 100%
     );
-    animation-duration: 0.74s;
+    animation-duration: 0.72s;
     animation-timing-function: cubic-bezier(0.25, 0.85, 0.3, 1);
   }
   #p23 .copy {
     position: absolute;
     left: 120px;
     bottom: 132px;
-    z-index: 5;
+    z-index: 12;
+    pointer-events: none;
   }
   #p23 .rule {
     width: 64px;
     height: 2px;
     background: rgba(255,255,255,.5);
     margin-bottom: 36px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #p23 .copy .rule.p23-wait,
+  #p23 .copy h1.p23-wait,
+  #p23 .copy .t-sub.p23-wait {
+    opacity: 0 !important;
+    transform: translateY(14px) !important;
   }
   #p23 .copy h1 {
     font-size: 112px;
@@ -2217,6 +2738,14 @@
     font-weight: 300;
     margin: 0 .18em;
   }
+  #p23.p23-on .copy h1 .orange {
+    text-shadow: 0 0 28px rgba(255,85,0,0.45);
+    animation: p23orangeGlow 3.2s ease-in-out infinite;
+  }
+  @keyframes p23orangeGlow {
+    0%, 100% { text-shadow: 0 0 24px rgba(255,85,0,0.40); }
+    50%      { text-shadow: 0 0 42px rgba(255,110,20,0.68); }
+  }
   #p23 .copy .t-sub {
     margin-top: 28px;
     font-size: 24px;
@@ -2225,16 +2754,30 @@
   }
 </style>
 <section id="p23" class="slide dark on-photo" data-ch="终章 · 表演系" data-cue="anthem">
-  <img class="fullbleed bg-img" src="assets/founder_hq_eagles.jpg" alt="桢昱烽动力总部灯塔">
+  <div class="p23-cam" aria-hidden="true">
+    <img class="fullbleed p23-dark" src="assets/founder_hq_brand_dark.jpg" alt="桢昱烽动力总部夜幕">
+    <img class="fullbleed p23-litcity" src="assets/founder_hq_brand_lit.jpg" alt="全城点亮">
+    <img class="fullbleed p23-littower" src="assets/founder_hq_brand_lit.jpg" alt="总部大楼充能点亮">
+    <div class="p23-front-clip"><div class="p23-front"></div></div>
+    <img class="fullbleed p23-bloom" src="assets/founder_hq_brand_lit.jpg" alt="">
+    <div class="p23-sky"></div>
+    <div class="p23-fog"><i class="f1"></i><i class="f2"></i></div>
+    <div class="p23-search"><i></i><i></i></div>
+    <div class="p23-core"><div class="streak"></div></div>
+    <div class="p23-led">
+      <div class="ln a"></div>
+      <div class="ln b"></div>
+    </div>
+  </div>
+  <canvas class="p23-eagles" width="1920" height="1080" aria-hidden="true"></canvas>
   <div class="vig"></div>
   <div class="scrim-bottom"></div>
   <div class="scrim-deep"></div>
-  <div class="sign-zone" aria-hidden="true"></div>
   <div class="chrome-ch">终章 · 表演系</div>
   <div class="copy">
-    <div class="rule rv d1"></div>
-    <h1 class="rv d1">桢昱烽动力<span class="dot">·</span><span class="orange">闪充领导者</span></h1>
-    <div class="t-sub rv d2">群鹰归巢 · 灯塔在此</div>
+    <div class="rule p23-wait"></div>
+    <h1 class="p23-wait">桢昱烽动力<span class="dot">·</span><span class="orange">闪充领导者</span></h1>
+    <div class="t-sub p23-wait">群鹰归巢 · 灯塔在此</div>
   </div>
   <div class="chrome-no">23 / 25</div>
 </section>
@@ -4434,6 +4977,7 @@
   (function () {
     let timers = [];
     let lightningCtrl = null;
+    let particles = null;
 
     function clearTimers() {
       for (let i = 0; i < timers.length; i++) clearTimeout(timers[i]);
@@ -4448,12 +4992,21 @@
         } catch (_) {}
         lightningCtrl = null;
       }
+      if (particles) {
+        try {
+          particles.stop();
+        } catch (_) {}
+        particles = null;
+      }
+      if (window.Deck && Deck.score && typeof Deck.score.duck === 'function') {
+        Deck.score.duck(false);
+      }
       if (!el) return;
-      const leftover = el.querySelectorAll('.fx-lightning-svg');
+      const leftover = el.querySelectorAll('.fx-lightning-svg, .fx-sparks-layer');
       for (let i = 0; i < leftover.length; i++) {
         if (leftover[i].parentNode) leftover[i].parentNode.removeChild(leftover[i]);
       }
-      el.classList.remove('is-lit', 'is-struck', 'is-sub-in');
+      el.classList.remove('is-lit', 'is-struck', 'is-sub-in', 'is-glory');
     }
 
     Deck.register('p20', {
@@ -4474,8 +5027,34 @@
         }, 450));
 
         timers.push(setTimeout(() => {
+          Deck.sfx('glory');
+          Deck.score.duck(true);
+        }, 500));
+
+        timers.push(setTimeout(() => {
+          Deck.sfx('ignite');
+        }, 530));
+
+        timers.push(setTimeout(() => {
           el.classList.add('is-sub-in');
         }, 780));
+
+        timers.push(setTimeout(() => {
+          Deck.fx.shake(0.35);
+        }, 1700));
+
+        timers.push(setTimeout(() => {
+          el.classList.add('is-glory');
+          const orangeEl = el.querySelector('.line2 .orange');
+          if (orangeEl) {
+            Deck.fx.sparks(orangeEl, { count: 22, color: '#FFD08A' });
+          }
+          particles = Deck.fx.particles(el, 'gold');
+        }, 3900));
+
+        timers.push(setTimeout(() => {
+          Deck.score.duck(false);
+        }, 7200));
       },
       leave(el) {
         cleanup(el);
@@ -4487,111 +5066,1665 @@
 <script>/* P21 */
 
   (function () {
-    let timers = [];
-    let onKeyDown = null;
+    const W = 1920;
+    const H = 1080;
+    const FOV_RAD = (55 * Math.PI) / 180;
+    const FOCAL_BASE = (H * 0.5) / Math.tan(FOV_RAD * 0.5);
+    const NEAR_Z = 1.0;
 
-    function clearTimers() {
-      for (let i = 0; i < timers.length; i++) clearTimeout(timers[i]);
-      timers = [];
+    const STRAIGHT1_LEN = 300;
+    const ARC_R = 120;
+    const ARC_LEN = ARC_R * Math.PI * 0.5;
+    const STRAIGHT2_LEN = 2000;
+    const TOTAL_LEN = STRAIGHT1_LEN + ARC_LEN + STRAIGHT2_LEN;
+    const APEX_S = STRAIGHT1_LEN + ARC_LEN * 0.5;
+    const SLOW_BAY_S = 404;
+    const SLOW_BAY_OFFSET = 10.8;
+    const FLASH_POST_S = 395;
+    const FLASH_POST_OFFSET = -9.6;
+
+    // Precompute 1m track centerline samples
+    const track = [];
+    (function buildTrack() {
+      const n = Math.floor(TOTAL_LEN) + 1;
+      for (let s = 0; s <= n; s++) {
+        let x, z, tx, tz, kappa;
+        if (s <= STRAIGHT1_LEN) {
+          x = 0;
+          z = s;
+          tx = 0;
+          tz = 1;
+          kappa = 0;
+        } else if (s <= STRAIGHT1_LEN + ARC_LEN) {
+          const th = (s - STRAIGHT1_LEN) / ARC_R;
+          x = ARC_R * (1 - Math.cos(th));
+          z = STRAIGHT1_LEN + ARC_R * Math.sin(th);
+          tx = Math.sin(th);
+          tz = Math.cos(th);
+          kappa = 1 / ARC_R;
+        } else {
+          const u = s - (STRAIGHT1_LEN + ARC_LEN);
+          x = ARC_R + u;
+          z = STRAIGHT1_LEN + ARC_R;
+          tx = 1;
+          tz = 0;
+          kappa = 0;
+        }
+        // Outward normal (-tz, tx): left/outside of the right turn
+        track.push({ s, x, z, tx, tz, nx: -tz, nz: tx, kappa });
+      }
+    })();
+
+    const _sampleOut = { s: 0, x: 0, z: 0, tx: 0, tz: 1, nx: -1, nz: 0, kappa: 0 };
+    function sampleTrack(sVal, out) {
+      const target = out || _sampleOut;
+      const sc = sVal < 0 ? 0 : sVal > TOTAL_LEN ? TOTAL_LEN : sVal;
+      const i0 = Math.floor(sc);
+      const i1 = i0 + 1 < track.length ? i0 + 1 : i0;
+      const f = sc - i0;
+      const a = track[i0];
+      const b = track[i1];
+      let tx = a.tx + (b.tx - a.tx) * f;
+      let tz = a.tz + (b.tz - a.tz) * f;
+      const len = Math.hypot(tx, tz) || 1;
+      tx /= len;
+      tz /= len;
+      target.s = sc;
+      target.x = a.x + (b.x - a.x) * f;
+      target.z = a.z + (b.z - a.z) * f;
+      target.tx = tx;
+      target.tz = tz;
+      target.nx = -tz;
+      target.nz = tx;
+      target.kappa = a.kappa + (b.kappa - a.kappa) * f;
+      return target;
     }
 
-    function clearSparks(el) {
-      if (!el) return;
-      const layers = el.querySelectorAll('.fx-sparks-layer');
+    function innerLaneOffset(s) {
+      if (s < 265 || s > 525) return -3.5;
+      const u = (s - 265) / 260;
+      const bell = Math.sin(Math.PI * u);
+      return -3.5 - 1.5 * bell * bell;
+    }
+
+    // Pre-generate offscreen radial glow sprites & city skyline (zero shadowBlur in loop)
+    function makeGlowSprite(size, stops) {
+      const c = document.createElement('canvas');
+      c.width = size;
+      c.height = size;
+      const gctx = c.getContext('2d');
+      const r = size * 0.5;
+      const g = gctx.createRadialGradient(r, r, 0, r, r, r);
+      for (let i = 0; i < stops.length; i++) {
+        g.addColorStop(stops[i][0], stops[i][1]);
+      }
+      gctx.fillStyle = g;
+      gctx.fillRect(0, 0, size, size);
+      return c;
+    }
+
+    const sprOrangeGlow = makeGlowSprite(160, [
+      [0.0, 'rgba(255, 252, 240, 1.0)'],
+      [0.14, 'rgba(255, 168, 76, 0.92)'],
+      [0.36, 'rgba(255, 85, 0, 0.48)'],
+      [0.7, 'rgba(255, 68, 0, 0.12)'],
+      [1.0, 'rgba(255, 55, 0, 0)']
+    ]);
+    const sprWhiteGlow = makeGlowSprite(128, [
+      [0.0, 'rgba(245, 250, 255, 0.92)'],
+      [0.18, 'rgba(195, 210, 232, 0.45)'],
+      [0.52, 'rgba(130, 150, 180, 0.14)'],
+      [1.0, 'rgba(100, 120, 150, 0)']
+    ]);
+    const sprRedGlow = makeGlowSprite(128, [
+      [0.0, 'rgba(255, 220, 216, 0.95)'],
+      [0.2, 'rgba(255, 59, 48, 0.72)'],
+      [0.55, 'rgba(255, 35, 24, 0.22)'],
+      [1.0, 'rgba(255, 20, 10, 0)']
+    ]);
+    const sprBlueDim = makeGlowSprite(112, [
+      [0.0, 'rgba(210, 225, 245, 0.6)'],
+      [0.28, 'rgba(130, 155, 190, 0.24)'],
+      [1.0, 'rgba(90, 110, 140, 0)']
+    ]);
+    const sprSpark = makeGlowSprite(40, [
+      [0.0, 'rgba(255, 255, 235, 1.0)'],
+      [0.32, 'rgba(255, 145, 45, 0.85)'],
+      [1.0, 'rgba(255, 70, 0, 0)']
+    ]);
+
+    // Pre-generate static city skyline strip (3072x360) for parallax horizon
+    const SKYLINE_W = 3072;
+    const SKYLINE_H = 340;
+    const skylineCanvas = (function buildSkyline() {
+      const c = document.createElement('canvas');
+      c.width = SKYLINE_W;
+      c.height = SKYLINE_H;
+      const sctx = c.getContext('2d');
+      let seed = 48271;
+      function rnd() {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      }
+      // Subtle horizon orange atmospheric mist band
+      const mist = sctx.createLinearGradient(0, SKYLINE_H * 0.35, 0, SKYLINE_H);
+      mist.addColorStop(0, 'rgba(255, 85, 0, 0)');
+      mist.addColorStop(0.7, 'rgba(255, 85, 0, 0.10)');
+      mist.addColorStop(1, 'rgba(255, 92, 20, 0.18)');
+      sctx.fillStyle = mist;
+      sctx.fillRect(0, 0, SKYLINE_W, SKYLINE_H);
+
+      // Draw looping building silhouettes + static window light strips
+      let bx = 0;
+      const buildings = [];
+      while (bx < SKYLINE_W) {
+        const bw = 24 + Math.floor(rnd() * 58);
+        const bh = 38 + Math.floor(Math.pow(rnd(), 1.35) * 195);
+        buildings.push({ x: bx, w: bw, h: bh, r1: rnd(), r2: rnd() });
+        bx += bw + 4 + Math.floor(rnd() * 16);
+      }
+      for (let i = 0; i < buildings.length; i++) {
+        const b = buildings[i];
+        const by = SKYLINE_H - b.h;
+        sctx.fillStyle = b.r1 > 0.5 ? '#0b0d14' : '#090b10';
+        sctx.fillRect(b.x, by, b.w, b.h);
+        if (b.h > 85 && b.r2 > 0.45) {
+          // Thin horizontal crown light or vertical window band
+          const warm = b.r1 > 0.72;
+          sctx.fillStyle = warm ? 'rgba(255, 130, 55, 0.24)' : 'rgba(155, 185, 225, 0.16)';
+          sctx.fillRect(b.x + 3, by + 5, b.w - 6, 2);
+          const rows = Math.floor((b.h - 24) / 14);
+          for (let ry = 0; ry < rows; ry++) {
+            if (rnd() > 0.56) {
+              sctx.fillStyle = warm && rnd() > 0.65
+                ? 'rgba(255, 150, 70, 0.18)'
+                : 'rgba(170, 196, 230, 0.11)';
+              const wx = b.x + 5 + Math.floor(rnd() * Math.max(4, b.w - 14));
+              const ww = Math.min(b.w - 8, 6 + Math.floor(rnd() * 14));
+              sctx.fillRect(wx, by + 14 + ry * 14, ww, 2);
+            }
+          }
+        }
+      }
+      return c;
+    })();
+
+    // Camera state and basis
+    const cam = {
+      cx: -160, cy: 120, cz: 70,
+      lx: -20, ly: 0, lz: 290,
+      zoom: 1.0,
+      rx: 1, ry: 0, rz: 0,
+      ux: 0, uy: 1, uz: 0,
+      fx: 0, fy: 0, fz: 1,
+      focal: FOCAL_BASE
+    };
+
+    function updateCamBasis() {
+      let fx = cam.lx - cam.cx;
+      let fy = cam.ly - cam.cy;
+      let fz = cam.lz - cam.cz;
+      const fl = Math.hypot(fx, fy, fz) || 1;
+      fx /= fl; fy /= fl; fz /= fl;
+      // right = normalize(cross(worldUp(0,1,0), fwd)) = (fz, 0, -fx)
+      let rx = fz;
+      let ry = 0;
+      let rz = -fx;
+      const rl = Math.hypot(rx, rz) || 1;
+      rx /= rl; rz /= rl;
+      // up = cross(fwd, right)
+      const ux = fy * rz - fz * ry;
+      const uy = fz * rx - fx * rz;
+      const uz = fx * ry - fy * rx;
+      cam.fx = fx; cam.fy = fy; cam.fz = fz;
+      cam.rx = rx; cam.ry = ry; cam.rz = rz;
+      cam.ux = ux; cam.uy = uy; cam.uz = uz;
+      cam.focal = FOCAL_BASE * cam.zoom;
+    }
+
+    function toCam(wx, wy, wz, out) {
+      const dx = wx - cam.cx;
+      const dy = wy - cam.cy;
+      const dz = wz - cam.cz;
+      out.x = dx * cam.rx + dy * cam.ry + dz * cam.rz;
+      out.y = dx * cam.ux + dy * cam.uy + dz * cam.uz;
+      out.z = dx * cam.fx + dy * cam.fy + dz * cam.fz;
+    }
+
+    function projectWorld(wx, wy, wz, out) {
+      const dx = wx - cam.cx;
+      const dy = wy - cam.cy;
+      const dz = wz - cam.cz;
+      const cz = dx * cam.fx + dy * cam.fy + dz * cam.fz;
+      if (cz < NEAR_Z) return false;
+      const cx = dx * cam.rx + dy * cam.ry + dz * cam.rz;
+      const cy = dx * cam.ux + dy * cam.uy + dz * cam.uz;
+      const scale = cam.focal / cz;
+      out.sx = W * 0.5 + (cx * scale);
+      out.sy = H * 0.5 - (cy * scale);
+      out.cz = cz;
+      out.scale = scale;
+      return true;
+    }
+
+    // Reusable buffers for near-plane polygon & line clipping
+    const _polyIn = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 },
+                     { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }];
+    const _polyOut = [{ x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 },
+                      { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }, { x: 0, y: 0, z: 0 }];
+
+    function clipQuadAndPath(ctx, w0x, w0y, w0z, w1x, w1y, w1z, w2x, w2y, w2z, w3x, w3y, w3z) {
+      toCam(w0x, w0y, w0z, _polyIn[0]);
+      toCam(w1x, w1y, w1z, _polyIn[1]);
+      toCam(w2x, w2y, w2z, _polyIn[2]);
+      toCam(w3x, w3y, w3z, _polyIn[3]);
+      if (_polyIn[0].z < NEAR_Z && _polyIn[1].z < NEAR_Z && _polyIn[2].z < NEAR_Z && _polyIn[3].z < NEAR_Z) {
+        return false;
+      }
+      let outLen = 0;
+      if (_polyIn[0].z >= NEAR_Z && _polyIn[1].z >= NEAR_Z && _polyIn[2].z >= NEAR_Z && _polyIn[3].z >= NEAR_Z) {
+        ctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+          const p = _polyIn[i];
+          const sc = cam.focal / p.z;
+          const sx = W * 0.5 + p.x * sc;
+          const sy = H * 0.5 - p.y * sc;
+          if (i === 0) ctx.moveTo(sx, sy);
+          else ctx.lineTo(sx, sy);
+        }
+        ctx.closePath();
+        return true;
+      }
+      for (let i = 0; i < 4; i++) {
+        const cur = _polyIn[i];
+        const nxt = _polyIn[(i + 1) & 3];
+        const inCur = cur.z >= NEAR_Z;
+        const inNxt = nxt.z >= NEAR_Z;
+        if (inCur && inNxt) {
+          const o = _polyOut[outLen++];
+          o.x = nxt.x; o.y = nxt.y; o.z = nxt.z;
+        } else if (inCur && !inNxt) {
+          const t = (NEAR_Z - cur.z) / (nxt.z - cur.z);
+          const o = _polyOut[outLen++];
+          o.x = cur.x + (nxt.x - cur.x) * t;
+          o.y = cur.y + (nxt.y - cur.y) * t;
+          o.z = NEAR_Z;
+        } else if (!inCur && inNxt) {
+          const t = (NEAR_Z - cur.z) / (nxt.z - cur.z);
+          const o1 = _polyOut[outLen++];
+          o1.x = cur.x + (nxt.x - cur.x) * t;
+          o1.y = cur.y + (nxt.y - cur.y) * t;
+          o1.z = NEAR_Z;
+          const o2 = _polyOut[outLen++];
+          o2.x = nxt.x; o2.y = nxt.y; o2.z = nxt.z;
+        }
+      }
+      if (outLen < 3) return false;
+      ctx.beginPath();
+      for (let i = 0; i < outLen; i++) {
+        const p = _polyOut[i];
+        const sc = cam.focal / p.z;
+        const sx = W * 0.5 + p.x * sc;
+        const sy = H * 0.5 - p.y * sc;
+        if (i === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      }
+      ctx.closePath();
+      return true;
+    }
+
+    const _cA = { x: 0, y: 0, z: 0 };
+    const _cB = { x: 0, y: 0, z: 0 };
+    function strokeLine3D(ctx, ax, ay, az, bx, by, bz) {
+      toCam(ax, ay, az, _cA);
+      toCam(bx, by, bz, _cB);
+      if (_cA.z < NEAR_Z && _cB.z < NEAR_Z) return;
+      if (_cA.z < NEAR_Z) {
+        const t = (NEAR_Z - _cA.z) / (_cB.z - _cA.z);
+        _cA.x += (_cB.x - _cA.x) * t;
+        _cA.y += (_cB.y - _cA.y) * t;
+        _cA.z = NEAR_Z;
+      } else if (_cB.z < NEAR_Z) {
+        const t = (NEAR_Z - _cB.z) / (_cA.z - _cB.z);
+        _cB.x += (_cA.x - _cB.x) * t;
+        _cB.y += (_cA.y - _cB.y) * t;
+        _cB.z = NEAR_Z;
+      }
+      const sA = cam.focal / _cA.z;
+      const sB = cam.focal / _cB.z;
+      ctx.beginPath();
+      ctx.moveTo(W * 0.5 + _cA.x * sA, H * 0.5 - _cA.y * sA);
+      ctx.lineTo(W * 0.5 + _cB.x * sB, H * 0.5 - _cB.y * sB);
+      ctx.stroke();
+    }
+
+    function fogRgb(r, g, b, dist, maxDist) {
+      const k = Math.max(0.08, Math.min(1, 1 - dist / maxDist));
+      const bgR = 9, bgG = 11, bgB = 16;
+      const rr = Math.round(bgR + (r - bgR) * k);
+      const gg = Math.round(bgG + (g - bgG) * k);
+      const bb = Math.round(bgB + (b - bgB) * k);
+      return 'rgb(' + rr + ',' + gg + ',' + bb + ')';
+    }
+
+    function clamp(v, lo, hi) {
+      return v < lo ? lo : v > hi ? hi : v;
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    // Main slide controller
+    const slide = document.getElementById('p21');
+    if (!slide) return;
+
+    const canvas = slide.querySelector('.p21-world');
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const tagTurn = slide.querySelector('.tag.turn');
+    const tagAlert = slide.querySelector('.tag.alert');
+    const tagRival = slide.querySelector('.tag.rival');
+    const tagUs = slide.querySelector('.tag.us');
+    const rivalFill = tagRival ? tagRival.querySelector('.tag-fill') : null;
+    const usFill = tagUs ? tagUs.querySelector('.tag-fill') : null;
+    const sealEl = slide.querySelector('.stamp') || slide.querySelector('.stamp-wrap');
+
+    let rafId = null;
+    let lastTs = 0;
+    let timers = [];
+    let motorLoop = null;
+    let stage = 0; // 0=standby, 1=beat1, 2=beat2, 3=beat3
+    let standbyElapsed = 0;
+    let beat1Elapsed = 0;
+    let beat2RealElapsed = 0;
+    let beat2Started = false;
+    let beat2Done = false;
+    let timeScale = 1.0;
+    let timeScaleTarget = 1.0;
+    let camMode = 'wide';
+    let targetZoom = 1.0;
+    let pathReveal = 0;
+    let pathTarget = 0;
+
+    const rival = {
+      s: 135, offset: 3.5, v: 6, wx: 0, wz: 135, tx: 0, tz: 1, nx: -1, nz: 0,
+      lean: 0, charge: 30, braking: false, parked: false, trail: []
+    };
+    const us = {
+      s: 110, offset: -3.5, v: 6, wx: 0, wz: 110, tx: 0, tz: 1, nx: -1, nz: 0,
+      lean: 0, charge: 10, boosting: false, charged: false, trail: []
+    };
+
+    let sparks3D = [];
+    let shockwaves = [];
+    const _tp = { s: 0, x: 0, z: 0, tx: 0, tz: 1, nx: -1, nz: 0, kappa: 0 };
+    const _tp2 = { s: 0, x: 0, z: 0, tx: 0, tz: 1, nx: -1, nz: 0, kappa: 0 };
+    const _proj = { sx: 0, sy: 0, cz: 0, scale: 1 };
+    const _proj2 = { sx: 0, sy: 0, cz: 0, scale: 1 };
+
+    function addTimer(fn, ms) {
+      const id = setTimeout(fn, ms);
+      timers.push(id);
+      return id;
+    }
+
+    function clearAllTimers() {
+      for (let i = 0; i < timers.length; i++) clearTimeout(timers[i]);
+      timers.length = 0;
+    }
+
+    function clearSparksDom() {
+      const layers = slide.querySelectorAll('.fx-sparks-layer');
       for (let i = 0; i < layers.length; i++) {
         if (layers[i].parentNode) layers[i].parentNode.removeChild(layers[i]);
       }
     }
 
-    function resetState(el) {
-      if (!el) return;
-      el.classList.remove('is-s1', 'is-s2', 'is-stamped');
+    function updateBikeWorld(bike) {
+      sampleTrack(bike.s, _tp);
+      bike.wx = _tp.x + bike.offset * _tp.nx;
+      bike.wz = _tp.z + bike.offset * _tp.nz;
+      bike.tx = _tp.tx;
+      bike.tz = _tp.tz;
+      bike.nx = _tp.nx;
+      bike.nz = _tp.nz;
+      const targetLean = _tp.kappa * clamp(bike.v * 0.48, 0, 52);
+      bike.lean = lerp(bike.lean, targetLean, 0.25);
     }
 
-    function runBeat1(el) {
-      el.classList.add('is-s1');
+    function seedTrail(bike, count, spacing) {
+      bike.trail.length = 0;
+      for (let i = count; i >= 0; i--) {
+        const ss = Math.max(0, bike.s - i * spacing);
+        sampleTrack(ss, _tp);
+        const off = bike === us ? innerLaneOffset(ss) : bike.offset;
+        bike.trail.push({
+          x: _tp.x + off * _tp.nx,
+          z: _tp.z + off * _tp.nz,
+          boost: bike.boosting
+        });
+      }
+    }
+
+    function recordTrail(bike, maxPoints) {
+      const tr = bike.trail;
+      const last = tr.length ? tr[tr.length - 1] : null;
+      if (!last || Math.hypot(bike.wx - last.x, bike.wz - last.z) >= 0.75) {
+        tr.push({ x: bike.wx, z: bike.wz, boost: bike.boosting });
+        if (tr.length > maxPoints) tr.shift();
+      }
+    }
+
+    function spawnSparkBurst(count, intensity) {
+      for (let i = 0; i < count; i++) {
+        if (sparks3D.length > 140) sparks3D.shift();
+        const spread = (Math.random() - 0.5) * 0.9;
+        const speedBack = (12 + Math.random() * 24) * intensity;
+        sparks3D.push({
+          x: us.wx - us.tx * 1.1 + us.nx * (Math.random() - 0.5) * 0.4,
+          y: 0.35 + Math.random() * 0.45,
+          z: us.wz - us.tz * 1.1 + us.nz * (Math.random() - 0.5) * 0.4,
+          vx: -us.tx * speedBack + us.nx * spread * 10,
+          vy: 1.5 + Math.random() * 4.5,
+          vz: -us.tz * speedBack + us.nz * spread * 10,
+          life: 0,
+          maxLife: 0.35 + Math.random() * 0.42,
+          size: 0.32 + Math.random() * 0.42
+        });
+      }
+    }
+
+    function spawnShockwaves() {
+      sampleTrack(FLASH_POST_S, _tp);
+      const cx = _tp.x + -7.2 * _tp.nx;
+      const cz = _tp.z + -7.2 * _tp.nz;
+      shockwaves = [
+        { x: cx, z: cz, age: 0, delay: 0.0, dur: 0.62, maxR: 34 },
+        { x: cx, z: cz, age: 0, delay: 0.13, dur: 0.62, maxR: 38 },
+        { x: cx, z: cz, age: 0, delay: 0.26, dur: 0.65, maxR: 42 }
+      ];
+    }
+
+    function resetAllState() {
+      clearAllTimers();
+      clearSparksDom();
+      slide.classList.remove('is-s1', 'is-s2', 'is-stamped', 'is-boost');
+      if (tagTurn) tagTurn.classList.remove('is-on', 'is-show');
+      if (tagAlert) tagAlert.classList.remove('is-on', 'is-show');
+      if (tagRival) {
+        tagRival.classList.remove('is-low', 'is-parked', 'is-show');
+        tagRival.style.transform = '';
+      }
+      if (tagUs) {
+        tagUs.classList.remove('is-charged', 'is-show');
+        tagUs.style.transform = '';
+      }
+      if (tagTurn) tagTurn.style.transform = '';
+      if (tagAlert) tagAlert.style.transform = '';
+
+      stage = 0;
+      standbyElapsed = 0;
+      beat1Elapsed = 0;
+      beat2RealElapsed = 0;
+      beat2Started = false;
+      beat2Done = false;
+      timeScale = 1.0;
+      timeScaleTarget = 1.0;
+      camMode = 'wide';
+      targetZoom = 1.0;
+      cam.zoom = 1.0;
+      pathReveal = 0;
+      pathTarget = 0;
+
+      rival.s = 135;
+      rival.offset = 3.5;
+      rival.v = 6;
+      rival.lean = 0;
+      rival.charge = 30;
+      rival.braking = false;
+      rival.parked = false;
+      updateBikeWorld(rival);
+      seedTrail(rival, 14, 1.2);
+
+      us.s = 110;
+      us.offset = -3.5;
+      us.v = 6;
+      us.lean = 0;
+      us.charge = 10;
+      us.boosting = false;
+      us.charged = false;
+      updateBikeWorld(us);
+      seedTrail(us, 14, 1.2);
+
+      sparks3D = [];
+      shockwaves = [];
+
+      cam.cx = -165; cam.cy = 104; cam.cz = 62;
+      cam.lx = -20; cam.ly = 12; cam.lz = 325;
+      updateCamBasis();
+    }
+
+    // Desired camera calculation by mode
+    const _desiredCam = { cx: 0, cy: 0, cz: 0, lx: 0, ly: 0, lz: 0 };
+    function computeDesiredCamera() {
+      if (camMode === 'wide') {
+        const drift = Math.min(1, standbyElapsed * 0.08);
+        _desiredCam.cx = lerp(-165, -145, drift);
+        _desiredCam.cy = lerp(104, 96, drift);
+        _desiredCam.cz = lerp(62, 86, drift);
+        _desiredCam.lx = -20;
+        _desiredCam.ly = 12;
+        _desiredCam.lz = 325;
+        return;
+      }
+      if (camMode === 'chase') {
+        const focusS = us.s * 0.65 + rival.s * 0.35;
+        sampleTrack(focusS, _tp);
+        sampleTrack(Math.min(TOTAL_LEN, focusS + 40), _tp2);
+        // 28m high, 60m behind, 15m left (outward normal)
+        _desiredCam.cx = _tp.x - _tp.tx * 60 + _tp.nx * 15;
+        _desiredCam.cy = 28;
+        _desiredCam.cz = _tp.z - _tp.tz * 60 + _tp.nz * 15;
+        // Shift look slightly left so track sits cleanly in center-right away from left text
+        _desiredCam.lx = _tp2.x + _tp2.nx * 6;
+        _desiredCam.ly = 1.5;
+        _desiredCam.lz = _tp2.z + _tp2.nz * 6;
+        return;
+      }
+      if (camMode === 'low') {
+        const btT = clamp((beat2RealElapsed - 2.1) / 1.0, 0, 1);
+        const camS = lerp(371, 378, btT);
+        sampleTrack(camS, _tp);
+        // 6m high near inner apex looking closely at side-by-side flash-charge stagger
+        _desiredCam.cx = _tp.x - _tp.nx * 18.0;
+        _desiredCam.cy = 6.2;
+        _desiredCam.cz = _tp.z - _tp.nz * 18.0;
+        const lookS = lerp(398, 404, btT);
+        sampleTrack(lookS, _tp2);
+        // Bias look outward so Rival & Flash-Charge Pylon sit well right of left title
+        _desiredCam.lx = _tp2.x + _tp2.nx * 6.5;
+        _desiredCam.ly = 1.6;
+        _desiredCam.lz = _tp2.z + _tp2.nz * 6.5;
+        return;
+      }
+      if (camMode === 'boost') {
+        const bu = clamp((beat2RealElapsed - 3.1) / 1.5, 0, 1);
+        const focusS = Math.min(TOTAL_LEN, us.s - 10);
+        sampleTrack(focusS, _tp);
+        sampleTrack(Math.min(TOTAL_LEN, us.s + 28), _tp2);
+        _desiredCam.cx = _tp.x - _tp.tx * lerp(30, 56, bu) + _tp.nx * lerp(-8, 16, bu);
+        _desiredCam.cy = lerp(11, 26, bu);
+        _desiredCam.cz = _tp.z - _tp.tz * lerp(30, 56, bu) + _tp.nz * lerp(-8, 16, bu);
+        _desiredCam.lx = _tp2.x + _tp2.nx * 6;
+        _desiredCam.ly = 1.6;
+        _desiredCam.lz = _tp2.z + _tp2.nz * 6;
+        return;
+      }
+      // pull: 90m high, 160m behind, framing speeding US vs parked Rival in slow-charge bay
+      const followShift = Math.max(0, us.s - 820);
+      _desiredCam.cx = -84 + followShift;
+      _desiredCam.cy = 90;
+      _desiredCam.cz = 274;
+      _desiredCam.lx = 104 + followShift;
+      _desiredCam.ly = 4;
+      _desiredCam.lz = 396;
+    }
+
+    // Beat 2 exact deterministic kinematics
+    function stepBeat2Kinematics(dtReal, dtSim) {
+      const t = beat2RealElapsed;
+      // Time scale: 0.18 during [2.1, 3.1], smooth 0.15s recovery at 3.1s
+      if (t >= 2.1 && t < 3.1) {
+        timeScale = 0.18;
+      } else if (t >= 3.1 && t < 3.25) {
+        const p = (t - 3.1) / 0.15;
+        timeScale = lerp(0.18, 1.0, p);
+      } else {
+        timeScale = 1.0;
+      }
+
+      // Rival velocity & outer slow-charge bay pull-off
+      if (t < 1.4) {
+        const u = t / 1.4;
+        rival.v = 24 + 54 * 0.5 * (1 - Math.cos(Math.PI * u)) + 37.7 * Math.sin(Math.PI * u);
+        rival.offset = 3.5;
+        rival.charge = lerp(28, 14, u);
+      } else if (t < 2.1) {
+        const u = (t - 1.4) / 0.7;
+        rival.v = lerp(78, 68, u);
+        rival.offset = lerp(3.5, 7.6, u);
+        rival.charge = lerp(14, 11, u);
+      } else if (t < 3.95) {
+        const u = clamp((t - 2.1) / 1.85, 0, 1);
+        const slowFactor = Math.max(0, 1 - u);
+        rival.v = 68 * slowFactor * slowFactor;
+        rival.offset = lerp(7.6, SLOW_BAY_OFFSET, Math.sin(u * Math.PI * 0.5));
+        rival.charge = 10;
+      } else {
+        rival.v = 0;
+        rival.s = SLOW_BAY_S;
+        rival.offset = SLOW_BAY_OFFSET;
+        rival.charge = 10;
+        rival.braking = false;
+        rival.parked = true;
+      }
+
+      if (!rival.parked) {
+        rival.s += rival.v * dtSim;
+        if (t >= 3.1 && rival.s > SLOW_BAY_S) {
+          rival.s = SLOW_BAY_S;
+          rival.v = 0;
+          rival.parked = true;
+          rival.braking = false;
+        }
+      }
+
+      // US velocity & inner apex cutting line
+      if (t < 2.1) {
+        const u = t / 2.1;
+        us.v = 24 + 80 * 0.5 * (1 - Math.cos(Math.PI * u)) + 41.9 * Math.sin(Math.PI * u);
+        us.charge = 10;
+      } else if (t < 3.1) {
+        // Maintain brisk world speed inside 0.18x slow-motion
+        us.v = 96;
+        const cU = clamp((t - 2.1) / 0.6, 0, 1);
+        const eased = 1 - Math.pow(1 - cU, 3);
+        us.charge = 10 + 85 * eased;
+      } else if (t < 4.6) {
+        const u = (t - 3.1) / 1.5;
+        us.v = 96 + 52 * Math.sin(u * Math.PI * 0.65);
+        us.charge = 95;
+      } else {
+        const u = clamp((t - 4.6) / 1.9, 0, 1);
+        us.v = lerp(138, 62, u);
+        us.charge = 95;
+      }
+
+      us.s += us.v * dtSim;
+      us.offset = innerLaneOffset(us.s);
+
+      // Seamless straight-2 loop if user lingers well past 6.5s near 2300m
+      if (us.s >= 2300) {
+        const shift = 1200;
+        us.s -= shift;
+        cam.cx -= shift;
+        cam.lx -= shift;
+        for (let i = 0; i < us.trail.length; i++) us.trail[i].x -= shift;
+        for (let i = 0; i < sparks3D.length; i++) sparks3D[i].x -= shift;
+      }
+
+      // Continuous sparks while boosting
+      if (us.boosting && t >= 3.1 && t <= 6.2) {
+        spawnSparkBurst(3, 1.15);
+      }
+    }
+
+    function updateSimulation(dtReal) {
+      if (stage === 0) {
+        standbyElapsed += dtReal;
+        rival.s = 240 - (240 - 135) * Math.exp(-0.05 * standbyElapsed);
+        us.s = 215 - (215 - 110) * Math.exp(-0.05 * standbyElapsed);
+        rival.v = Math.max(0.4, (240 - rival.s) * 0.05);
+        us.v = Math.max(0.4, (215 - us.s) * 0.05);
+        rival.offset = 3.5;
+        us.offset = -3.5;
+        rival.charge = 25 + 5 * Math.exp(-0.08 * standbyElapsed);
+        us.charge = 10;
+      } else if (stage === 1) {
+        beat1Elapsed += dtReal;
+        const k = 1 - Math.exp(-dtReal * 0.28);
+        const rPrev = rival.s;
+        const uPrev = us.s;
+        rival.s += (266 - rival.s) * k;
+        us.s += (241 - us.s) * k;
+        rival.v = Math.max(1.2, (rival.s - rPrev) / (dtReal || 0.016));
+        us.v = Math.max(1.2, (us.s - uPrev) / (dtReal || 0.016));
+        rival.offset = 3.5;
+        us.offset = innerLaneOffset(us.s);
+      } else if (stage >= 2) {
+        beat2RealElapsed += dtReal;
+        const dtSim = dtReal * timeScale;
+        stepBeat2Kinematics(dtReal, dtSim);
+      }
+
+      // Smooth path light band reveal
+      if (pathReveal < pathTarget) {
+        pathReveal = Math.min(pathTarget, pathReveal + dtReal / 1.2);
+      }
+
+      // Update bike world coords & light trails
+      updateBikeWorld(rival);
+      updateBikeWorld(us);
+      if (!rival.parked) recordTrail(rival, 75);
+      recordTrail(us, 145);
+
+      // Update 3D spark particles
+      const dtSim = dtReal * timeScale;
+      for (let i = sparks3D.length - 1; i >= 0; i--) {
+        const p = sparks3D[i];
+        p.life += dtSim;
+        if (p.life >= p.maxLife) {
+          sparks3D.splice(i, 1);
+          continue;
+        }
+        p.x += p.vx * dtSim;
+        p.y += p.vy * dtSim;
+        p.z += p.vz * dtSim;
+        p.vy -= 14 * dtSim;
+        if (p.y < 0.06) {
+          p.y = 0.06;
+          p.vy = Math.abs(p.vy) * 0.35;
+        }
+      }
+
+      // Update ground shockwaves (real time so they bloom visually during slow-mo!)
+      for (let i = shockwaves.length - 1; i >= 0; i--) {
+        const sw = shockwaves[i];
+        sw.age += dtReal;
+        if (sw.age >= sw.delay + sw.dur) {
+          shockwaves.splice(i, 1);
+        }
+      }
+
+      // Smooth camera interpolation: k = 1 - Math.exp(-dt * 3) (faster snap during bullet-time / boost cut)
+      computeDesiredCamera();
+      const camRate = camMode === 'low' ? 6.5 : (camMode === 'boost' ? 4.5 : 3.0);
+      const ck = 1 - Math.exp(-dtReal * camRate);
+      cam.cx += (_desiredCam.cx - cam.cx) * ck;
+      cam.cy += (_desiredCam.cy - cam.cy) * ck;
+      cam.cz += (_desiredCam.cz - cam.cz) * ck;
+      cam.lx += (_desiredCam.lx - cam.lx) * ck;
+      cam.ly += (_desiredCam.ly - cam.ly) * ck;
+      cam.lz += (_desiredCam.lz - cam.lz) * ck;
+      cam.zoom += (targetZoom - cam.zoom) * (1 - Math.exp(-dtReal * 5.0));
+      updateCamBasis();
+    }
+
+    // Rendering layers
+    function renderScene() {
+      if (!ctx) return;
+
+      // 1. Night sky gradient + horizon orange glow + pre-generated city skyline
+      const horizonPtX = cam.cx + cam.fx * 8000;
+      const horizonPtZ = cam.cz + cam.fz * 8000;
+      let horizonY = H * 0.32;
+      if (projectWorld(horizonPtX, 0, horizonPtZ, _proj)) {
+        horizonY = clamp(_proj.sy, 80, H * 0.68);
+      }
+
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY + 30);
+      skyGrad.addColorStop(0, '#06070b');
+      skyGrad.addColorStop(0.68, '#0b0e16');
+      skyGrad.addColorStop(1, '#0e1119');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, W, horizonY + 10);
+
+      // Ground dark asphalt base below horizon
+      ctx.fillStyle = '#08090e';
+      ctx.fillRect(0, horizonY, W, H - horizonY);
+
+      // City skyline parallax strip
+      const yaw = Math.atan2(cam.fx, cam.fz);
+      const scrollPx = (((yaw / (Math.PI * 2)) * SKYLINE_W) % SKYLINE_W + SKYLINE_W) % SKYLINE_W;
+      const syTop = horizonY - SKYLINE_H + 14;
+      ctx.drawImage(skylineCanvas, scrollPx, 0, SKYLINE_W - scrollPx, SKYLINE_H, 0, syTop, SKYLINE_W - scrollPx, SKYLINE_H);
+      if (SKYLINE_W - scrollPx < W) {
+        ctx.drawImage(skylineCanvas, 0, 0, W - (SKYLINE_W - scrollPx), SKYLINE_H, SKYLINE_W - scrollPx, syTop, W - (SKYLINE_W - scrollPx), SKYLINE_H);
+      }
+
+      // 2. Ground 20m perspective grid lines
+      const gridStep = 20;
+      const gxCenter = Math.round((cam.cx + cam.fx * 180) / gridStep) * gridStep;
+      const gzCenter = Math.round((cam.cz + cam.fz * 180) / gridStep) * gridStep;
+      const gridHalf = 480;
+      ctx.lineWidth = 1;
+      for (let gx = gxCenter - gridHalf; gx <= gxCenter + gridHalf; gx += gridStep) {
+        const d = Math.abs(gx - cam.cx);
+        const alpha = Math.max(0.02, 0.16 * (1 - d / 560));
+        ctx.strokeStyle = 'rgba(130, 155, 195, ' + alpha.toFixed(3) + ')';
+        strokeLine3D(ctx, gx, 0, gzCenter - gridHalf, gx, 0, gzCenter + gridHalf);
+      }
+      for (let gz = gzCenter - gridHalf; gz <= gzCenter + gridHalf; gz += gridStep) {
+        const d = Math.abs(gz - cam.cz);
+        const alpha = Math.max(0.02, 0.16 * (1 - d / 560));
+        ctx.strokeStyle = 'rgba(130, 155, 195, ' + alpha.toFixed(3) + ')';
+        strokeLine3D(ctx, gxCenter - gridHalf, 0, gz, gxCenter + gridHalf, 0, gz);
+      }
+
+      // 3. Track asphalt ribbon, edge lines, dashed centerline, and red/white curbs
+      let sStart = 0;
+      let sEnd = 1050;
+      if (cam.cx > 200) {
+        sStart = Math.max(0, Math.floor((cam.cx - 260 + 368) / 12) * 12);
+        sEnd = Math.min(TOTAL_LEN, sStart + 1000);
+      }
+      let s = sStart;
+      while (s < sEnd) {
+        const inCurveZone = s >= 255 && s <= 535;
+        const step = inCurveZone ? 3 : (s < 750 ? 6 : 12);
+        const sNext = Math.min(sEnd, s + step);
+        sampleTrack(s, _tp);
+        sampleTrack(sNext, _tp2);
+        const dist = Math.hypot(_tp.x - cam.cx, _tp.z - cam.cz);
+        if (dist < 1050) {
+          // Asphalt ribbon (-7m to +7m)
+          if (clipQuadAndPath(ctx,
+            _tp.x - 7 * _tp.nx, 0, _tp.z - 7 * _tp.nz,
+            _tp.x + 7 * _tp.nx, 0, _tp.z + 7 * _tp.nz,
+            _tp2.x + 7 * _tp2.nx, 0, _tp2.z + 7 * _tp2.nz,
+            _tp2.x - 7 * _tp2.nx, 0, _tp2.z - 7 * _tp2.nz
+          )) {
+            ctx.fillStyle = fogRgb(21, 22, 26, dist, 1000);
+            ctx.fill();
+          }
+
+          // White outer/inner edge lines (0.28m wide, alpha 0.6)
+          const edgeFog = clamp(1 - dist / 900, 0.05, 1);
+          ctx.fillStyle = 'rgba(235, 240, 248, ' + (0.6 * edgeFog).toFixed(3) + ')';
+          if (clipQuadAndPath(ctx,
+            _tp.x - 6.85 * _tp.nx, 0.01, _tp.z - 6.85 * _tp.nz,
+            _tp.x - 6.57 * _tp.nx, 0.01, _tp.z - 6.57 * _tp.nz,
+            _tp2.x - 6.57 * _tp2.nx, 0.01, _tp2.z - 6.57 * _tp2.nz,
+            _tp2.x - 6.85 * _tp2.nx, 0.01, _tp2.z - 6.85 * _tp2.nz
+          )) ctx.fill();
+          if (clipQuadAndPath(ctx,
+            _tp.x + 6.57 * _tp.nx, 0.01, _tp.z + 6.57 * _tp.nz,
+            _tp.x + 6.85 * _tp.nx, 0.01, _tp.z + 6.85 * _tp.nz,
+            _tp2.x + 6.85 * _tp2.nx, 0.01, _tp2.z + 6.85 * _tp2.nz,
+            _tp2.x + 6.57 * _tp2.nx, 0.01, _tp2.z + 6.57 * _tp2.nz
+          )) ctx.fill();
+
+          // Center dashed line
+          if (Math.floor(s / 6) % 2 === 0) {
+            ctx.fillStyle = 'rgba(220, 228, 240, ' + (0.42 * edgeFog).toFixed(3) + ')';
+            if (clipQuadAndPath(ctx,
+              _tp.x - 0.14 * _tp.nx, 0.01, _tp.z - 0.14 * _tp.nz,
+              _tp.x + 0.14 * _tp.nx, 0.01, _tp.z + 0.14 * _tp.nz,
+              _tp2.x + 0.14 * _tp2.nx, 0.01, _tp2.z + 0.14 * _tp2.nz,
+              _tp2.x - 0.14 * _tp2.nx, 0.01, _tp2.z - 0.14 * _tp2.nz
+            )) ctx.fill();
+          }
+
+          // Red & white alternating curbs along bend (1.2m wide, 3m pitch)
+          if (s >= 264 && s < 525) {
+            const isRed = Math.floor(s / 3) % 2 === 0;
+            const curbColor = isRed ? fogRgb(224, 53, 43, dist, 950) : fogRgb(234, 238, 245, dist, 950);
+            ctx.fillStyle = curbColor;
+            // Inner curb (-8.2m to -7.0m)
+            if (clipQuadAndPath(ctx,
+              _tp.x - 8.2 * _tp.nx, 0.02, _tp.z - 8.2 * _tp.nz,
+              _tp.x - 7.0 * _tp.nx, 0.02, _tp.z - 7.0 * _tp.nz,
+              _tp2.x - 7.0 * _tp2.nx, 0.02, _tp2.z - 7.0 * _tp2.nz,
+              _tp2.x - 8.2 * _tp2.nx, 0.02, _tp2.z - 8.2 * _tp2.nz
+            )) ctx.fill();
+            // Outer curb (+7.0m to +8.2m), opening gap for Slow-Charge Station apron
+            if (s < 372 || s >= 429) {
+              if (clipQuadAndPath(ctx,
+                _tp.x + 7.0 * _tp.nx, 0.02, _tp.z + 7.0 * _tp.nz,
+                _tp.x + 8.2 * _tp.nx, 0.02, _tp.z + 8.2 * _tp.nz,
+                _tp2.x + 8.2 * _tp2.nx, 0.02, _tp2.z + 8.2 * _tp2.nz,
+                _tp2.x + 7.0 * _tp2.nx, 0.02, _tp2.z + 7.0 * _tp2.nz
+              )) ctx.fill();
+            }
+          }
+        }
+        s = sNext;
+      }
+
+      // 4. Slow-Charge Station (outer curve gray bay + dim cool-white pillars)
+      renderSlowChargeStation(ctx);
+
+      // 4b. Flash-Charge Post (inner apex glowing orange pillar + ground induction ring)
+      renderFlashChargePost(ctx);
+
+      // 5. Inner racing guide ribbon (progressive reveal after Beat 1)
+      if (pathReveal > 0.01) {
+        renderPathGuide(ctx);
+      }
+
+      // 6. Vehicle wet reflections, headlight cones, light trails, scooters, and sparks
+      renderBike(ctx, rival, false);
+      renderBike(ctx, us, true);
+      renderTrail(ctx, rival.trail, false);
+      renderTrail(ctx, us.trail, true);
+      renderSparks3D(ctx);
+
+      // 7. Flash-charge shockwave rings
+      if (shockwaves.length > 0) {
+        renderShockwaves(ctx);
+      }
+
+      // Update floating tracking tags & leader pins
+      updateTagsAndPins(ctx);
+    }
+
+    function renderSlowChargeStation(ctx) {
+      // Gray service apron along outer curve s=375..429, offset=+7.0..+15.6
+      const segs = 9;
+      for (let i = 0; i < segs; i++) {
+        const s0 = 375 + (i / segs) * 54;
+        const s1 = 375 + ((i + 1) / segs) * 54;
+        sampleTrack(s0, _tp);
+        sampleTrack(s1, _tp2);
+        const dist = Math.hypot(_tp.x - cam.cx, _tp.z - cam.cz);
+        if (clipQuadAndPath(ctx,
+          _tp.x + 7.0 * _tp.nx, 0.01, _tp.z + 7.0 * _tp.nz,
+          _tp.x + 15.6 * _tp.nx, 0.01, _tp.z + 15.6 * _tp.nz,
+          _tp2.x + 15.6 * _tp2.nx, 0.01, _tp2.z + 15.6 * _tp2.nz,
+          _tp2.x + 7.0 * _tp2.nx, 0.01, _tp2.z + 7.0 * _tp2.nz
+        )) {
+          ctx.fillStyle = fogRgb(31, 35, 44, dist, 950);
+          ctx.fill();
+        }
+      }
+      // Dashed/solid gray box outline around bay
+      ctx.strokeStyle = 'rgba(154, 163, 178, 0.45)';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < segs; i++) {
+        const s0 = 375 + (i / segs) * 54;
+        const s1 = 375 + ((i + 1) / segs) * 54;
+        sampleTrack(s0, _tp);
+        sampleTrack(s1, _tp2);
+        strokeLine3D(ctx, _tp.x + 15.6 * _tp.nx, 0.03, _tp.z + 15.6 * _tp.nz,
+          _tp2.x + 15.6 * _tp2.nx, 0.03, _tp2.z + 15.6 * _tp2.nz);
+        if (i % 2 === 0) {
+          strokeLine3D(ctx, _tp.x + 7.2 * _tp.nx, 0.03, _tp.z + 7.2 * _tp.nz,
+            _tp2.x + 7.2 * _tp2.nx, 0.03, _tp2.z + 7.2 * _tp2.nz);
+        }
+      }
+      sampleTrack(375, _tp);
+      strokeLine3D(ctx, _tp.x + 7.0 * _tp.nx, 0.03, _tp.z + 7.0 * _tp.nz,
+        _tp.x + 15.6 * _tp.nx, 0.03, _tp.z + 15.6 * _tp.nz);
+      sampleTrack(429, _tp);
+      strokeLine3D(ctx, _tp.x + 7.0 * _tp.nx, 0.03, _tp.z + 7.0 * _tp.nz,
+        _tp.x + 15.6 * _tp.nx, 0.03, _tp.z + 15.6 * _tp.nz);
+
+      // 3 dim cool-white slow-charge posts
+      const postS = [388, 404, 420];
+      for (let i = 0; i < postS.length; i++) {
+        sampleTrack(postS[i], _tp);
+        const px = _tp.x + 14.3 * _tp.nx;
+        const pz = _tp.z + 14.3 * _tp.nz;
+        if (projectWorld(px, 0, pz, _proj) && projectWorld(px, 3.1, pz, _proj2)) {
+          const pw = Math.max(3, 0.55 * _proj.scale);
+          ctx.fillStyle = '#38404F';
+          ctx.fillRect(_proj2.sx - pw * 0.5, _proj2.sy, pw, Math.max(2, _proj.sy - _proj2.sy));
+          ctx.fillStyle = 'rgba(185, 200, 222, 0.55)';
+          ctx.fillRect(_proj2.sx - pw * 0.4, _proj2.sy, pw * 0.8, Math.max(2, (_proj.sy - _proj2.sy) * 0.22));
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.globalAlpha = 0.34;
+          const gs = clamp(3.4 * _proj2.scale, 16, 86);
+          ctx.drawImage(sprBlueDim, _proj2.sx - gs * 0.5, _proj2.sy - gs * 0.45, gs, gs);
+          ctx.restore();
+        }
+      }
+    }
+
+    function renderFlashChargePost(ctx) {
+      sampleTrack(FLASH_POST_S, _tp);
+      // Ground induction pad right across the inner apex racing line
+      const padX = _tp.x - 5.6 * _tp.nx;
+      const padZ = _tp.z - 5.6 * _tp.nz;
+      const pulse = 0.72 + 0.28 * Math.sin(performance.now() * 0.005);
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.strokeStyle = 'rgba(255, 110, 30, ' + (0.58 * pulse).toFixed(3) + ')';
+      ctx.lineWidth = 2.5;
+      const ringSegs = 20;
+      for (let rIdx = 0; rIdx < 2; rIdx++) {
+        const rad = rIdx === 0 ? 3.2 : 1.9;
+        for (let k = 0; k < ringSegs; k++) {
+          const a0 = (k / ringSegs) * Math.PI * 2;
+          const a1 = ((k + 1) / ringSegs) * Math.PI * 2;
+          strokeLine3D(ctx,
+            padX + Math.cos(a0) * rad, 0.04, padZ + Math.sin(a0) * rad,
+            padX + Math.cos(a1) * rad, 0.04, padZ + Math.sin(a1) * rad);
+        }
+      }
+      // Energy conduit from pylon to induction pad
+      const postX = _tp.x + FLASH_POST_OFFSET * _tp.nx;
+      const postZ = _tp.z + FLASH_POST_OFFSET * _tp.nz;
+      ctx.strokeStyle = 'rgba(255, 140, 50, 0.65)';
+      ctx.lineWidth = 3;
+      strokeLine3D(ctx, postX, 0.05, postZ, padX, 0.05, padZ);
+      ctx.restore();
+
+      // Glowing orange charging pylon at inner apex curb
+      const baseOk = projectWorld(postX, 0, postZ, _proj);
+      const topOk = projectWorld(postX, 4.8, postZ, _proj2);
+      if (baseOk && topOk) {
+        const pw = Math.max(4, 0.85 * _proj.scale);
+        const ph = Math.max(4, _proj.sy - _proj2.sy);
+        ctx.fillStyle = '#1d1817';
+        ctx.fillRect(_proj2.sx - pw * 0.5, _proj2.sy, pw, ph);
+        // Glowing vertical orange core strip
+        ctx.fillStyle = '#FF6A1A';
+        ctx.fillRect(_proj2.sx - pw * 0.18, _proj2.sy + ph * 0.08, pw * 0.36, ph * 0.82);
+        ctx.fillStyle = '#FFF1DC';
+        ctx.fillRect(_proj2.sx - pw * 0.08, _proj2.sy + ph * 0.1, pw * 0.16, ph * 0.65);
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = 0.82 * pulse;
+        const gTop = clamp(7.2 * _proj2.scale, 28, 190);
+        ctx.drawImage(sprOrangeGlow, _proj2.sx - gTop * 0.5, _proj2.sy - gTop * 0.45, gTop, gTop);
+        ctx.globalAlpha = 0.48 * pulse;
+        const gBase = clamp(6.0 * _proj.scale, 22, 160);
+        ctx.drawImage(sprOrangeGlow, _proj.sx - gBase * 0.5, _proj.sy - gBase * 0.5, gBase, gBase);
+        ctx.restore();
+      }
+    }
+
+    function renderPathGuide(ctx) {
+      const s0 = Math.max(105, us.s + 1.5);
+      const sMax = 550;
+      const sEnd = s0 + (sMax - s0) * pathReveal;
+      if (sEnd <= s0 + 2) return;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const step = 4;
+      for (let s = s0; s < sEnd; s += step) {
+        const sn = Math.min(sEnd, s + step);
+        sampleTrack(s, _tp);
+        sampleTrack(sn, _tp2);
+        const o0 = innerLaneOffset(s);
+        const o1 = innerLaneOffset(sn);
+        const fadeTail = s > 480 ? clamp(1 - (s - 480) / 70, 0, 1) : 1;
+        // Soft wide outer orange strip
+        ctx.fillStyle = 'rgba(255, 85, 0, ' + (0.28 * fadeTail).toFixed(3) + ')';
+        if (clipQuadAndPath(ctx,
+          _tp.x + (o0 - 0.85) * _tp.nx, 0.04, _tp.z + (o0 - 0.85) * _tp.nz,
+          _tp.x + (o0 + 0.85) * _tp.nx, 0.04, _tp.z + (o0 + 0.85) * _tp.nz,
+          _tp2.x + (o1 + 0.85) * _tp2.nx, 0.04, _tp2.z + (o1 + 0.85) * _tp2.nz,
+          _tp2.x + (o1 - 0.85) * _tp2.nx, 0.04, _tp2.z + (o1 - 0.85) * _tp2.nz
+        )) ctx.fill();
+        // Hot core guide strip
+        ctx.fillStyle = 'rgba(255, 195, 110, ' + (0.68 * fadeTail).toFixed(3) + ')';
+        if (clipQuadAndPath(ctx,
+          _tp.x + (o0 - 0.22) * _tp.nx, 0.05, _tp.z + (o0 - 0.22) * _tp.nz,
+          _tp.x + (o0 + 0.22) * _tp.nx, 0.05, _tp.z + (o0 + 0.22) * _tp.nz,
+          _tp2.x + (o1 + 0.22) * _tp2.nx, 0.05, _tp2.z + (o1 + 0.22) * _tp2.nz,
+          _tp2.x + (o1 - 0.22) * _tp2.nx, 0.05, _tp2.z + (o1 - 0.22) * _tp2.nz
+        )) ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function renderTrail(ctx, trail, isUs) {
+      if (trail.length < 2) return;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const n = trail.length;
+      for (let i = 0; i < n - 1; i++) {
+        const p0 = trail[i];
+        const p1 = trail[i + 1];
+        const frac = (i + 1) / n; // 0 at tail -> 1 at head
+        const boostMul = isUs && p1.boost ? 1.55 : 1.0;
+        const tx = p1.x - p0.x;
+        const tz = p1.z - p0.z;
+        const len = Math.hypot(tx, tz) || 1;
+        const nx = -tz / len;
+        const nz = tx / len;
+
+        const wOuter = (isUs ? (0.2 + frac * 0.86) : (0.06 + frac * 0.36)) * boostMul;
+        const aOuter = Math.pow(frac, 1.3) * (isUs ? (p1.boost ? 0.72 : 0.6) : 0.22);
+        ctx.fillStyle = isUs
+          ? 'rgba(255, 92, 16, ' + aOuter.toFixed(3) + ')'
+          : 'rgba(135, 155, 185, ' + aOuter.toFixed(3) + ')';
+        if (clipQuadAndPath(ctx,
+          p0.x - nx * wOuter, 0.34, p0.z - nz * wOuter,
+          p0.x + nx * wOuter, 0.34, p0.z + nz * wOuter,
+          p1.x + nx * wOuter, 0.34, p1.z + nz * wOuter,
+          p1.x - nx * wOuter, 0.34, p1.z - nz * wOuter
+        )) ctx.fill();
+
+        if (frac > 0.16) {
+          const wCore = (isUs ? (0.07 + frac * 0.32) : (0.02 + frac * 0.12)) * boostMul;
+          const aCore = Math.pow(frac, 1.65) * (isUs ? 0.94 : 0.38);
+          ctx.fillStyle = isUs
+            ? 'rgba(255, 236, 200, ' + aCore.toFixed(3) + ')'
+            : 'rgba(210, 224, 244, ' + aCore.toFixed(3) + ')';
+          if (clipQuadAndPath(ctx,
+            p0.x - nx * wCore, 0.36, p0.z - nz * wCore,
+            p0.x + nx * wCore, 0.36, p0.z + nz * wCore,
+            p1.x + nx * wCore, 0.36, p1.z + nz * wCore,
+            p1.x - nx * wCore, 0.36, p1.z - nz * wCore
+          )) ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    function renderBike(ctx, bike, isUs) {
+      const bx = bike.wx;
+      const bz = bike.wz;
+      const tx = bike.tx;
+      const tz = bike.tz;
+      const nx = bike.nx;
+      const nz = bike.nz;
+
+      // 1. Wet-road elongated reflection behind vehicle
+      const reflLen = isUs ? 6.8 : 4.6;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = isUs
+        ? 'rgba(255, 95, 25, 0.22)'
+        : (bike.braking ? 'rgba(255, 59, 48, 0.28)' : 'rgba(130, 148, 175, 0.14)');
+      if (clipQuadAndPath(ctx,
+        bx - tx * 0.9 - nx * 0.32, 0.02, bz - tz * 0.9 - nz * 0.32,
+        bx - tx * 0.9 + nx * 0.32, 0.02, bz - tz * 0.9 + nz * 0.32,
+        bx - tx * reflLen + nx * 0.16, 0.02, bz - tz * reflLen + nz * 0.16,
+        bx - tx * reflLen - nx * 0.16, 0.02, bz - tz * reflLen - nz * 0.16
+      )) ctx.fill();
+
+      // 2. Headlight cone fan projected on ground ahead
+      const beamLen = isUs ? (bike.boosting ? 24 : 18) : (bike.parked ? 6 : 14);
+      const beamSpread = isUs ? 3.2 : 2.3;
+      ctx.fillStyle = isUs
+        ? 'rgba(255, 196, 128, 0.24)'
+        : (bike.parked ? 'rgba(160, 178, 205, 0.08)' : 'rgba(195, 212, 236, 0.15)');
+      if (clipQuadAndPath(ctx,
+        bx + tx * 1.1 - nx * 0.22, 0.03, bz + tz * 1.1 - nz * 0.22,
+        bx + tx * 1.1 + nx * 0.22, 0.03, bz + tz * 1.1 + nz * 0.22,
+        bx + tx * beamLen + nx * beamSpread, 0.03, bz + tz * beamLen + nz * beamSpread,
+        bx + tx * beamLen - nx * beamSpread, 0.03, bz + tz * beamLen - nz * beamSpread
+      )) ctx.fill();
+      ctx.restore();
+
+      // 3. Soft dark ground contact shadow (2.2m x 0.8m footprint)
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.68)';
+      if (clipQuadAndPath(ctx,
+        bx - tx * 1.15 - nx * 0.45, 0.02, bz - tz * 1.15 - nz * 0.45,
+        bx - tx * 1.15 + nx * 0.45, 0.02, bz - tz * 1.15 + nz * 0.45,
+        bx + tx * 1.15 + nx * 0.45, 0.02, bz + tz * 1.15 + nz * 0.45,
+        bx + tx * 1.15 - nx * 0.45, 0.02, bz + tz * 1.15 - nz * 0.45
+      )) ctx.fill();
+
+      // 4. Streamlined 2-wheel EV silhouette (with inward lean during curves)
+      const leanShift = -bike.lean * 0.42; // inward toward -normal
+      const midX = bx + nx * leanShift;
+      const midZ = bz + nz * leanShift;
+      if (!projectWorld(midX, 0.65, midZ, _proj)) return;
+      const sc = _proj.scale;
+
+      // Project nose, tail, top fairing, handlebar ends
+      const noseOk = projectWorld(bx + tx * 1.1 + nx * leanShift * 0.7, 0.48, bz + tz * 1.1 + nz * leanShift * 0.7, _proj2);
+      const tailOk = projectWorld(bx - tx * 1.1 + nx * leanShift * 0.7, 0.68, bz - tz * 1.1 + nz * leanShift * 0.7, { sx: 0, sy: 0, cz: 0, scale: 1 });
+      // Dedicated points via helper object
+      const pNose = { sx: 0, sy: 0, cz: 0, scale: 1 };
+      const pTail = { sx: 0, sy: 0, cz: 0, scale: 1 };
+      const pTop = { sx: 0, sy: 0, cz: 0, scale: 1 };
+      const pBarL = { sx: 0, sy: 0, cz: 0, scale: 1 };
+      const pBarR = { sx: 0, sy: 0, cz: 0, scale: 1 };
+      const pBaseF = { sx: 0, sy: 0, cz: 0, scale: 1 };
+      const pBaseR = { sx: 0, sy: 0, cz: 0, scale: 1 };
+
+      if (!projectWorld(bx + tx * 1.1 + nx * leanShift * 0.7, 0.56, bz + tz * 1.1 + nz * leanShift * 0.7, pNose)) return;
+      if (!projectWorld(bx - tx * 1.1 + nx * leanShift * 0.7, 0.74, bz - tz * 1.1 + nz * leanShift * 0.7, pTail)) return;
+      if (!projectWorld(bx + tx * 0.35 + nx * leanShift * 1.15, 1.18, bz + tz * 0.35 + nz * leanShift * 1.15, pTop)) return;
+      if (!projectWorld(bx + tx * 0.52 + nx * (leanShift * 1.15 + 0.42), 1.08, bz + tz * 0.52 + nz * (leanShift * 1.15 + 0.42), pBarL)) return;
+      if (!projectWorld(bx + tx * 0.52 + nx * (leanShift * 1.15 - 0.42), 1.08, bz + tz * 0.52 + nz * (leanShift * 1.15 - 0.42), pBarR)) return;
+      if (!projectWorld(bx + tx * 0.95, 0.18, bz + tz * 0.95, pBaseF)) return;
+      if (!projectWorld(bx - tx * 0.95, 0.18, bz - tz * 0.95, pBaseR)) return;
+
+      const bw = clamp(0.4 * sc, 2.5, 46);
+
+      // Tires
+      ctx.strokeStyle = '#0c0d11';
+      ctx.lineWidth = clamp(0.24 * sc, 2, 18);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(pBaseR.sx, pBaseR.sy);
+      ctx.lineTo(pTail.sx, pTail.sy);
+      ctx.moveTo(pBaseF.sx, pBaseF.sy);
+      ctx.lineTo(pNose.sx, pNose.sy);
+      ctx.stroke();
+
+      // Streamlined capsule chassis polygon
+      ctx.fillStyle = isUs ? '#FF6A1A' : '#586274';
+      ctx.beginPath();
+      ctx.moveTo(pNose.sx, pNose.sy);
+      ctx.quadraticCurveTo(pTop.sx, pTop.sy - bw * 0.35, pTail.sx, pTail.sy - bw * 0.15);
+      ctx.lineTo(pBaseR.sx, pBaseR.sy);
+      ctx.lineTo(pBaseF.sx, pBaseF.sy);
+      ctx.closePath();
+      ctx.fill();
+
+      // Top cowl highlight & cockpit capsule
+      ctx.fillStyle = isUs ? '#FFF3E2' : '#9AA4B5';
+      ctx.beginPath();
+      ctx.moveTo(pNose.sx, pNose.sy - bw * 0.12);
+      ctx.quadraticCurveTo(pTop.sx, pTop.sy - bw * 0.42, pTail.sx, pTail.sy - bw * 0.25);
+      ctx.lineTo((pTail.sx + pBaseR.sx) * 0.5, (pTail.sy + pBaseR.sy) * 0.5);
+      ctx.closePath();
+      ctx.fill();
+
+      // Handlebar crossbar
+      ctx.strokeStyle = isUs ? '#FFE4C4' : '#B8C2D2';
+      ctx.lineWidth = clamp(0.11 * sc, 1.5, 8);
+      ctx.beginPath();
+      ctx.moveTo(pBarL.sx, pBarL.sy);
+      ctx.lineTo(pBarR.sx, pBarR.sy);
+      ctx.stroke();
+
+      // Additive glow sprites: aura, headlight, and taillight
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      if (isUs) {
+        const auraR = clamp((bike.boosting ? 4.4 : 3.4) * sc, 24, 210);
+        ctx.globalAlpha = bike.charged ? 0.92 : 0.72;
+        ctx.drawImage(sprOrangeGlow, _proj.sx - auraR * 0.5, _proj.sy - auraR * 0.5, auraR, auraR);
+        const headR = clamp(1.8 * sc, 12, 95);
+        ctx.globalAlpha = 0.85;
+        ctx.drawImage(sprOrangeGlow, pNose.sx - headR * 0.5, pNose.sy - headR * 0.5, headR, headR);
+      } else {
+        const bodyR = clamp(2.4 * sc, 16, 120);
+        ctx.globalAlpha = 0.35;
+        ctx.drawImage(sprWhiteGlow, _proj.sx - bodyR * 0.5, _proj.sy - bodyR * 0.5, bodyR, bodyR);
+        if (bike.braking || bike.parked) {
+          const tailR = clamp((bike.braking ? 2.4 : 1.5) * sc, 14, 120);
+          ctx.globalAlpha = bike.braking ? 0.95 : 0.45;
+          ctx.drawImage(sprRedGlow, pTail.sx - tailR * 0.5, pTail.sy - tailR * 0.5, tailR, tailR);
+        }
+      }
+      ctx.restore();
+    }
+
+    function renderSparks3D(ctx) {
+      if (!sparks3D.length) return;
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < sparks3D.length; i++) {
+        const p = sparks3D[i];
+        if (!projectWorld(p.x, p.y, p.z, _proj)) continue;
+        const alpha = 1 - p.life / p.maxLife;
+        const sz = clamp(p.size * _proj.scale * 2.2, 4, 34);
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(sprSpark, _proj.sx - sz * 0.5, _proj.sy - sz * 0.5, sz, sz);
+      }
+      ctx.restore();
+    }
+
+    function renderShockwaves(ctx) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      const segs = 28;
+      for (let i = 0; i < shockwaves.length; i++) {
+        const sw = shockwaves[i];
+        if (sw.age < sw.delay) continue;
+        const p = clamp((sw.age - sw.delay) / sw.dur, 0, 1);
+        const eased = 1 - Math.pow(1 - p, 2.2);
+        const rad = 2.0 + eased * sw.maxR;
+        const alpha = (1 - p) * 0.92;
+        ctx.strokeStyle = 'rgba(255, 132, 42, ' + alpha.toFixed(3) + ')';
+        ctx.lineWidth = Math.max(1.5, 6 * (1 - p));
+        for (let k = 0; k < segs; k++) {
+          const a0 = (k / segs) * Math.PI * 2;
+          const a1 = ((k + 1) / segs) * Math.PI * 2;
+          strokeLine3D(ctx,
+            sw.x + Math.cos(a0) * rad, 0.08, sw.z + Math.sin(a0) * rad,
+            sw.x + Math.cos(a1) * rad, 0.08, sw.z + Math.sin(a1) * rad);
+        }
+        ctx.strokeStyle = 'rgba(255, 245, 225, ' + (alpha * 0.72).toFixed(3) + ')';
+        ctx.lineWidth = Math.max(1, 2.4 * (1 - p));
+        for (let k = 0; k < segs; k++) {
+          const a0 = (k / segs) * Math.PI * 2;
+          const a1 = ((k + 1) / segs) * Math.PI * 2;
+          strokeLine3D(ctx,
+            sw.x + Math.cos(a0) * (rad * 0.96), 0.09, sw.z + Math.sin(a0) * (rad * 0.96),
+            sw.x + Math.cos(a1) * (rad * 0.96), 0.09, sw.z + Math.sin(a1) * (rad * 0.96));
+        }
+      }
+      ctx.restore();
+    }
+
+    function placeTagBox(el, anchorX, anchorY, preferOffsetX, preferOffsetY, occupied) {
+      if (!el) return null;
+      const w = el.offsetWidth || 176;
+      const h = el.offsetHeight || 60;
+      let x = anchorX - w * 0.5 + preferOffsetX;
+      let y = preferOffsetY < 0 ? anchorY + preferOffsetY - h : anchorY + preferOffsetY;
+
+      // Clamp to safe canvas stage (stay clear of right rail)
+      x = clamp(x, 42, W - w - 62);
+      y = clamp(y, 92, H - h - 76);
+
+      // Avoid left title zone (x < 690, y in [265, 650])
+      if (x < 695 && y + h > 265 && y < 650) {
+        if (anchorX > 500) {
+          x = 700;
+        } else {
+          y = anchorY < 460 ? 245 - h : 660;
+          y = clamp(y, 92, H - h - 76);
+        }
+      }
+
+      // Avoid stamp-wrap lower-right zone when stamped or Beat 2/3 pull shot
+      if (stage >= 2 && x + w > 1135 && y + h > 605) {
+        if (y + h - 605 < 180) {
+          y = 595 - h;
+        } else {
+          x = 1125 - w;
+        }
+        x = clamp(x, 42, W - w - 62);
+        y = clamp(y, 92, H - h - 76);
+      }
+
+      // Avoid overlap with previously placed tags
+      for (let i = 0; i < occupied.length; i++) {
+        const b = occupied[i];
+        const pad = 12;
+        if (x < b.x + b.w + pad && x + w + pad > b.x && y < b.y + b.h + pad && y + h + pad > b.y) {
+          const shiftUp = b.y - h - pad;
+          const shiftDown = b.y + b.h + pad;
+          const shiftRight = b.x + b.w + pad;
+          if (shiftUp >= 92) {
+            y = shiftUp;
+          } else if (shiftDown + h <= H - 80 && !(stage >= 2 && x + w > 1135 && shiftDown + h > 605)) {
+            y = shiftDown;
+          } else if (shiftRight + w <= W - 62) {
+            x = shiftRight;
+          } else {
+            x = clamp(b.x - w - pad, 42, W - w - 62);
+          }
+        }
+      }
+
+      const box = { x, y, w, h };
+      occupied.push(box);
+      el.style.transform = 'translate3d(' + Math.round(x) + 'px,' + Math.round(y) + 'px,0)';
+      return box;
+    }
+
+    function drawLeaderPin(ctx, ax, ay, box, color) {
+      if (!box) return;
+      const bx = clamp(ax, box.x + 12, box.x + box.w - 12);
+      const by = ay < box.y ? box.y : (ay > box.y + box.h ? box.y + box.h : box.y + box.h * 0.5);
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(bx, by);
+      ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(ax, ay, 3.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function updateTagsAndPins(ctx) {
+      const occupied = [];
+
+      // Update battery fills & low/parked state
+      if (rivalFill) rivalFill.style.width = clamp(rival.charge, 4, 100).toFixed(1) + '%';
+      if (usFill) usFill.style.width = clamp(us.charge, 4, 100).toFixed(1) + '%';
+      if (tagRival) {
+        tagRival.classList.toggle('is-low', rival.charge < 18 || rival.braking || rival.parked);
+        tagRival.classList.toggle('is-parked', rival.parked);
+      }
+
+      // 1. US vehicle tag
+      if (tagUs) {
+        if (projectWorld(us.wx, 1.4, us.wz, _proj) && _proj.sx > -80 && _proj.sx < W + 80 && _proj.sy > -60 && _proj.sy < H + 60) {
+          tagUs.classList.add('is-show');
+          const uBox = placeTagBox(tagUs, _proj.sx, _proj.sy, 0, -36, occupied);
+          drawLeaderPin(ctx, _proj.sx, _proj.sy, uBox, 'rgba(255, 110, 34, 0.72)');
+        } else {
+          tagUs.classList.remove('is-show');
+        }
+      }
+
+      // 2. Rival vehicle tag
+      let rivalBox = null;
+      if (tagRival) {
+        if (projectWorld(rival.wx, 1.4, rival.wz, _proj) && _proj.sx > -80 && _proj.sx < W + 80 && _proj.sy > -60 && _proj.sy < H + 60) {
+          tagRival.classList.add('is-show');
+          rivalBox = placeTagBox(tagRival, _proj.sx, _proj.sy, 0, -36, occupied);
+          drawLeaderPin(ctx, _proj.sx, _proj.sy, rivalBox, rival.charge < 18 ? 'rgba(255, 75, 65, 0.72)' : 'rgba(154, 163, 178, 0.65)');
+        } else {
+          tagRival.classList.remove('is-show');
+        }
+      }
+
+      // 3. Alert tag (only show when Rival is visible in frame)
+      if (tagAlert) {
+        if (tagAlert.classList.contains('is-on') && rivalBox) {
+          tagAlert.classList.add('is-show');
+          const ax = rivalBox.x + rivalBox.w * 0.5;
+          const ay = rivalBox.y;
+          placeTagBox(tagAlert, ax, ay, 0, -10, occupied);
+        } else {
+          tagAlert.classList.remove('is-show');
+        }
+      }
+
+      // 4. Turn apex tag ("行业拐点") — hide cleanly if apex exits viewport during boost chase
+      if (tagTurn) {
+        if (tagTurn.classList.contains('is-on')) {
+          sampleTrack(APEX_S, _tp);
+          const apexX = _tp.x - 6.0 * _tp.nx;
+          const apexZ = _tp.z - 6.0 * _tp.nz;
+          if (projectWorld(apexX, 2.0, apexZ, _proj) && _proj.sx > 80 && _proj.sx < W - 80 && _proj.sy > 60 && _proj.sy < H - 40) {
+            tagTurn.classList.add('is-show');
+            const isPull = camMode === 'pull';
+            const ox = isPull ? 132 : 0;
+            const oy = isPull ? 26 : -44;
+            const tBox = placeTagBox(tagTurn, _proj.sx, _proj.sy, ox, oy, occupied);
+            drawLeaderPin(ctx, _proj.sx, _proj.sy, tBox, 'rgba(255, 130, 50, 0.75)');
+          } else {
+            tagTurn.classList.remove('is-show');
+          }
+        } else {
+          tagTurn.classList.remove('is-show');
+        }
+      }
+    }
+
+    function frame(ts) {
+      if (!lastTs) lastTs = ts;
+      const dtReal = Math.min(0.05, Math.max(0.001, (ts - lastTs) / 1000));
+      lastTs = ts;
+
+      updateSimulation(dtReal);
+      renderScene();
+
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function triggerBeat1() {
+      if (stage >= 1) return;
+      stage = 1;
+      beat1Elapsed = 0;
+      slide.classList.add('is-s1');
       Deck.sfx('whoosh');
+      pathTarget = 1;
+      Deck.sfx('zap');
+      if (tagTurn) tagTurn.classList.add('is-on');
+      camMode = 'chase';
+      if (motorLoop) motorLoop.set(0.55);
     }
 
-    function runBeat2(el) {
-      el.classList.add('is-s1', 'is-s2');
-      Deck.sfx('overtake');
+    function triggerBeat2() {
+      if (beat2Started) return;
+      beat2Started = true;
+      if (stage < 1) {
+        slide.classList.add('is-s1');
+        if (tagTurn) tagTurn.classList.add('is-on');
+      }
+      stage = 2;
+      pathReveal = 1;
+      pathTarget = 1;
+      beat2RealElapsed = 0;
+      timeScale = 1.0;
+
+      // Deterministic sprint start
+      rival.s = 230;
+      rival.offset = 3.5;
+      rival.v = 24;
+      rival.charge = 28;
+      rival.braking = false;
+      rival.parked = false;
+      updateBikeWorld(rival);
+      seedTrail(rival, 14, 1.1);
+
+      us.s = 205;
+      us.offset = -3.5;
+      us.v = 24;
+      us.charge = 10;
+      us.boosting = false;
+      us.charged = false;
+      updateBikeWorld(us);
+      seedTrail(us, 14, 1.1);
+
+      camMode = 'chase';
+      slide.classList.add('is-s2');
+      Deck.score.cue('race');
+      Deck.sfx('riser', 2200);
+
+      // 1.4s: Rival reaches corner entrance -> low battery alert & braking into slow-charge bay
+      addTimer(() => {
+        rival.braking = true;
+        rival.charge = 12;
+        if (tagAlert) tagAlert.classList.add('is-on');
+        Deck.sfx('sting');
+      }, 1400);
+
+      // 2.1s: US hits apex flash-charge post -> ignite + shockwaves + charge + 0.18x bullet time
+      addTimer(() => {
+        us.charged = true;
+        if (tagUs) tagUs.classList.add('is-charged');
+        spawnShockwaves();
+        Deck.fx.flash('rgba(255,120,40,0.45)');
+        Deck.sfx('ignite');
+        Deck.sfx('bullet');
+        Deck.score.duck(true);
+        if (motorLoop) motorLoop.set(0.15);
+        camMode = 'low';
+      }, 2100);
+
+      // 3.1s: Bullet-time release slingshot boost overtake!
+      addTimer(() => {
+        us.boosting = true;
+        camMode = 'boost';
+        slide.classList.add('is-boost');
+        Deck.sfx('boost');
+        Deck.fx.shake(1.1);
+        Deck.score.duck(false);
+        if (motorLoop) motorLoop.set(0.9);
+        spawnSparkBurst(16, 1.3);
+        addTimer(() => {
+          Deck.sfx('overtake');
+        }, 120);
+        addTimer(() => {
+          slide.classList.remove('is-boost');
+        }, 950);
+      }, 3100);
+
+      // 4.6s: Pull-back wide panoramic contrast shot
+      addTimer(() => {
+        camMode = 'pull';
+        if (motorLoop) motorLoop.set(0.6);
+      }, 4600);
+
+      // 6.5s: Beat 2 main cinematic sequence settled into straight cruise
+      addTimer(() => {
+        beat2Done = true;
+        us.boosting = false;
+      }, 6500);
     }
 
-    function runBeat3(el) {
-      el.classList.add('is-s1', 'is-s2', 'is-stamped');
-      const sealEl = el.querySelector('.stamp') || el.querySelector('.stamp-wrap');
+    function fastForwardBeat2ToEnd() {
+      clearAllTimers();
+      Deck.score.duck(false);
+      slide.classList.remove('is-boost');
+      slide.classList.add('is-s1', 'is-s2');
+      if (tagTurn) tagTurn.classList.add('is-on');
+      if (tagAlert) tagAlert.classList.add('is-on');
+      pathReveal = 1;
+      pathTarget = 1;
+      timeScale = 1.0;
+      beat2Started = true;
+      beat2Done = true;
+      beat2RealElapsed = 6.2;
+
+      rival.s = SLOW_BAY_S;
+      rival.offset = SLOW_BAY_OFFSET;
+      rival.v = 0;
+      rival.charge = 10;
+      rival.braking = false;
+      rival.parked = true;
+      updateBikeWorld(rival);
+
+      if (us.s < 615) {
+        us.s = 615;
+      }
+      us.offset = innerLaneOffset(us.s);
+      us.v = 62;
+      us.charge = 95;
+      us.charged = true;
+      us.boosting = false;
+      if (tagUs) tagUs.classList.add('is-charged');
+      updateBikeWorld(us);
+      seedTrail(us, 72, 2.7);
+
+      camMode = 'pull';
+      computeDesiredCamera();
+      cam.cx = _desiredCam.cx;
+      cam.cy = _desiredCam.cy;
+      cam.cz = _desiredCam.cz;
+      cam.lx = _desiredCam.lx;
+      cam.ly = _desiredCam.ly;
+      cam.lz = _desiredCam.lz;
+      updateCamBasis();
+    }
+
+    function triggerBeat3() {
+      if (stage >= 3) return;
+      if (!beat2Done) {
+        fastForwardBeat2ToEnd();
+      }
+      stage = 3;
+      targetZoom = 1.05;
+      if (motorLoop) motorLoop.set(0.45);
+      slide.classList.add('is-stamped');
       Deck.sfx('stamp');
       Deck.fx.sparks(sealEl, { count: 24, color: '#FF5500' });
       Deck.fx.flash('rgba(255,85,0,0.35)');
       Deck.fx.shake(1.4);
-    }
-
-    function replayToStage(el, maxStage) {
-      clearTimers();
-      clearSparks(el);
-      resetState(el);
-      void el.offsetWidth;
-
-      timers.push(setTimeout(() => runBeat1(el), 100));
-      if (maxStage >= 2) {
-        timers.push(setTimeout(() => runBeat2(el), 760));
-      }
-      if (maxStage >= 3) {
-        timers.push(setTimeout(() => runBeat3(el), 1480));
-      }
+      Deck.sfx('cymbal');
+      Deck.score.cue('drums');
     }
 
     Deck.register('p21', {
       enter(el) {
-        clearTimers();
-        clearSparks(el);
-        resetState(el);
+        resetAllState();
         void el.offsetWidth;
-
-        timers.push(setTimeout(() => runBeat1(el), 120));
-
-        if (onKeyDown) {
-          document.removeEventListener('keydown', onKeyDown);
-        }
-        onKeyDown = (e) => {
-          if (!el.classList.contains('active')) return;
-          if (e.metaKey || e.ctrlKey || e.altKey) return;
-          const tag = e.target && e.target.tagName;
-          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) {
-            return;
-          }
-          if (e.key === 'r' || e.key === 'R') {
-            e.preventDefault();
-            const stage = el.classList.contains('is-stamped') ? 3 : (el.classList.contains('is-s2') ? 2 : 1);
-            replayToStage(el, stage);
-          }
-        };
-        document.addEventListener('keydown', onKeyDown);
-        el.__p21Replay = () => replayToStage(el, 3);
+        motorLoop = Deck.loop('motor');
+        if (motorLoop) motorLoop.set(0.3);
+        lastTs = 0;
+        renderScene();
+        rafId = requestAnimationFrame(frame);
       },
       beats: [
-        function (el) {
-          clearTimers();
-          if (el.classList.contains('is-s2')) return;
-          void el.offsetWidth;
-          runBeat2(el);
-        },
-        function (el) {
-          clearTimers();
-          if (el.classList.contains('is-stamped')) return;
-          void el.offsetWidth;
-          runBeat3(el);
-        }
+        function () { triggerBeat1(); },
+        function () { triggerBeat2(); },
+        function () { triggerBeat3(); }
       ],
       leave(el) {
-        clearTimers();
-        clearSparks(el);
-        resetState(el);
-        if (onKeyDown) {
-          document.removeEventListener('keydown', onKeyDown);
-          onKeyDown = null;
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
         }
+        if (motorLoop) {
+          try { motorLoop.stop(); } catch (_) {}
+          motorLoop = null;
+        }
+        Deck.score.duck(false);
+        resetAllState();
+        if (ctx) ctx.clearRect(0, 0, W, H);
       }
     });
   })();
@@ -4731,29 +6864,602 @@
 <script>/* P23 */
 
   (function () {
-    let cueTimer = null;
+    const TIP_X = 960;
+    const TIP_Y = 100;
+    const BASE_Y = 838;
+    const STRIP = { left: 941, top: 374, width: 38, height: 199 };
+    const H_START = 1080 - BASE_Y - 12;
+    const H_END = 1080 - 48;
+    const EAGLE_T0 = 3000;
+    const LINE_A = ['桢', '昱', '烽', '动', '力'];
+    const LINE_B = ['闪', '充', '领', '导', '者'];
 
-    function clearCueTimer() {
-      if (cueTimer) {
-        clearTimeout(cueTimer);
-        cueTimer = null;
+    let timers = [];
+    let flipInterval = null;
+    let sparkInterval = null;
+    let rafId = null;
+    let chargeLoop = null;
+    let particles = null;
+    let ignited = false;
+    let eagles = [];
+
+    function makeRng(seed) {
+      let s = seed >>> 0;
+      return function () {
+        s += 0x6D2B79F5;
+        let t = Math.imul(s ^ (s >>> 15), 1 | s);
+        t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function clamp01(v) {
+      return v < 0 ? 0 : v > 1 ? 1 : v;
+    }
+
+    function smoothstep(p) {
+      const t = clamp01(p);
+      return t * t * (3 - 2 * t);
+    }
+
+    function easeOutCubic(p) {
+      const t = clamp01(p);
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function lerpAngle(a, b, t) {
+      let d = ((b - a + Math.PI) % (Math.PI * 2)) - Math.PI;
+      if (d < -Math.PI) d += Math.PI * 2;
+      return a + d * t;
+    }
+
+    function buildLed(ledEl) {
+      if (!ledEl) return;
+      const lnA = ledEl.querySelector('.ln.a');
+      const lnB = ledEl.querySelector('.ln.b');
+      const fs = Math.floor(Math.min(STRIP.width * 0.85, (STRIP.height * 0.8) / 5.7));
+      ledEl.style.fontSize = fs + 'px';
+      if (lnA && lnA.children.length === 0) {
+        for (let i = 0; i < LINE_A.length; i++) {
+          const sp = document.createElement('span');
+          sp.textContent = LINE_A[i];
+          lnA.appendChild(sp);
+        }
+      }
+      if (lnB && lnB.children.length === 0) {
+        for (let i = 0; i < LINE_B.length; i++) {
+          const sp = document.createElement('span');
+          sp.textContent = LINE_B[i];
+          lnB.appendChild(sp);
+        }
+      }
+      const allSpans = ledEl.querySelectorAll('span');
+      for (let i = 0; i < allSpans.length; i++) {
+        allSpans[i].classList.remove('on');
+      }
+      ledEl.classList.remove('flip');
+    }
+
+    function initEagles() {
+      const rng = makeRng(20261123);
+      const cx = TIP_X;
+      const cy = TIP_Y + 150;
+      const list = [];
+
+      for (let i = 0; i < 9; i++) {
+        const tier = i % 3;
+        const rx = 250 + tier * 110;
+        const ry = 55 + tier * 30;
+        const theta0 = i * ((Math.PI * 2) / 9);
+        const omega = 0.14 + tier * 0.035;
+        const delay = EAGLE_T0 + i * 110;
+        const dur = 2300 + (i % 4) * 250;
+        const thetaArr = theta0 + omega * ((delay + dur) / 1000);
+        const tx = cx + rx * Math.cos(thetaArr);
+        const ty = cy + ry * Math.sin(thetaArr);
+
+        let sx, sy;
+        if (i === 2 || i === 6) {
+          sx = 340 + rng() * 1240;
+          sy = -150;
+        } else if (i % 2 === 0) {
+          sx = -200;
+          sy = 120 + rng() * 400;
+        } else {
+          sx = 2120;
+          sy = 80 + rng() * 400;
+        }
+
+        const mx = (sx + tx) * 0.5;
+        const my = (sy + ty) * 0.5 - 180;
+
+        list.push({
+          idx: i,
+          tier: tier,
+          rx: rx,
+          ry: ry,
+          cx: cx,
+          cy: cy,
+          theta0: theta0,
+          thetaArr: thetaArr,
+          omega: omega,
+          delay: delay,
+          dur: dur,
+          sx: sx,
+          sy: sy,
+          mx: mx,
+          my: my,
+          tx: tx,
+          ty: ty,
+          baseScale0: 0.45 + tier * 0.22,
+          flapPhase0: rng() * Math.PI * 2,
+          nextBurstT: delay + dur + 1400 + rng() * 2400,
+          burstGapBase: 3200 + rng() * 2600,
+          burstBeats: rng() > 0.45 ? 3 : 2,
+          burstEndT: 0
+        });
+      }
+      eagles = list;
+    }
+
+    function drawEagle(ctx, x, y, heading, scale, phase, alpha, tone, bank, isLit) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(heading);
+      ctx.scale(scale, scale * (0.92 + 0.08 * Math.cos(bank)));
+
+      const rCol = Math.round(28 - 20 * tone);
+      const gCol = Math.round(32 - 24 * tone);
+      const bCol = Math.round(42 - 32 * tone);
+      const fillCol = 'rgba(' + rCol + ',' + gCol + ',' + bCol + ',' + alpha.toFixed(3) + ')';
+
+      const sExt = 0.62 + 0.38 * Math.cos(phase);
+      const wristShift = -6 * Math.sin(phase);
+      const tipShift = -12 * Math.sin(phase + 0.6);
+      const wristSpan = 31 * (0.86 + 0.14 * Math.cos(phase));
+      const handSpan = wristSpan + 28 * sExt;
+
+      const wx = 10.5 + wristShift;
+      const hx = 1.5 + tipShift;
+      const fingerLens = [13.5, 16.0, 15.2, 12.8, 10.2];
+      const fingerAngles = [1.46, 1.59, 1.72, 1.85, 1.98]; // ~83.6° to 113.4° (~7.4° apart, within 6..8°)
+
+      function buildHalfWing(side, startFromHead) {
+        const wy = side * wristSpan;
+        const hy = side * handSpan;
+
+        if (startFromHead) {
+          // Neck -> shoulder -> curved wrist -> outer hand leading edge
+          ctx.bezierCurveTo(17, side * 4.4, 13, side * 4.2, 9, side * 4.2);
+          ctx.bezierCurveTo(11, side * (wristSpan * 0.42), wx + 1.5, side * (wristSpan * 0.78), wx, wy);
+          ctx.bezierCurveTo(wx - 0.5, side * (wristSpan + (handSpan - wristSpan) * 0.42), hx + 3.8, side * (handSpan - 6), hx + 1.2, hy);
+
+          // 5 separated slotted primary "fingers" fanning outward-to-backward
+          for (let f = 0; f < 5; f++) {
+            const frac = f / 4;
+            const bx = (hx + 0.8) - frac * 11.5;
+            const by = side * (handSpan - frac * 7.5);
+            const absAng = fingerAngles[f];
+            const ang = side * absAng;
+            const len = fingerLens[f] * (0.76 + 0.24 * sExt);
+            const dx = Math.cos(ang), dy = Math.sin(ang);
+            const tipX = bx + dx * len;
+            const tipY = by + dy * len;
+            // Leading (+x) normal orthogonal to finger shaft
+            const lx = Math.sin(absAng);
+            const ly = -side * Math.cos(absAng);
+
+            ctx.quadraticCurveTo(bx + dx * len * 0.55 + lx * 1.15, by + dy * len * 0.55 + ly * 1.15, tipX, tipY);
+            const nextFrac = (f + 0.5) / 4;
+            const notchX = f < 4 ? (hx + 0.8) - nextFrac * 11.5 - 0.8 : hx - 12.6;
+            const notchY = f < 4 ? side * (handSpan - nextFrac * 7.5 - 2.2) : side * (handSpan - 9.2);
+            ctx.quadraticCurveTo(bx + dx * len * 0.50 - lx * 1.15, by + dy * len * 0.50 - ly * 1.15, notchX, notchY);
+          }
+
+          // Broad rounded secondary trailing edge back into tail root
+          ctx.bezierCurveTo(
+            hx - 16.5, side * (wristSpan + (handSpan - wristSpan) * 0.48),
+            -12 + wristShift * 0.45, side * (wristSpan * 0.98),
+            -13.5, side * (wristSpan * 0.48)
+          );
+          ctx.quadraticCurveTo(-14.5, side * 10.5, -13.0, side * 3.4);
+        } else {
+          // Tail root -> trailing edge -> 5 fingers reverse -> wrist -> shoulder -> neck
+          ctx.quadraticCurveTo(-14.5, side * 10.5, -13.5, side * (wristSpan * 0.48));
+          ctx.bezierCurveTo(
+            -12 + wristShift * 0.45, side * (wristSpan * 0.98),
+            hx - 16.5, side * (wristSpan + (handSpan - wristSpan) * 0.48),
+            hx - 12.6, side * (handSpan - 9.2)
+          );
+
+          for (let f = 4; f >= 0; f--) {
+            const frac = f / 4;
+            const bx = (hx + 0.8) - frac * 11.5;
+            const by = side * (handSpan - frac * 7.5);
+            const absAng = fingerAngles[f];
+            const ang = side * absAng;
+            const len = fingerLens[f] * (0.76 + 0.24 * sExt);
+            const dx = Math.cos(ang), dy = Math.sin(ang);
+            const tipX = bx + dx * len;
+            const tipY = by + dy * len;
+            const lx = Math.sin(absAng);
+            const ly = -side * Math.cos(absAng);
+
+            ctx.quadraticCurveTo(bx + dx * len * 0.50 - lx * 1.15, by + dy * len * 0.50 - ly * 1.15, tipX, tipY);
+            const prevFrac = (f - 0.5) / 4;
+            const notchX = f > 0 ? (hx + 0.8) - prevFrac * 11.5 - 0.8 : hx + 1.2;
+            const notchY = f > 0 ? side * (handSpan - prevFrac * 7.5 - 2.2) : hy;
+            ctx.quadraticCurveTo(bx + dx * len * 0.55 + lx * 1.15, by + dy * len * 0.55 + ly * 1.15, notchX, notchY);
+          }
+
+          ctx.bezierCurveTo(hx + 3.8, side * (handSpan - 6), wx - 0.5, side * (wristSpan + (handSpan - wristSpan) * 0.42), wx, wy);
+          ctx.bezierCurveTo(wx + 1.5, side * (wristSpan * 0.78), 11, side * (wristSpan * 0.42), 9, side * 4.2);
+          ctx.bezierCurveTo(13, side * 4.2, 17, side * 4.4, 21.8, side * 2.2);
+        }
+      }
+
+      // Unified single closed silhouette: beak -> head -> right wing -> fanned tail -> left wing -> head
+      ctx.beginPath();
+      ctx.moveTo(29.2, 1.8);
+      ctx.quadraticCurveTo(25.8, 1.9, 21.8, 2.2);
+      buildHalfWing(1, true);
+      // Fanned tail (length 16, ±18 deg spread, straight-slightly-curved fan end)
+      ctx.lineTo(-28.0, 8.4);
+      ctx.quadraticCurveTo(-30.2, 0, -28.0, -8.4);
+      ctx.lineTo(-13.0, -3.4);
+      buildHalfWing(-1, false);
+      // Hooked raptor beak tip closure
+      ctx.quadraticCurveTo(27.2, -1.6, 29.2, 1.8);
+      ctx.closePath();
+
+      // Stroke outer halo BEFORE fill so rim light only hugs outside edge without cutting into thin feathers
+      if (isLit) {
+        ctx.strokeStyle = 'rgba(255,150,70,0.35)';
+        ctx.lineWidth = 1.4 / Math.max(0.25, scale);
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+      }
+      ctx.fillStyle = fillCol;
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function renderEagles(ctx, elapsed, isLit) {
+      ctx.clearRect(0, 0, 1920, 1080);
+      if (elapsed < EAGLE_T0) return;
+
+      const drawQueue = [];
+      for (let i = 0; i < eagles.length; i++) {
+        const eg = eagles[i];
+        if (elapsed < eg.delay) continue;
+
+        let x, y, heading, scale, phase, depth, bank;
+        const arriveT = eg.delay + eg.dur;
+
+        if (elapsed < arriveT) {
+          const rawP = (elapsed - eg.delay) / eg.dur;
+          const u = easeOutCubic(rawP);
+          const omt = 1 - u;
+          x = omt * omt * eg.sx + 2 * omt * u * eg.mx + u * u * eg.tx;
+          y = omt * omt * eg.sy + 2 * omt * u * eg.my + u * u * eg.ty;
+
+          const dxdt = 2 * omt * (eg.mx - eg.sx) + 2 * u * (eg.tx - eg.mx);
+          const dydt = 2 * omt * (eg.my - eg.sy) + 2 * u * (eg.ty - eg.my);
+          const bezAngle = Math.atan2(dydt, dxdt);
+          const ellAngle = Math.atan2(
+            eg.ry * Math.cos(eg.thetaArr),
+            -eg.rx * Math.sin(eg.thetaArr)
+          );
+          const blend = rawP > 0.78 ? smoothstep((rawP - 0.78) / 0.22) : 0;
+          heading = lerpAngle(bezAngle, ellAngle, blend);
+
+          depth = Math.sin(eg.thetaArr);
+          const arrScale = eg.baseScale0 * (0.85 + 0.15 * depth);
+          scale = arrScale * (0.6 + 0.4 * u);
+          phase = eg.flapPhase0 + ((elapsed - eg.delay) / 1000) * Math.PI * 2 * 2.6;
+          bank = 0.18 * Math.sin(rawP * Math.PI);
+        } else {
+          const theta = eg.theta0 + eg.omega * (elapsed / 1000);
+          x = eg.cx + eg.rx * Math.cos(theta);
+          y = eg.cy + eg.ry * Math.sin(theta);
+          const vx = -eg.rx * Math.sin(theta);
+          const vy = eg.ry * Math.cos(theta);
+          heading = Math.atan2(vy, vx);
+          depth = Math.sin(theta);
+          scale = eg.baseScale0 * (0.85 + 0.15 * depth);
+
+          if (elapsed >= eg.nextBurstT) {
+            const burstDur = (eg.burstBeats / 2.2) * 1000;
+            eg.burstEndT = eg.nextBurstT + burstDur;
+            eg.nextBurstT = eg.burstEndT + eg.burstGapBase;
+          }
+          if (elapsed < eg.burstEndT) {
+            const bt = (elapsed - (eg.burstEndT - (eg.burstBeats / 2.2) * 1000)) / 1000;
+            phase = bt * Math.PI * 2 * 2.2;
+          } else {
+            phase = 0.08 * Math.sin(elapsed * 0.0045 + eg.idx * 1.7);
+          }
+
+          bank = (0.24 + 0.56 * Math.abs(Math.cos(theta))) * (Math.cos(theta) >= 0 ? 1 : -1);
+        }
+
+        if (y >= 560) y = 559;
+
+        const alpha = 0.70 + 0.30 * (0.5 + 0.5 * depth);
+        const tone = clamp01((scale - 0.30) / 0.58);
+        drawQueue.push({
+          x: x,
+          y: y,
+          heading: heading,
+          scale: scale,
+          phase: phase,
+          alpha: alpha,
+          tone: tone,
+          bank: bank
+        });
+      }
+
+      drawQueue.sort(function (a, b) { return a.scale - b.scale; });
+      for (let i = 0; i < drawQueue.length; i++) {
+        const d = drawQueue[i];
+        drawEagle(ctx, d.x, d.y, d.heading, d.scale, d.phase, d.alpha, d.tone, d.bank, isLit);
+      }
+    }
+
+    function clearAllAsync(el) {
+      for (let i = 0; i < timers.length; i++) {
+        clearTimeout(timers[i]);
+      }
+      timers = [];
+      if (flipInterval) {
+        clearInterval(flipInterval);
+        flipInterval = null;
+      }
+      if (sparkInterval) {
+        clearInterval(sparkInterval);
+        sparkInterval = null;
+      }
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (chargeLoop) {
+        try { chargeLoop.stop(); } catch (_) {}
+        chargeLoop = null;
+      }
+      if (particles) {
+        try { particles.stop(); } catch (_) {}
+        particles = null;
+      }
+      if (Deck && Deck.score && typeof Deck.score.duck === 'function') {
+        Deck.score.duck(false);
+      }
+
+      if (!el) return;
+      const canvas = el.querySelector('.p23-eagles');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) ctx.clearRect(0, 0, 1920, 1080);
+      }
+      const litCity = el.querySelector('.p23-litcity');
+      const litTower = el.querySelector('.p23-littower');
+      const front = el.querySelector('.p23-front');
+      const core = el.querySelector('.p23-core');
+      const search = el.querySelector('.p23-search');
+      const led = el.querySelector('.p23-led');
+      const rule = el.querySelector('.copy .rule');
+      const h1 = el.querySelector('.copy h1');
+      const sub = el.querySelector('.copy .t-sub');
+
+      el.classList.remove('p23-on');
+      if (litCity) {
+        litCity.style.setProperty('--r', '0px');
+        litCity.style.opacity = '0';
+      }
+      if (litTower) {
+        litTower.style.setProperty('--h', '0px');
+        litTower.style.opacity = '0';
+      }
+      if (front) {
+        front.style.opacity = '0';
+        front.style.top = '1080px';
+      }
+      if (core) core.classList.remove('lit');
+      if (search) search.classList.remove('lit');
+      if (led) {
+        led.classList.remove('flip');
+        const spans = led.querySelectorAll('span');
+        for (let i = 0; i < spans.length; i++) spans[i].classList.remove('on');
+      }
+      if (rule) rule.classList.add('p23-wait');
+      if (h1) {
+        h1.classList.add('p23-wait');
+        h1.style.opacity = '';
+      }
+      if (sub) {
+        sub.classList.add('p23-wait');
+        sub.style.transition = '';
+        sub.style.clipPath = '';
+        sub.style.opacity = '';
       }
     }
 
     Deck.register('p23', {
       enter(el) {
-        clearCueTimer();
-        const signZone = el.querySelector('.sign-zone');
-        cueTimer = setTimeout(function () {
-          cueTimer = null;
-          Deck.sfx('eagle');
-          if (signZone) {
-            Deck.fx.sweep(signZone);
+        clearAllAsync(el);
+        ignited = false;
+
+        const litCity = el.querySelector('.p23-litcity');
+        const litTower = el.querySelector('.p23-littower');
+        const front = el.querySelector('.p23-front');
+        const core = el.querySelector('.p23-core');
+        const search = el.querySelector('.p23-search');
+        const led = el.querySelector('.p23-led');
+        const canvas = el.querySelector('.p23-eagles');
+        const ctx = canvas ? canvas.getContext('2d') : null;
+        const rule = el.querySelector('.copy .rule');
+        const h1 = el.querySelector('.copy h1');
+        const sub = el.querySelector('.copy .t-sub');
+
+        buildLed(led);
+        initEagles();
+
+        Deck.sfx('riser', 1300);
+
+        const startTime = performance.now();
+
+        function tick(now) {
+          const elapsed = now - startTime;
+
+          // Tower flash charge: 200ms -> 2600ms
+          if (elapsed >= 200 && elapsed < 2600) {
+            const p = (elapsed - 200) / 2400;
+            const eased = smoothstep(p);
+            const hVal = H_START + eased * (H_END - H_START);
+            if (litTower) {
+              litTower.style.opacity = '1';
+              litTower.style.setProperty('--h', hVal.toFixed(1) + 'px');
+            }
+            if (front) {
+              front.style.opacity = p < 0.04 ? String(p / 0.04) : '1';
+              front.style.top = (1080 - hVal - 11).toFixed(1) + 'px';
+            }
+            if (chargeLoop) {
+              chargeLoop.set(0.2 + 0.8 * eased);
+            }
+          } else if (elapsed >= 2600 && !ignited) {
+            if (litTower) {
+              litTower.style.opacity = '1';
+              litTower.style.setProperty('--h', '1080px');
+            }
+            if (front) front.style.opacity = '0';
           }
-        }, 350);
+
+          // City radial light reveal: 1400ms -> 3400ms
+          if (elapsed >= 1400 && litCity) {
+            const cp = clamp01((elapsed - 1400) / 2000);
+            const rVal = cp * 2400;
+            litCity.style.setProperty('--r', rVal.toFixed(1) + 'px');
+            litCity.style.opacity = String(Math.min(1, rVal / 180));
+          }
+
+          if (ctx) {
+            renderEagles(ctx, elapsed, ignited);
+          }
+
+          rafId = requestAnimationFrame(tick);
+        }
+
+        rafId = requestAnimationFrame(tick);
+
+        // 200ms: start charge loop & sparks along charging wavefront
+        timers.push(setTimeout(function () {
+          chargeLoop = Deck.loop('charge');
+          if (front) {
+            Deck.fx.sparks(front, { count: 6, color: '#FFB15C' });
+            sparkInterval = setInterval(function () {
+              Deck.fx.sparks(front, { count: 6, color: '#FFB15C' });
+            }, 380);
+          }
+        }, 200));
+
+        // 1400ms: glory accent & duck music
+        timers.push(setTimeout(function () {
+          Deck.sfx('glory');
+          Deck.score.duck(true);
+        }, 1400));
+
+        // 2600ms: IGNITE tower crown once
+        timers.push(setTimeout(function () {
+          if (ignited) return;
+          ignited = true;
+
+          if (sparkInterval) {
+            clearInterval(sparkInterval);
+            sparkInterval = null;
+          }
+          if (chargeLoop) {
+            try { chargeLoop.stop(); } catch (_) {}
+            chargeLoop = null;
+          }
+          if (litTower) {
+            litTower.style.opacity = '1';
+            litTower.style.setProperty('--h', '1080px');
+          }
+          if (front) front.style.opacity = '0';
+          if (core) core.classList.add('lit');
+          if (search) search.classList.add('lit');
+          el.classList.add('p23-on');
+
+          Deck.fx.flash('rgba(255,214,170,0.55)');
+          Deck.sfx('ignite');
+          Deck.sfx('impact');
+          Deck.fx.shake(0.5);
+          if (core) Deck.fx.sparks(core, { count: 26, color: '#FFD08A' });
+          particles = Deck.fx.particles(el, 'gold');
+        }, 2600));
+
+        // 3150ms & 4400ms: eagle cries during flock fly-in
+        timers.push(setTimeout(function () { Deck.sfx('eagle'); }, 3150));
+        timers.push(setTimeout(function () { Deck.sfx('eagle'); }, 4400));
+
+        // 3400ms: LED facade line A top-to-bottom 5 chars + sweep
+        if (led) {
+          const spansA = led.querySelectorAll('.ln.a span');
+          for (let i = 0; i < spansA.length; i++) {
+            (function (sp, idx) {
+              timers.push(setTimeout(function () {
+                sp.classList.add('on');
+                Deck.sfx('tick');
+              }, 3400 + idx * 140));
+            })(spansA[i], i);
+          }
+          timers.push(setTimeout(function () {
+            const spansB = led.querySelectorAll('.ln.b span');
+            for (let i = 0; i < spansB.length; i++) spansB[i].classList.add('on');
+            Deck.fx.sweep(led);
+          }, 3400 + spansA.length * 140 + 40));
+        }
+
+        // 4300ms: Main headline slamChars
+        timers.push(setTimeout(function () {
+          if (rule) rule.classList.remove('p23-wait');
+          if (h1) {
+            h1.classList.remove('p23-wait');
+            Deck.fx.slamChars(h1, { sfx: 'hit', gap: 75 });
+          }
+        }, 4300));
+
+        // 5400ms: Subtitle writeOn + chime
+        timers.push(setTimeout(function () {
+          if (sub) {
+            sub.classList.remove('p23-wait');
+            Deck.fx.writeOn(sub, { ms: 1200 });
+          }
+          Deck.sfx('chime');
+        }, 5400));
+
+        // 8000ms: un-duck music & alternate LED facade copy every 4500ms
+        timers.push(setTimeout(function () {
+          Deck.score.duck(false);
+          if (led) {
+            led.classList.toggle('flip');
+            Deck.sfx('pop');
+            flipInterval = setInterval(function () {
+              led.classList.toggle('flip');
+              Deck.sfx('pop');
+            }, 4500);
+          }
+        }, 8000));
+
+        // 8600ms: final eagle cry
+        timers.push(setTimeout(function () { Deck.sfx('eagle'); }, 8600));
       },
+
       leave(el) {
-        clearCueTimer();
+        clearAllAsync(el);
+        ignited = false;
       }
     });
   })();

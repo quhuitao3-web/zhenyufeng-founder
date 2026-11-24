@@ -83,6 +83,7 @@
   var masterGain = null;
   var scoreBusGain = null;
   var noiseBuffer = null;
+  var gloryReverbBuffer = null;
   var silentAudioEl = null;
   var userMuted = false;
   var btnUnlockStamp = 0;
@@ -317,6 +318,21 @@
     }
     noiseBuffer = buf;
     return noiseBuffer;
+  }
+
+  function ensureGloryReverbBuffer() {
+    if (!ctx) return null;
+    if (gloryReverbBuffer) return gloryReverbBuffer;
+    var len = Math.floor(ctx.sampleRate * 2.8);
+    var buf = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (var ch = 0; ch < 2; ch++) {
+      var data = buf.getChannelData(ch);
+      for (var i = 0; i < len; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6);
+      }
+    }
+    gloryReverbBuffer = buf;
+    return gloryReverbBuffer;
   }
 
   function syncMuteUI() {
@@ -1419,6 +1435,454 @@
           brO.stop(nt + nn.d + 0.03);
           blO.stop(nt + nn.d + 0.03);
         }
+        break;
+      }
+
+      case 'glory': {
+        var glSources = [];
+        var glOut = ctx.createGain();
+        glOut.gain.setValueAtTime(0.9, now);
+        glOut.connect(masterGain);
+
+        var glBus = ctx.createGain();
+        glBus.gain.value = 1;
+
+        var glDry = ctx.createGain();
+        glDry.gain.value = 0.8;
+        glBus.connect(glDry);
+        glDry.connect(glOut);
+
+        var revBuf = ensureGloryReverbBuffer();
+        if (revBuf) {
+          var glConv = ctx.createConvolver();
+          glConv.buffer = revBuf;
+          var glWet = ctx.createGain();
+          glWet.gain.value = 0.38;
+          glBus.connect(glConv);
+          glConv.connect(glWet);
+          glWet.connect(glOut);
+        }
+
+        // 1) 定音鼓滚奏 0..1.2s + 1.2s 重击
+        var glRollN = createNoiseSource(now, 1.35);
+        glSources.push(glRollN);
+        var glRollLp = ctx.createBiquadFilter();
+        glRollLp.type = 'lowpass';
+        glRollLp.frequency.value = 200;
+        glRollLp.Q.value = 0.8;
+        var glRollNG = ctx.createGain();
+        glRollNG.gain.setValueAtTime(0.02, now);
+        glRollNG.gain.linearRampToValueAtTime(0.35, now + 1.2);
+        glRollNG.gain.exponentialRampToValueAtTime(0.0001, now + 1.26);
+        glRollN.connect(glRollLp);
+        glRollLp.connect(glRollNG);
+        glRollNG.connect(glBus);
+
+        var glRollTone = ctx.createOscillator();
+        glRollTone.type = 'sine';
+        glRollTone.frequency.setValueAtTime(65, now);
+        var glRollToneG = ctx.createGain();
+        glRollToneG.gain.setValueAtTime(0.22, now);
+        var glLfo = ctx.createOscillator();
+        glLfo.type = 'sine';
+        glLfo.frequency.value = 14;
+        var glLfoDepth = ctx.createGain();
+        glLfoDepth.gain.value = 0.12;
+        glLfo.connect(glLfoDepth);
+        glLfoDepth.connect(glRollToneG.gain);
+        var glRollEnv = ctx.createGain();
+        glRollEnv.gain.setValueAtTime(0.0001, now);
+        glRollEnv.gain.linearRampToValueAtTime(1.0, now + 1.2);
+        glRollEnv.gain.exponentialRampToValueAtTime(0.0001, now + 1.26);
+        glRollTone.connect(glRollToneG);
+        glRollToneG.connect(glRollEnv);
+        glRollEnv.connect(glBus);
+        glRollTone.start(now);
+        glLfo.start(now);
+        glRollTone.stop(now + 1.28);
+        glLfo.stop(now + 1.28);
+        glSources.push(glRollTone, glLfo);
+
+        var glHit = ctx.createOscillator();
+        glHit.type = 'sine';
+        glHit.frequency.setValueAtTime(90, now + 1.2);
+        glHit.frequency.exponentialRampToValueAtTime(48, now + 1.8);
+        var glHitG = ctx.createGain();
+        glHitG.gain.setValueAtTime(0.0001, now + 1.2);
+        glHitG.gain.linearRampToValueAtTime(0.55, now + 1.215);
+        glHitG.gain.exponentialRampToValueAtTime(0.0001, now + 2.6);
+        glHit.connect(glHitG);
+        glHitG.connect(glBus);
+        glHit.start(now + 1.2);
+        glHit.stop(now + 2.65);
+        glSources.push(glHit);
+
+        var glHitN = createNoiseSource(now + 1.2, 0.36);
+        glSources.push(glHitN);
+        var glHitNLp = ctx.createBiquadFilter();
+        glHitNLp.type = 'lowpass';
+        glHitNLp.frequency.value = 900;
+        var glHitNG = ctx.createGain();
+        glHitNG.gain.setValueAtTime(0.25, now + 1.2);
+        glHitNG.gain.exponentialRampToValueAtTime(0.0001, now + 1.55);
+        glHitN.connect(glHitNLp);
+        glHitNLp.connect(glHitNG);
+        glHitNG.connect(glBus);
+
+        // 2) 铜管 + 合唱和弦推进 (G -> A -> Dadd9)
+        var glChFilter = ctx.createBiquadFilter();
+        glChFilter.type = 'lowpass';
+        glChFilter.Q.value = 0.7;
+        glChFilter.frequency.setValueAtTime(500, now + 1.2);
+        glChFilter.frequency.exponentialRampToValueAtTime(2600, now + 3.4);
+        glChFilter.frequency.exponentialRampToValueAtTime(3400, now + 4.2);
+        glChFilter.connect(glBus);
+
+        var chords = [
+          { t0: 1.2, fadeAt: 2.4, stopAt: 3.5, notes: [196.0, 246.94, 293.66, 392.0], perVoice: 0.0375 },
+          { t0: 2.4, fadeAt: 3.4, stopAt: 4.5, notes: [220.0, 277.18, 329.63, 440.0], perVoice: 0.0375 },
+          { t0: 3.4, fadeAt: null, stopAt: 6.55, notes: [146.83, 220.0, 293.66, 369.99, 440.0, 659.25], perVoice: 0.0325 }
+        ];
+        var detuneCents = [-6, 6];
+        for (var ci = 0; ci < chords.length; ci++) {
+          var ch = chords[ci];
+          var cg = ctx.createGain();
+          cg.gain.setValueAtTime(0.0001, now + ch.t0);
+          cg.gain.linearRampToValueAtTime(1.0, now + ch.t0 + 0.35);
+          if (ch.fadeAt !== null) {
+            cg.gain.setTargetAtTime(0.0001, now + ch.fadeAt, 0.18);
+          } else {
+            cg.gain.setValueAtTime(1.0, now + 5.0);
+            cg.gain.exponentialRampToValueAtTime(0.0001, now + 6.5);
+          }
+          cg.connect(glChFilter);
+
+          for (var ni = 0; ni < ch.notes.length; ni++) {
+            var nFreq = ch.notes[ni];
+            for (var di = 0; di < detuneCents.length; di++) {
+              var vo = ctx.createOscillator();
+              vo.type = 'sawtooth';
+              vo.frequency.setValueAtTime(nFreq, now + ch.t0);
+              vo.detune.setValueAtTime(detuneCents[di], now + ch.t0);
+              var vg = ctx.createGain();
+              vg.gain.value = ch.perVoice;
+              vo.connect(vg);
+              vg.connect(cg);
+              vo.start(now + ch.t0);
+              vo.stop(now + ch.stopAt);
+              glSources.push(vo);
+            }
+          }
+        }
+
+        // Dadd9 低音支点 73.42Hz
+        var glSubD = ctx.createOscillator();
+        glSubD.type = 'sine';
+        glSubD.frequency.setValueAtTime(73.42, now + 3.4);
+        var glSubDG = ctx.createGain();
+        glSubDG.gain.setValueAtTime(0.0001, now + 3.4);
+        glSubDG.gain.linearRampToValueAtTime(0.18, now + 3.75);
+        glSubDG.gain.setValueAtTime(0.18, now + 5.0);
+        glSubDG.gain.exponentialRampToValueAtTime(0.0001, now + 6.5);
+        glSubD.connect(glSubDG);
+        glSubDG.connect(glBus);
+        glSubD.start(now + 3.4);
+        glSubD.stop(now + 6.55);
+        glSources.push(glSubD);
+
+        // 3) 钟琴琶音 3.4s 起
+        var bellNotes = [587.33, 739.99, 880.0, 1174.66, 1479.98];
+        for (var bi = 0; bi < bellNotes.length; bi++) {
+          var bt = now + 3.4 + bi * 0.11;
+          var bf = bellNotes[bi];
+          var b1 = ctx.createOscillator();
+          b1.type = 'sine';
+          b1.frequency.setValueAtTime(bf, bt);
+          var bg1 = ctx.createGain();
+          bg1.gain.setValueAtTime(0.0001, bt);
+          bg1.gain.linearRampToValueAtTime(0.14, bt + 0.008);
+          bg1.gain.exponentialRampToValueAtTime(0.0001, bt + 1.6);
+          b1.connect(bg1);
+          bg1.connect(glBus);
+          b1.start(bt);
+          b1.stop(bt + 1.64);
+          glSources.push(b1);
+
+          var b2 = ctx.createOscillator();
+          b2.type = 'sine';
+          b2.frequency.setValueAtTime(bf * 2.76, bt);
+          var bg2 = ctx.createGain();
+          bg2.gain.setValueAtTime(0.0001, bt);
+          bg2.gain.linearRampToValueAtTime(0.14 * 0.3, bt + 0.006);
+          bg2.gain.exponentialRampToValueAtTime(0.0001, bt + 1.45);
+          b2.connect(bg2);
+          bg2.connect(glBus);
+          b2.start(bt);
+          b2.stop(bt + 1.5);
+          glSources.push(b2);
+        }
+
+        // 4) 吊镲 3.4s
+        var glCy = createNoiseSource(now + 3.4, 2.65);
+        glSources.push(glCy);
+        var glCyHp = ctx.createBiquadFilter();
+        glCyHp.type = 'highpass';
+        glCyHp.frequency.value = 4000;
+        var glCyG = ctx.createGain();
+        glCyG.gain.setValueAtTime(0.0001, now + 3.4);
+        glCyG.gain.linearRampToValueAtTime(0.22, now + 3.42);
+        glCyG.gain.exponentialRampToValueAtTime(0.0001, now + 6.0);
+        glCy.connect(glCyHp);
+        glCyHp.connect(glCyG);
+        glCyG.connect(glBus);
+
+        registerSlideCleanup(null, function () {
+          try {
+            glOut.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.05);
+          } catch (_) {}
+          setTimeout(function () {
+            for (var si = 0; si < glSources.length; si++) {
+              try {
+                glSources[si].stop();
+              } catch (_) {}
+            }
+            try {
+              glOut.disconnect();
+            } catch (_) {}
+          }, 90);
+        });
+        break;
+      }
+
+      case 'ignite': {
+        var igSources = [];
+        var igOut = ctx.createGain();
+        igOut.gain.setValueAtTime(0.88, now);
+        igOut.connect(masterGain);
+
+        var igBus = ctx.createGain();
+        igBus.gain.value = 1;
+        var igDry = ctx.createGain();
+        igDry.gain.value = 0.82;
+        igBus.connect(igDry);
+        igDry.connect(igOut);
+
+        var igRevBuf = ensureGloryReverbBuffer();
+        if (igRevBuf) {
+          var igConv = ctx.createConvolver();
+          igConv.buffer = igRevBuf;
+          var igWet = ctx.createGain();
+          igWet.gain.value = 0.34;
+          igBus.connect(igConv);
+          igConv.connect(igWet);
+          igWet.connect(igOut);
+        }
+
+        var igSub = ctx.createOscillator();
+        igSub.type = 'sine';
+        igSub.frequency.setValueAtTime(70, now);
+        igSub.frequency.exponentialRampToValueAtTime(38, now + 1.2);
+        var igSubG = ctx.createGain();
+        igSubG.gain.setValueAtTime(0.0001, now);
+        igSubG.gain.linearRampToValueAtTime(0.6, now + 0.014);
+        igSubG.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+        igSub.connect(igSubG);
+        igSubG.connect(igBus);
+        igSub.start(now);
+        igSub.stop(now + 1.25);
+        igSources.push(igSub);
+
+        var igArc = createNoiseSource(now, 0.28);
+        igSources.push(igArc);
+        var igBp = ctx.createBiquadFilter();
+        igBp.type = 'bandpass';
+        igBp.Q.value = 2.0;
+        igBp.frequency.setValueAtTime(600, now);
+        igBp.frequency.exponentialRampToValueAtTime(5000, now + 0.25);
+        var igArcG = ctx.createGain();
+        igArcG.gain.setValueAtTime(0.001, now);
+        igArcG.gain.linearRampToValueAtTime(0.42, now + 0.03);
+        igArcG.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+        igArc.connect(igBp);
+        igBp.connect(igArcG);
+        igArcG.connect(igBus);
+
+        var dingFreqs = [1760, 2640];
+        for (var di2 = 0; di2 < dingFreqs.length; di2++) {
+          var dgO = ctx.createOscillator();
+          dgO.type = 'sine';
+          dgO.frequency.setValueAtTime(dingFreqs[di2], now + 0.05);
+          var dgG = ctx.createGain();
+          dgG.gain.setValueAtTime(0.0001, now + 0.05);
+          dgG.gain.linearRampToValueAtTime(di2 === 0 ? 0.12 : 0.06, now + 0.058);
+          dgG.gain.exponentialRampToValueAtTime(0.0001, now + 1.45);
+          dgO.connect(dgG);
+          dgG.connect(igBus);
+          dgO.start(now + 0.05);
+          dgO.stop(now + 1.5);
+          igSources.push(dgO);
+        }
+
+        registerSlideCleanup(null, function () {
+          try {
+            igOut.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.04);
+          } catch (_) {}
+          setTimeout(function () {
+            for (var si = 0; si < igSources.length; si++) {
+              try {
+                igSources[si].stop();
+              } catch (_) {}
+            }
+            try {
+              igOut.disconnect();
+            } catch (_) {}
+          }, 90);
+        });
+        break;
+      }
+
+      case 'boost': {
+        var boSources = [];
+        var boOut = ctx.createGain();
+        boOut.gain.setValueAtTime(0.9, now);
+        boOut.connect(masterGain);
+
+        var boLp = ctx.createBiquadFilter();
+        boLp.type = 'lowpass';
+        boLp.Q.value = 1.6;
+        boLp.frequency.setValueAtTime(600, now);
+        boLp.frequency.exponentialRampToValueAtTime(6000, now + 1.5);
+        var boSawG = ctx.createGain();
+        boSawG.gain.setValueAtTime(0.0001, now);
+        boSawG.gain.linearRampToValueAtTime(0.22, now + 0.35);
+        boSawG.gain.exponentialRampToValueAtTime(0.0001, now + 1.65);
+        boLp.connect(boSawG);
+        boSawG.connect(boOut);
+
+        var boPair = [
+          { f0: 180, f1: 1400 },
+          { f0: 181.5, f1: 1410 }
+        ];
+        for (var bi2 = 0; bi2 < boPair.length; bi2++) {
+          var boO = ctx.createOscillator();
+          boO.type = 'sawtooth';
+          boO.frequency.setValueAtTime(boPair[bi2].f0, now);
+          boO.frequency.exponentialRampToValueAtTime(boPair[bi2].f1, now + 1.5);
+          boO.connect(boLp);
+          boO.start(now);
+          boO.stop(now + 1.68);
+          boSources.push(boO);
+        }
+
+        var boCrack = createNoiseSource(now, 0.1);
+        boSources.push(boCrack);
+        var boHp = ctx.createBiquadFilter();
+        boHp.type = 'highpass';
+        boHp.frequency.value = 2500;
+        var boCg = ctx.createGain();
+        boCg.gain.setValueAtTime(0.3, now);
+        boCg.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+        boCrack.connect(boHp);
+        boHp.connect(boCg);
+        boCg.connect(boOut);
+
+        var boTail = createNoiseSource(now + 1.4, 0.36);
+        boSources.push(boTail);
+        var boBp = ctx.createBiquadFilter();
+        boBp.type = 'bandpass';
+        boBp.Q.value = 1.8;
+        boBp.frequency.setValueAtTime(280, now + 1.4);
+        boBp.frequency.exponentialRampToValueAtTime(2100, now + 1.54);
+        boBp.frequency.exponentialRampToValueAtTime(420, now + 1.75);
+        var boTg = ctx.createGain();
+        boTg.gain.setValueAtTime(0.001, now + 1.4);
+        boTg.gain.linearRampToValueAtTime(0.32, now + 1.49);
+        boTg.gain.exponentialRampToValueAtTime(0.0001, now + 1.75);
+        boTail.connect(boBp);
+        boBp.connect(boTg);
+        boTg.connect(boOut);
+
+        registerSlideCleanup(null, function () {
+          try {
+            boOut.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.04);
+          } catch (_) {}
+          setTimeout(function () {
+            for (var si = 0; si < boSources.length; si++) {
+              try {
+                boSources[si].stop();
+              } catch (_) {}
+            }
+            try {
+              boOut.disconnect();
+            } catch (_) {}
+          }, 90);
+        });
+        break;
+      }
+
+      case 'bullet': {
+        var buSources = [];
+        var buOut = ctx.createGain();
+        buOut.gain.setValueAtTime(0.9, now);
+        buOut.connect(masterGain);
+
+        var buN = createNoiseSource(now, 1.18);
+        buSources.push(buN);
+        var buLp = ctx.createBiquadFilter();
+        buLp.type = 'lowpass';
+        buLp.Q.value = 1.2;
+        buLp.frequency.setValueAtTime(300, now);
+        buLp.frequency.exponentialRampToValueAtTime(2500, now + 1.1);
+        var buNG = ctx.createGain();
+        buNG.gain.setValueAtTime(0.0001, now);
+        buNG.gain.exponentialRampToValueAtTime(0.35, now + 1.1);
+        buNG.gain.linearRampToValueAtTime(0.0001, now + 1.15);
+        buN.connect(buLp);
+        buLp.connect(buNG);
+        buNG.connect(buOut);
+
+        var buHum = ctx.createOscillator();
+        buHum.type = 'sine';
+        buHum.frequency.setValueAtTime(55, now);
+        var buHG = ctx.createGain();
+        buHG.gain.setValueAtTime(0.0001, now);
+        buHG.gain.linearRampToValueAtTime(0.25, now + 1.08);
+        buHG.gain.linearRampToValueAtTime(0.0001, now + 1.15);
+        buHum.connect(buHG);
+        buHG.connect(buOut);
+        buHum.start(now);
+        buHum.stop(now + 1.18);
+        buSources.push(buHum);
+
+        var buDrop = ctx.createOscillator();
+        buDrop.type = 'sine';
+        buDrop.frequency.setValueAtTime(110, now + 1.1);
+        buDrop.frequency.exponentialRampToValueAtTime(72, now + 1.55);
+        var buDG = ctx.createGain();
+        buDG.gain.setValueAtTime(0.0001, now + 1.1);
+        buDG.gain.linearRampToValueAtTime(0.4, now + 1.11);
+        buDG.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
+        buDrop.connect(buDG);
+        buDG.connect(buOut);
+        buDrop.start(now + 1.1);
+        buDrop.stop(now + 1.64);
+        buSources.push(buDrop);
+
+        registerSlideCleanup(null, function () {
+          try {
+            buOut.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.04);
+          } catch (_) {}
+          setTimeout(function () {
+            for (var si = 0; si < buSources.length; si++) {
+              try {
+                buSources[si].stop();
+              } catch (_) {}
+            }
+            try {
+              buOut.disconnect();
+            } catch (_) {}
+          }, 90);
+        });
         break;
       }
 
