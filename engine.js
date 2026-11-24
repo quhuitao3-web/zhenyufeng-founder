@@ -79,6 +79,14 @@
   var modalTitleEl = null;
   var modalVideoEl = null;
   var modalOpen = false;
+  var modalOnCanPlay = null;
+  var modalPlayToken = 0;
+
+  var IDLE_VIDEO_SLIDE_INDICES = [12, 13, 14, 16, 17, 23];
+  var lastTransitionAt = 0;
+  var idleWarmerScheduled = false;
+  var idleWarmerStarted = false;
+  var idleWarmerTimer = null;
 
   var lastWheelAt = 0;
   var lastSwipeAt = 0;
@@ -2095,51 +2103,115 @@
         telOut.gain.setValueAtTime(0.85, now);
         telOut.connect(masterGain);
 
-        var telDur = 0.055;
-        var telFreq = Math.random() < 0.5 ? 880 : 920;
+        // Layer 1: Tactile Mechanical Keystrike
+        // 1a) Crisp 0.016s bandpass noise burst at 2800Hz (Q=1.8, gain 0.42)
+        var keyNoise = createNoiseSource(now, 0.016);
+        telSources.push(keyNoise);
+        var keyBp = ctx.createBiquadFilter();
+        keyBp.type = 'bandpass';
+        keyBp.frequency.value = 2800;
+        keyBp.Q.value = 1.8;
+        var keyNoiseG = ctx.createGain();
+        keyNoiseG.gain.setValueAtTime(0.0001, now);
+        keyNoiseG.gain.linearRampToValueAtTime(0.42, now + 0.0015);
+        keyNoiseG.gain.exponentialRampToValueAtTime(0.0001, now + 0.016);
+        keyNoise.connect(keyBp);
+        keyBp.connect(keyNoiseG);
+        keyNoiseG.connect(telOut);
 
-        var telOsc = ctx.createOscillator();
-        telOsc.type = 'sine';
-        telOsc.frequency.setValueAtTime(telFreq, now);
+        // 1b) Bright contact click 0.008s highpass at 5400Hz (gain 0.24)
+        var clickNoise = createNoiseSource(now, 0.008);
+        telSources.push(clickNoise);
+        var clickHp = ctx.createBiquadFilter();
+        clickHp.type = 'highpass';
+        clickHp.frequency.value = 5400;
+        var clickG = ctx.createGain();
+        clickG.gain.setValueAtTime(0.0001, now);
+        clickG.gain.linearRampToValueAtTime(0.24, now + 0.001);
+        clickG.gain.exponentialRampToValueAtTime(0.0001, now + 0.008);
+        clickNoise.connect(clickHp);
+        clickHp.connect(clickG);
+        clickG.connect(telOut);
 
-        var telHarm = ctx.createOscillator();
-        telHarm.type = 'triangle';
-        telHarm.frequency.setValueAtTime(telFreq * 2, now);
+        // 1c) Low keycap thock oscillator (185Hz -> 62Hz triangle 0.028s, gain 0.34)
+        var thockOsc = ctx.createOscillator();
+        thockOsc.type = 'triangle';
+        thockOsc.frequency.setValueAtTime(185, now);
+        thockOsc.frequency.exponentialRampToValueAtTime(62, now + 0.028);
+        var thockG = ctx.createGain();
+        thockG.gain.setValueAtTime(0.0001, now);
+        thockG.gain.linearRampToValueAtTime(0.34, now + 0.002);
+        thockG.gain.exponentialRampToValueAtTime(0.0001, now + 0.028);
+        thockOsc.connect(thockG);
+        thockG.connect(telOut);
+        thockOsc.start(now);
+        thockOsc.stop(now + 0.032);
+        telSources.push(thockOsc);
 
-        var telToneG = ctx.createGain();
-        telToneG.gain.setValueAtTime(0.0001, now);
-        telToneG.gain.linearRampToValueAtTime(0.26, now + 0.003);
-        telToneG.gain.setValueAtTime(0.24, now + telDur - 0.012);
-        telToneG.gain.exponentialRampToValueAtTime(0.0001, now + telDur);
+        // 1d) Subtle spring key-release tick at now + 0.065 (3200Hz bandpass 0.008s, gain 0.14)
+        var relAt = now + 0.065;
+        var relNoise = createNoiseSource(relAt, 0.008);
+        telSources.push(relNoise);
+        var relBp = ctx.createBiquadFilter();
+        relBp.type = 'bandpass';
+        relBp.frequency.value = 3200;
+        relBp.Q.value = 2.2;
+        var relG = ctx.createGain();
+        relG.gain.setValueAtTime(0.0001, relAt);
+        relG.gain.linearRampToValueAtTime(0.14, relAt + 0.001);
+        relG.gain.exponentialRampToValueAtTime(0.0001, relAt + 0.008);
+        relNoise.connect(relBp);
+        relBp.connect(relG);
+        relG.connect(telOut);
 
-        var telHarmG = ctx.createGain();
-        telHarmG.gain.setValueAtTime(0.0001, now);
-        telHarmG.gain.linearRampToValueAtTime(0.045, now + 0.003);
-        telHarmG.gain.exponentialRampToValueAtTime(0.0001, now + telDur * 0.85);
+        // Layer 2: Spy CW Telegraph Dit-Dah
+        var cwBp = ctx.createBiquadFilter();
+        cwBp.type = 'bandpass';
+        cwBp.frequency.value = 860;
+        cwBp.Q.value = 3.5;
+        cwBp.connect(telOut);
 
-        telOsc.connect(telToneG);
-        telHarm.connect(telHarmG);
-        telToneG.connect(telOut);
-        telHarmG.connect(telOut);
-        telOsc.start(now);
-        telHarm.start(now);
-        telOsc.stop(now + telDur + 0.015);
-        telHarm.stop(now + telDur + 0.015);
-        telSources.push(telOsc, telHarm);
+        var cwFreq = Math.random() < 0.5 ? 820 : 860;
+        var cwPulses = [
+          { offset: 0.006, dur: 0.034, gain: 0.30 },
+          { offset: 0.056, dur: 0.056, gain: 0.26 }
+        ];
+        for (var pi = 0; pi < cwPulses.length; pi++) {
+          var cp = cwPulses[pi];
+          var pStart = now + cp.offset;
+          var pEnd = pStart + cp.dur;
 
-        var telClick = createNoiseSource(now, 0.026);
-        telSources.push(telClick);
-        var telBp = ctx.createBiquadFilter();
-        telBp.type = 'bandpass';
-        telBp.frequency.value = 2400;
-        telBp.Q.value = 2.4;
-        var telClickG = ctx.createGain();
-        telClickG.gain.setValueAtTime(0.0001, now);
-        telClickG.gain.linearRampToValueAtTime(0.24, now + 0.002);
-        telClickG.gain.exponentialRampToValueAtTime(0.0001, now + 0.024);
-        telClick.connect(telBp);
-        telBp.connect(telClickG);
-        telClickG.connect(telOut);
+          var cwOsc = ctx.createOscillator();
+          cwOsc.type = 'sine';
+          cwOsc.frequency.setValueAtTime(cwFreq, pStart);
+
+          var cwHarm = ctx.createOscillator();
+          cwHarm.type = 'triangle';
+          cwHarm.frequency.setValueAtTime(cwFreq * 2, pStart);
+
+          var cwGain = ctx.createGain();
+          cwGain.gain.setValueAtTime(0.0001, pStart);
+          cwGain.gain.linearRampToValueAtTime(cp.gain, pStart + 0.0025);
+          cwGain.gain.setValueAtTime(cp.gain, pEnd - 0.0025);
+          cwGain.gain.exponentialRampToValueAtTime(0.0001, pEnd);
+
+          var cwHarmGain = ctx.createGain();
+          cwHarmGain.gain.setValueAtTime(0.0001, pStart);
+          cwHarmGain.gain.linearRampToValueAtTime(cp.gain * 0.24, pStart + 0.0025);
+          cwHarmGain.gain.setValueAtTime(cp.gain * 0.24, pEnd - 0.0025);
+          cwHarmGain.gain.exponentialRampToValueAtTime(0.0001, pEnd);
+
+          cwOsc.connect(cwGain);
+          cwHarm.connect(cwHarmGain);
+          cwGain.connect(cwBp);
+          cwHarmGain.connect(cwBp);
+
+          cwOsc.start(pStart);
+          cwHarm.start(pStart);
+          cwOsc.stop(pEnd + 0.01);
+          cwHarm.stop(pEnd + 0.01);
+          telSources.push(cwOsc, cwHarm);
+        }
 
         registerSlideCleanup(null, function () {
           try {
@@ -4806,20 +4878,57 @@
     v.loop = true;
   }
 
+  function clearInlineCanplay(entry) {
+    if (!entry) return;
+    if (entry._onCanPlay && entry.videoEl) {
+      entry.videoEl.removeEventListener('canplay', entry._onCanPlay);
+    }
+    entry._onCanPlay = null;
+  }
+
   function startInlineEntry(entry) {
     if (!entry || !entry.videoEl) return;
     if (entry.slideEl && !entry.slideEl.classList.contains('active')) return;
     var v = entry.videoEl;
-    var canPlayWithSound = Boolean(Deck.audioReady && !Deck.isMuted());
 
-    v.muted = !canPlayWithSound;
-    entry.unmutedIntent = canPlayWithSound;
-    if (canPlayWithSound) v.volume = 1;
+    clearInlineCanplay(entry);
+
+    v.preload = 'auto';
+    if (v.readyState === 0) {
+      if (!v.__prewarmed || v.networkState !== 2) {
+        v.__prewarmed = true;
+        try {
+          v.load();
+        } catch (_) {}
+      }
+    } else {
+      v.__prewarmed = true;
+    }
+
+    var applyMuteState = function () {
+      var canPlayWithSound = Boolean(Deck.audioReady && !Deck.isMuted());
+      v.muted = !canPlayWithSound;
+      entry.unmutedIntent = canPlayWithSound;
+      if (canPlayWithSound) v.volume = 1;
+      if (entry.soundBtn) {
+        entry.soundBtn.classList.toggle('on', !v.muted);
+      }
+      syncAutoDuck();
+    };
 
     var attempt = function () {
+      if (entry.slideEl && !entry.slideEl.classList.contains('active')) return;
+      if (modalOpen) return;
+      var playToken = (entry._playToken || 0) + 1;
+      entry._playToken = playToken;
+      v.preload = 'auto';
+      applyMuteState();
       var p = v.play();
       if (p && typeof p.catch === 'function') {
         p.catch(function () {
+          if (entry._playToken !== playToken) return;
+          if (entry.slideEl && !entry.slideEl.classList.contains('active')) return;
+          if (modalOpen) return;
           v.muted = true;
           entry.unmutedIntent = false;
           if (entry.soundBtn) entry.soundBtn.classList.remove('on');
@@ -4827,7 +4936,11 @@
           var pMuted = v.play();
           if (pMuted && typeof pMuted.catch === 'function') {
             pMuted.catch(function () {
+              if (entry._playToken !== playToken) return;
               invokeWeixin(function () {
+                if (entry._playToken !== playToken) return;
+                if (entry.slideEl && !entry.slideEl.classList.contains('active')) return;
+                if (modalOpen) return;
                 v.muted = true;
                 entry.unmutedIntent = false;
                 v.play().catch(function () {});
@@ -4836,11 +4949,22 @@
           }
         });
       }
-      if (entry.soundBtn) {
-        entry.soundBtn.classList.toggle('on', !v.muted);
-      }
-      syncAutoDuck();
     };
+
+    if (v.readyState < 3) {
+      var onCanPlay = function () {
+        if (entry._onCanPlay === onCanPlay) {
+          clearInlineCanplay(entry);
+        }
+        if (entry.slideEl && !entry.slideEl.classList.contains('active')) return;
+        if (modalOpen) return;
+        if (v.paused) {
+          attempt();
+        }
+      };
+      entry._onCanPlay = onCanPlay;
+      v.addEventListener('canplay', onCanPlay, { once: true });
+    }
 
     attempt();
   }
@@ -4865,6 +4989,8 @@
     }
     for (var j = 0; j < inlineEntries.length; j++) {
       if (inlineEntries[j].slideEl === slideEl) {
+        inlineEntries[j]._playToken = (inlineEntries[j]._playToken || 0) + 1;
+        clearInlineCanplay(inlineEntries[j]);
         inlineEntries[j].unmutedIntent = false;
         if (inlineEntries[j].soundBtn) {
           inlineEntries[j].soundBtn.classList.remove('on');
@@ -4890,7 +5016,8 @@
         videoEl: videoEl,
         soundBtn: soundBtn || null,
         slideEl: videoEl.closest('.slide'),
-        unmutedIntent: false
+        unmutedIntent: false,
+        _onCanPlay: null
       };
       inlineEntries.push(entry);
 
@@ -4898,11 +5025,17 @@
         if (!videoEl.muted) entry.unmutedIntent = true;
         syncAutoDuck();
       });
+      videoEl.addEventListener('playing', function () {
+        clearInlineCanplay(entry);
+      });
       videoEl.addEventListener('pause', function () {
+        entry._playToken = (entry._playToken || 0) + 1;
+        clearInlineCanplay(entry);
         entry.unmutedIntent = false;
         syncAutoDuck();
       });
       videoEl.addEventListener('ended', function () {
+        clearInlineCanplay(entry);
         entry.unmutedIntent = false;
         syncAutoDuck();
       });
@@ -4938,6 +5071,7 @@
         }
         soundBtn.classList.toggle('on', !videoEl.muted);
         syncAutoDuck();
+        videoEl.preload = 'auto';
         var playPromise = videoEl.play();
         if (playPromise && typeof playPromise.catch === 'function') {
           playPromise.catch(function () {
@@ -4961,6 +5095,8 @@
         startInlineEntry(entry);
       },
       pause: function () {
+        entry._playToken = (entry._playToken || 0) + 1;
+        clearInlineCanplay(entry);
         entry.unmutedIntent = false;
         videoEl.pause();
         syncAutoDuck();
@@ -4976,6 +5112,13 @@
     };
   }
 
+  function clearModalCanplay() {
+    if (modalOnCanPlay && modalVideoEl) {
+      modalVideoEl.removeEventListener('canplay', modalOnCanPlay);
+    }
+    modalOnCanPlay = null;
+  }
+
   function openModal(src, title) {
     if (!modalEl || !modalVideoEl) return;
     if (currentIndex >= 0 && slides[currentIndex]) {
@@ -4986,7 +5129,9 @@
         } catch (_) {}
       }
     }
+    clearModalCanplay();
     modalTitleEl.textContent = title || '';
+    modalVideoEl.preload = 'auto';
     modalVideoEl.src = src || '';
     modalVideoEl.muted = Deck.isMuted();
     modalVideoEl.volume = 1;
@@ -4995,22 +5140,49 @@
     modalEl.setAttribute('aria-hidden', 'false');
     syncAutoDuck();
 
-    var p = modalVideoEl.play();
-    if (p && typeof p.catch === 'function') {
-      p.catch(function () {
-        modalVideoEl.muted = true;
-        modalVideoEl.play().catch(function () {
-          invokeWeixin(function () {
-            modalVideoEl.play().catch(function () {});
+    var attemptModalPlay = function () {
+      if (!modalOpen || !modalVideoEl) return;
+      var tok = ++modalPlayToken;
+      modalVideoEl.preload = 'auto';
+      modalVideoEl.muted = Deck.isMuted();
+      if (!modalVideoEl.muted) modalVideoEl.volume = 1;
+      var p = modalVideoEl.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(function () {
+          if (!modalOpen || !modalVideoEl || tok !== modalPlayToken) return;
+          modalVideoEl.muted = true;
+          modalVideoEl.play().catch(function () {
+            if (!modalOpen || !modalVideoEl || tok !== modalPlayToken) return;
+            invokeWeixin(function () {
+              if (!modalOpen || !modalVideoEl || tok !== modalPlayToken) return;
+              modalVideoEl.play().catch(function () {});
+            });
           });
         });
-      });
+      }
+    };
+
+    if (modalVideoEl.readyState < 3) {
+      var onModalCanPlay = function () {
+        if (modalOnCanPlay === onModalCanPlay) {
+          clearModalCanplay();
+        }
+        if (modalOpen && modalVideoEl && modalVideoEl.paused) {
+          attemptModalPlay();
+        }
+      };
+      modalOnCanPlay = onModalCanPlay;
+      modalVideoEl.addEventListener('canplay', onModalCanPlay, { once: true });
     }
+
+    attemptModalPlay();
   }
 
   function closeModal() {
     if (!modalEl || !modalOpen) return;
     modalOpen = false;
+    modalPlayToken++;
+    clearModalCanplay();
     modalEl.classList.remove('open');
     modalEl.setAttribute('aria-hidden', 'true');
     if (modalVideoEl) {
@@ -5254,23 +5426,140 @@
     goTo(currentIndex + 1);
   }
 
+  function decodeSlideImages(slideEl) {
+    if (!slideEl) return;
+    var imgs = slideEl.querySelectorAll('img');
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      try {
+        img.loading = 'eager';
+        img.decoding = 'sync';
+        if (!img.__deckDecoded && !img.__deckDecodePending && typeof img.decode === 'function') {
+          img.__deckDecodePending = true;
+          (function (targetImg) {
+            targetImg.decode().then(
+              function () {
+                targetImg.__deckDecoded = true;
+                targetImg.__deckDecodePending = false;
+              },
+              function () {
+                targetImg.__deckDecodePending = false;
+              }
+            );
+          })(img);
+        }
+      } catch (_) {}
+    }
+  }
+
+  function prewarmVideoElement(v) {
+    if (!v) return;
+    try {
+      v.preload = 'auto';
+      if (!v.__prewarmed) {
+        v.__prewarmed = true;
+        if ((v.readyState || 0) < 2 && v.networkState !== 2) {
+          v.load();
+        }
+      }
+    } catch (_) {}
+  }
+
+  function startIdleVideoWarmer() {
+    if (idleWarmerStarted) return;
+    idleWarmerStarted = true;
+    if (idleWarmerTimer) {
+      clearTimeout(idleWarmerTimer);
+      idleWarmerTimer = null;
+    }
+    if (!slides || !slides.length) return;
+
+    var queue = [];
+    for (var i = 0; i < IDLE_VIDEO_SLIDE_INDICES.length; i++) {
+      var sEl = slides[IDLE_VIDEO_SLIDE_INDICES[i]];
+      if (!sEl) continue;
+      var vids = sEl.querySelectorAll('video');
+      for (var j = 0; j < vids.length; j++) {
+        queue.push(vids[j]);
+      }
+    }
+    if (!queue.length) return;
+
+    var qPos = 0;
+    function step() {
+      idleWarmerTimer = null;
+      while (qPos < queue.length && queue[qPos] && queue[qPos].__prewarmed) {
+        qPos++;
+      }
+      if (qPos >= queue.length) return;
+
+      var sinceNav = Date.now() - lastTransitionAt;
+      if (modalOpen || (lastTransitionAt > 0 && sinceNav < 900)) {
+        var deferMs = modalOpen ? 900 : Math.max(200, 900 - sinceNav);
+        idleWarmerTimer = setTimeout(step, deferMs);
+        return;
+      }
+
+      var v = queue[qPos++];
+      if (v && !v.__prewarmed) {
+        prewarmVideoElement(v);
+      }
+
+      if (qPos < queue.length) {
+        idleWarmerTimer = setTimeout(step, 900);
+      }
+    }
+
+    step();
+  }
+
+  function scheduleIdleVideoWarmer(delayMs) {
+    if (idleWarmerScheduled || idleWarmerStarted) return;
+    idleWarmerScheduled = true;
+    var waitMs = typeof delayMs === 'number' && delayMs >= 0 ? delayMs : 600;
+    var trigger = function () {
+      if (idleWarmerStarted) return;
+      setTimeout(startIdleVideoWarmer, waitMs);
+    };
+    if (document.readyState === 'complete') {
+      trigger();
+    } else {
+      global.addEventListener('load', function onWinLoad() {
+        global.removeEventListener('load', onWinLoad);
+        trigger();
+      });
+    }
+  }
+
   function prewarmVideosAround(idx) {
     if (!slides || !slides.length) return;
     var startIdx = Math.max(0, idx);
-    var endIdx = Math.min(slides.length - 1, idx + 2);
-    for (var i = startIdx; i <= endIdx; i++) {
-      var slideEl = slides[i];
-      if (!slideEl) continue;
-      var vids = slideEl.querySelectorAll('video');
+    var imgEndIdx = Math.min(slides.length - 1, idx + 3);
+    for (var i = startIdx; i <= imgEndIdx; i++) {
+      if (slides[i]) decodeSlideImages(slides[i]);
+    }
+
+    if (idx === 0) {
+      scheduleIdleVideoWarmer(500);
+      return;
+    }
+
+    var vidTargets = [];
+    var vidEndIdx = Math.min(slides.length - 1, idx + 2);
+    for (var k = startIdx; k <= vidEndIdx; k++) {
+      if (slides[k]) vidTargets.push(slides[k]);
+    }
+    if (idx >= 15) {
+      var p17El = document.getElementById('p17') || slides[16];
+      var p18El = document.getElementById('p18') || slides[17];
+      if (p17El && vidTargets.indexOf(p17El) === -1) vidTargets.push(p17El);
+      if (p18El && vidTargets.indexOf(p18El) === -1) vidTargets.push(p18El);
+    }
+
+    for (var t = 0; t < vidTargets.length; t++) {
+      var vids = vidTargets[t].querySelectorAll('video');
       for (var j = 0; j < vids.length; j++) {
-        var v = vids[j];
-        try {
-          v.preload = 'auto';
-          if (!v.__prewarmed) {
-            v.__prewarmed = true;
-            v.load();
-          }
-        } catch (_) {}
+        prewarmVideoElement(vids[j]);
       }
     }
   }
@@ -5279,6 +5568,7 @@
     var firstEl = slides[initIdx];
     currentIndex = initIdx;
     beatIndex = 0;
+    lastTransitionAt = Date.now();
 
     firstEl.classList.add('active', 'deck-pre');
     void firstEl.offsetWidth;
@@ -5346,6 +5636,7 @@
 
     currentIndex = targetIdx;
     beatIndex = 0;
+    lastTransitionAt = Date.now();
 
     void newEl.offsetWidth;
     newEl.classList.add('active');
@@ -5603,6 +5894,8 @@
     var initIdx = parseHashIndex();
     currentIndex = initIdx;
     beatIndex = 0;
+    decodeSlideImages(slides[initIdx]);
+    scheduleIdleVideoWarmer(600);
 
     if (hasNoGateFlag()) {
       activateInitialSlide(initIdx, false);

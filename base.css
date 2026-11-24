@@ -2,6 +2,14 @@
    桢昱烽 · 主理人版 V2 —— 版面设计统一样式（所有页面必须引用）
    画布：1920 × 1080，一页一个 HTML 文件
    ========================================================= */
+@font-face {
+  font-family: 'MaoTi';
+  src: url('assets/fonts/maoti-subset.woff2') format('woff2'), url('assets/fonts/maoti-subset.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
 :root {
   --dark: #0A0A0B;
   --light: #F5F4F0;
@@ -16,7 +24,8 @@
   --line-lt: rgba(14,14,16,0.12);
   --sans: "PingFang SC", "Hiragino Sans GB", "Heiti SC", sans-serif;
   --serif: "Songti SC", "STSong", serif;
-  --brush: "Xingkai SC", "Kaiti SC", serif;
+  --brush: "MaoTi", "Xingkai SC", "Kaiti SC", serif;
+  --mao: "MaoTi", "Xingkai SC", "Kaiti SC", serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
@@ -67,9 +76,9 @@ body { font-family: var(--sans); -webkit-font-smoothing: antialiased; }
   height: 48px; padding: 0 22px; border-radius: 999px;
   font-size: 17px; font-weight: 700; letter-spacing: 0.04em;
   border: 1px solid rgba(255,255,255,0.28); color: #fff;
-  background: rgba(10,10,12,0.55); backdrop-filter: blur(10px);
+  background: rgba(12, 13, 18, 0.84);
 }
-.light .pill, .white .pill { border-color: rgba(14,14,16,0.18); color: var(--ink); background: rgba(255,255,255,0.7); }
+.light .pill, .white .pill { border-color: rgba(14,14,16,0.18); color: var(--ink); background: rgba(255, 255, 255, 0.88); }
 .pill.on { background: var(--orange); border-color: var(--orange); color: #fff; }
 .pill.gold-btn { background: transparent; border-color: var(--gold); color: var(--gold); }
 

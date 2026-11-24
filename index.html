@@ -8,6 +8,9 @@
 <meta property="og:title" content="桢昱烽 · 闪充第一品牌｜主理人版">
 <meta property="og:description" content="100 位闪充人 · 国企制造 · 闪充中国，让每一次出行都是免费">
 <meta property="og:image" content="assets/cover_12c.jpg">
+<link rel="preload" href="assets/fonts/maoti-subset.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/cover_12c.jpg" as="image" fetchpriority="high">
+<link rel="preload" href="assets/zhenyufeng_logo.png" as="image" fetchpriority="high">
 <link rel="stylesheet" href="base.css">
 <link rel="stylesheet" href="engine.css">
 </head>
@@ -16,21 +19,14 @@
 <style>
 #p01 .media {
   position: absolute; right: 0; top: 0; bottom: 0; width: 1180px; overflow: hidden;
-  opacity: 0; transition: opacity .72s cubic-bezier(.16,1,.3,1);
+  opacity: 1;
 }
-#p01.active .media { opacity: 1; }
 #p01 .media img {
   position: absolute; right: -185px; top: 50%; transform: translateY(-46%);
   height: 760px; width: auto; display: block;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 14%, rgba(0,0,0,.5) 26%, #000 40%, #000 100%), linear-gradient(180deg, transparent 0%, #000 24%, #000 80%, transparent 100%);
   -webkit-mask-composite: source-in; mask-composite: intersect;
 }
-#p01 .media-curtain {
-  position: absolute; inset: 0; z-index: 4; pointer-events: none;
-  background: linear-gradient(90deg, rgba(10,10,11,.94) 0%, #0A0A0B 32%, #0A0A0B 100%);
-  opacity: 1; transition: opacity .68s cubic-bezier(.16,1,.3,1);
-}
-#p01.is-revealed .media-curtain { opacity: 0; }
 #p01 .energy-scan {
   position: absolute; right: -185px; top: 50%; transform: translateY(-46%);
   height: 760px; width: 1362px; overflow: hidden; pointer-events: none;
@@ -97,13 +93,15 @@
   color: rgba(255,255,255,.38); margin-bottom: 36px;
 }
 #p01 .hero {
-  font-family: var(--brush); font-size: 204px; font-weight: 900; line-height: 0.96;
+  font-family: var(--mao); font-size: 204px; font-weight: 900; line-height: 0.96;
   letter-spacing: .04em; color: #FFFFFF;
+  -webkit-text-stroke: 2.4px currentColor; paint-order: stroke fill;
   text-shadow: 0 10px 44px rgba(255, 85, 0, 0.30);
 }
 #p01 .slogan {
-  font-family: var(--brush); font-size: 86px; font-weight: 700; line-height: 1.08;
+  font-family: var(--mao); font-size: 86px; font-weight: 700; line-height: 1.08;
   color: #FFFFFF; white-space: nowrap; margin-top: 26px;
+  -webkit-text-stroke: 1.3px currentColor; paint-order: stroke fill;
   transform: translateY(28px) skewX(-10deg) rotate(-1.6deg);
   transform-origin: left center;
   opacity: 0;
@@ -132,7 +130,7 @@
   display: flex; align-items: center; gap: 14px;
   height: 52px; padding: 0 24px 0 18px; border-radius: 999px;
   border: 1px solid rgba(255,255,255,.18);
-  background: rgba(10,10,12,.55); backdrop-filter: blur(10px);
+  background: rgba(10, 10, 14, 0.84);
   font-size: 18px; font-weight: 600; letter-spacing: .08em; color: rgba(255,255,255,.88);
   transition: border-color .36s ease, box-shadow .36s ease;
 }
@@ -183,15 +181,14 @@
 </style>
 <section id="p01" class="slide dark" data-ch="序章" data-cue="tension">
   <div class="media">
-    <img src="assets/cover_12c.jpg" alt="12C 闪充电动车">
+    <img src="assets/cover_12c.jpg" alt="12C 闪充电动车" fetchpriority="high" decoding="sync" width="1376" height="768">
     <div class="cable-glow" aria-hidden="true"></div>
     <div class="charge-aura" aria-hidden="true"></div>
     <div class="charge-ring" aria-hidden="true"></div>
     <div class="energy-scan" aria-hidden="true"></div>
     <div class="pile-spark" aria-hidden="true"></div>
-    <div class="media-curtain" aria-hidden="true"></div>
   </div>
-  <img class="brand-logo rv d1" src="assets/zhenyufeng_logo.png" alt="桢昱烽动力">
+  <img class="brand-logo rv d1" src="assets/zhenyufeng_logo.png" alt="桢昱烽动力" fetchpriority="high" decoding="sync">
   <div class="body">
     <div class="eyebrow rv d1">SHANGHAI ZHENYUFENG POWER</div>
     <div class="hero">桢昱烽</div>
@@ -372,16 +369,18 @@
   #p04 .hero-xiake {
     display: inline-block;
     margin-top: 8px;
-    padding: 0.06em 0.14em 0.08em 0.04em;
-    margin-left: -0.04em;
-    margin-right: -0.14em;
-    font-family: var(--brush);
-    font-size: 224px;
-    font-weight: 400;
-    line-height: 1.02;
+    padding: 0.08em 0.18em 0.12em 0.06em;
+    margin-left: -0.06em;
+    margin-right: -0.18em;
+    font-family: var(--mao);
+    font-size: 236px;
+    font-weight: 900;
+    -webkit-text-stroke: 5px #FFF8EE;
+    paint-order: stroke fill;
+    line-height: 1.04;
     letter-spacing: 0.06em;
     color: #FFF8EE;
-    text-shadow: 0 0 36px rgba(255, 140, 40, 0.45), 0 8px 32px rgba(0, 0, 0, 0.75);
+    text-shadow: 0 0 42px rgba(255, 130, 32, 0.55), 0 10px 34px rgba(0, 0, 0, 0.82);
     clip-path: inset(0 100% 0 0);
     will-change: clip-path;
   }
@@ -397,7 +396,7 @@
   }
 </style>
 <section id="p04" class="slide dark on-photo" data-ch="壹 · 闪充计划" data-cue="wuxia" data-chapter="壹">
-  <img class="fullbleed" src="assets/v7_wanxiang_cell_lab_1795434763061.jpg" alt="电芯实验室">
+  <img class="fullbleed" src="assets/v7_wanxiang_cell_lab_1795434763061.jpg" alt="电芯实验室" loading="lazy" decoding="async">
   <div class="scrim-left"></div>
   <div class="scrim-extra"></div>
   <div class="chrome-ch">壹 · 闪充计划</div>
@@ -908,7 +907,7 @@
 }
 </style>
 <section id="p08" class="slide dark" data-ch="壹 · 闪充计划" data-cue="silence">
-  <img class="fullbleed bg" src="assets/v7_beijing_banquet_hall_1795434764932.jpg" alt="">
+  <img class="fullbleed bg" src="assets/v7_beijing_banquet_hall_1795434764932.jpg" alt="" loading="lazy" decoding="async">
   <div class="vig"></div>
   <div class="chrome-ch">壹 · 闪充计划</div>
   <div class="body">
@@ -1135,13 +1134,13 @@
 </style>
 <section id="p11" class="slide light" data-ch="贰 · 精准定位" data-cue="silence">
   <div class="chrome-ch">贰 · 精准定位</div>
-  <div class="frame"><img src="assets/storefront.jpg" alt="闪充合作门店实景"></div>
+  <div class="frame"><img src="assets/storefront.jpg" alt="闪充合作门店实景" loading="lazy" decoding="async"></div>
   <div class="body">
-    <h1 class="rv d2">三超门口摆两台，<br><span class="orange">就能卖雅迪闪充</span></h1>
+    <h1 class="rv d2">商超门口摆两台，<br><span class="orange">就能卖雅迪闪充</span></h1>
     <div class="sub t-sub rv d2">零门槛摆台 · 直接增加收入</div>
     <div class="list">
       <div class="row"><span class="k">专业车行</span><span class="v">雅迪及多品牌门店升级为闪充区</span></div>
-      <div class="row"><span class="k">跨界三超</span><span class="v">对标问界 · 理想 · 特斯拉进商场，以及 N 种形式</span></div>
+      <div class="row"><span class="k">跨界商超</span><span class="v">对标问界 · 理想 · 特斯拉进商场，以及 N 种形式</span></div>
       <div class="row"><span class="k">线上种草</span><span class="v">微博 · 抖音 · 小红书 · 视频号 · 快手 · 美团多平台全覆盖</span></div>
     </div>
   </div>
@@ -1262,10 +1261,8 @@
   height: 42px;
   padding: 0 18px;
   border-radius: 999px;
-  background: rgba(10, 10, 12, 0.62);
+  background: rgba(10, 10, 14, 0.84);
   border: 1px solid rgba(255, 100, 30, 0.38);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1429,7 +1426,7 @@
     <button type="button" class="pill no-nav">🔈 闪电原声</button>
   </div>
   <div class="video-box rv d2">
-    <video class="no-nav" src="assets/xian_eco.mp4" poster="assets/frame_xian_eco.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="auto"></video>
+    <video class="no-nav" src="assets/xian_eco.mp4" poster="assets/frame_xian_eco.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="none"></video>
     <div class="video-shade"></div>
   </div>
   <div class="matrix">
@@ -1561,10 +1558,8 @@
     height: 38px;
     padding: 0 16px;
     border-radius: 999px;
-    background: rgba(10, 10, 12, 0.68);
+    background: rgba(10, 10, 14, 0.84);
     border: 1px solid rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -1606,10 +1601,8 @@
     height: 40px;
     padding: 0 16px;
     border-radius: 999px;
-    background: rgba(10, 10, 12, 0.6);
+    background: rgba(10, 10, 14, 0.84);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -1692,7 +1685,7 @@
 <section id="p14" class="slide light" data-ch="叁 · 国企背书" data-cue="dark" data-chapter="叁">
   <div class="chrome-ch">叁 · 国企背书</div>
   <div class="monitor">
-    <video class="no-nav" src="assets/saturation_grid.mp4" poster="assets/frame_saturation_grid.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="auto"></video>
+    <video class="no-nav" src="assets/saturation_grid.mp4" poster="assets/frame_saturation_grid.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="none"></video>
     <div class="media-shade"></div>
     <div class="crosshairs" aria-hidden="true">
       <div class="ch-v"></div>
@@ -1812,9 +1805,6 @@
     object-fit: cover;
     display: block;
   }
-  #p15 .frame-pile video {
-    object-position: center 22%;
-  }
   #p15 .frame .shade {
     position: absolute;
     inset: 0;
@@ -1841,10 +1831,8 @@
     height: 42px;
     padding: 0 18px;
     border-radius: 999px;
-    background: rgba(10, 10, 12, 0.68);
+    background: rgba(10, 10, 14, 0.84);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -1872,7 +1860,7 @@
   #p15.slide.active.deck-pre .live b {
     animation: none;
   }
-  #p15 .frame-fire .pill {
+  #p15 .frame .pill {
     pointer-events: auto;
     flex: none;
     height: 42px;
@@ -1884,7 +1872,7 @@
     border-color: rgba(255, 255, 255, 0.34);
     color: #fff;
   }
-  #p15 .frame-fire .pill.on {
+  #p15 .frame .pill.on {
     background: var(--orange);
     border-color: var(--orange);
     color: #fff;
@@ -1916,14 +1904,15 @@
   </div>
   <div class="dual-grid">
     <div class="frame frame-pile">
-      <video class="no-nav v-pile" src="assets/no_pile.mp4" poster="assets/frame_no_pile.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="auto"></video>
+      <video class="no-nav v-pile" src="assets/no_pile.mp4" poster="assets/frame_no_pile.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="none"></video>
       <div class="shade"></div>
       <div class="frame-head">
         <div class="live"><b></b>痛点一 · 满城找不到充电桩 &amp; 飞线隐患</div>
+        <button type="button" class="pill no-nav">🔈 实拍原声</button>
       </div>
     </div>
     <div class="frame frame-fire">
-      <video class="no-nav v-fire" data-no-duck src="assets/zhengzhou_fire.mp4" poster="assets/frame_zhengzhou_fire.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="auto"></video>
+      <video class="no-nav v-fire" data-no-duck src="assets/zhengzhou_fire.mp4" poster="assets/frame_zhengzhou_fire.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="none"></video>
       <div class="shade"></div>
       <div class="frame-head">
         <div class="live"><b></b>痛点二 · 郑州入户充电爆燃 5 死警示</div>
@@ -2202,6 +2191,12 @@
   margin-left: 14px;
   font-size: 22px;
 }
+#p16 .timer .t b.clock {
+  display: inline-block;
+  min-width: 124px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
 #p16 .replay {
   height: 30px;
   padding: 0 13px;
@@ -2378,7 +2373,7 @@
         <span class="t">同一时刻充电进度</span>
         <button type="button" class="pill no-nav replay" aria-label="重播赛跑动画">↻ 重播</button>
       </span>
-      <span class="t">计时<b class="clock">00:00</b></span>
+      <span class="t">计时<b class="clock">00:00.00</b></span>
     </div>
     <div class="row slow-row">
       <div class="n">传统慢充</div>
@@ -2508,13 +2503,13 @@
   <div class="chrome-ch">叁 · 国企背书</div>
   <div class="title t-title rv d1">大趋势：符合<span class="orange">国家政策</span></div>
   <div class="player no-nav rv d2">
-    <img class="poster" src="assets/v3_policy_hd_1795332670082.jpg" alt="国家政策新闻短片">
+    <img class="poster" src="assets/v3_policy_hd_1795332670082.jpg" alt="国家政策新闻短片" loading="lazy" decoding="async">
     <div class="shade"></div>
     <div class="play" role="button" aria-label="播放国家政策新闻短片"></div>
     <div class="cap">国家政策新闻短片 · 1080P 超清本地版</div>
     <div class="dur">00:00 / 00:37</div>
     <div class="prog"><i></i></div>
-    <video class="no-nav" src="assets/policy.mp4" poster="assets/v3_policy_hd_1795332670082.jpg" controls playsinline webkit-playsinline="true" x5-playsinline="true" preload="auto"></video>
+    <video class="no-nav" src="assets/policy.mp4" poster="assets/v3_policy_hd_1795332670082.jpg" controls playsinline webkit-playsinline="true" x5-playsinline="true" preload="none"></video>
   </div>
   <div class="bar-below no-nav">
     <div class="bar-meta">
@@ -2610,7 +2605,7 @@
   }
 </style>
 <section id="p18" class="slide dark" data-ch="叁 · 国企背书" data-cue="epic">
-  <div class="split-media left"><img src="assets/v5_wanxiang_hq_real_1795335693337.jpg" alt="万向集团总部"></div>
+  <div class="split-media left"><img src="assets/v5_wanxiang_hq_real_1795335693337.jpg" alt="万向集团总部" loading="lazy" decoding="async"></div>
   <div class="split-body right">
     <div class="t-label kicker rv d1">双股东 · 国企背书</div>
     <h1 class="t-title rv d2">上汽捷新<span class="x">×</span>万向集团</h1>
@@ -2626,7 +2621,7 @@
     </div>
     <div class="btn rv d4"><button type="button" class="pill gold-btn no-nav">▶&nbsp; 人民大会堂国宴短片 · 1080P 超清</button></div>
   </div>
-  <video class="p18-preload" src="assets/wanxiang.mp4" preload="auto" muted playsinline style="display:none" aria-hidden="true"></video>
+  <video class="p18-preload" src="assets/wanxiang.mp4" preload="none" muted playsinline style="display:none" aria-hidden="true"></video>
   <div class="chrome-ch">叁 · 国企背书</div>
   <div class="chrome-no">18 / 25</div>
 </section>
@@ -3136,14 +3131,12 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background: linear-gradient(165deg, rgba(28, 26, 30, 0.74) 0%, rgba(12, 12, 16, 0.86) 100%);
+    background: linear-gradient(165deg, rgba(26, 24, 30, 0.90) 0%, rgba(12, 12, 16, 0.95) 100%);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
       0 24px 60px rgba(0, 0, 0, 0.55),
       inset 0 1px 0 rgba(255, 255, 255, 0.22),
       inset 0 -1px 0 rgba(255, 175, 90, 0.08);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
     opacity: 0;
     transform: translateY(26px) scale(0.97);
     transition:
@@ -3186,21 +3179,13 @@
     pointer-events: none;
     opacity: 0;
   }
-  #p20.is-sub-in .card {
+  #p20 .card.is-show {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-  #p20.is-sub-in .card:nth-child(1) { transition-delay: 0.00s; }
-  #p20.is-sub-in .card:nth-child(2) { transition-delay: 0.11s; }
-  #p20.is-sub-in .card:nth-child(3) { transition-delay: 0.22s; }
-  #p20.is-sub-in .card:nth-child(4) { transition-delay: 0.33s; }
-  #p20.is-sub-in .card::after {
+  #p20 .card.is-show::after {
     animation: p20_card_shimmer 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  #p20.is-sub-in .card:nth-child(1)::after { animation-delay: 0.38s; }
-  #p20.is-sub-in .card:nth-child(2)::after { animation-delay: 0.52s; }
-  #p20.is-sub-in .card:nth-child(3)::after { animation-delay: 0.66s; }
-  #p20.is-sub-in .card:nth-child(4)::after { animation-delay: 0.80s; }
   @keyframes p20_card_shimmer {
     0% { left: -65%; opacity: 0; }
     20% { opacity: 1; }
@@ -3241,16 +3226,16 @@
   #p20 .card-l2 .gold {
     text-shadow: 0 0 24px rgba(229, 185, 92, 0.52), 0 0 54px rgba(229, 185, 92, 0.22);
   }
-  #p20.is-sub-in .card-l2 .orange {
-    animation: p20_orange_glow 2.8s ease-in-out 0.45s infinite;
+  #p20 .card.is-show .card-l2 .orange {
+    animation: p20_orange_glow 2.8s ease-in-out 0.35s infinite;
   }
-  #p20.is-sub-in .card-l2 .gold {
-    animation: p20_gold_glow 2.8s ease-in-out 0.6s infinite;
+  #p20 .card.is-show .card-l2 .gold {
+    animation: p20_gold_glow 2.8s ease-in-out 0.35s infinite;
   }
-  #p20.is-glory .card-l2 .orange {
+  #p20.is-glory .card.is-show .card-l2 .orange {
     animation: p20glory 2.4s ease-out 1 forwards;
   }
-  #p20.is-glory .card-l2 .gold {
+  #p20.is-glory .card.is-show .card-l2 .gold {
     animation: p20glory_gold 2.4s ease-out 1 forwards;
   }
   #p20 .card-sub {
@@ -3300,13 +3285,11 @@
     padding: 0 44px;
     border-radius: 999px;
     border: 1px solid rgba(229, 185, 92, 0.55);
-    background: linear-gradient(135deg, rgba(229, 185, 92, 0.16) 0%, rgba(255, 85, 0, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(229, 185, 92, 0.16) 0%, rgba(255, 85, 0, 0.1) 100%), rgba(22, 18, 16, 0.90);
     box-shadow:
       0 12px 34px rgba(0, 0, 0, 0.45),
       0 0 28px rgba(229, 185, 92, 0.18),
       inset 0 1px 0 rgba(255, 232, 175, 0.32);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     font-size: 23px;
     font-weight: 700;
     letter-spacing: 0.14em;
@@ -3353,7 +3336,7 @@
   }
 </style>
 <section id="p20" class="slide dark on-photo" data-ch="肆 · 利群计划" data-cue="warm">
-  <img class="fullbleed" src="assets/founder_flash_china.jpg" alt="">
+  <img class="fullbleed" src="assets/founder_flash_china.jpg" alt="" loading="lazy" decoding="async">
   <div class="vig"></div>
   <div class="intro-veil"></div>
   <div class="chrome-ch">肆 · 利群计划</div>
@@ -3473,9 +3456,7 @@
     top: 0;
     padding: 9px 15px;
     border-radius: 10px;
-    background: rgba(10, 12, 18, 0.84);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(10, 12, 20, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.16);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.58);
     color: #ffffff;
@@ -3639,9 +3620,7 @@
     height: 52px;
     padding: 0 24px;
     border-radius: 999px;
-    background: rgba(10, 12, 20, 0.86);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 12, 20, 0.92);
     border: 1px solid rgba(255, 110, 30, 0.58);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.56);
     font-size: 20px;
@@ -3818,9 +3797,7 @@
     width: 274px;
     padding: 14px 22px 16px;
     border-radius: 16px;
-    background: rgba(8, 10, 16, 0.78);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10, 12, 20, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.16);
     box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -4549,9 +4526,9 @@
 </style>
 <section id="p23" class="slide dark on-photo" data-ch="终章 · 表演系" data-cue="anthem">
   <div class="p23-cam" aria-hidden="true">
-    <img class="fullbleed p23-dark" src="assets/founder_hq_brand_dark.jpg" alt="桢昱烽闪充总部夜幕">
-    <img class="fullbleed p23-litcity" src="assets/founder_hq_brand_lit.jpg" alt="全城点亮">
-    <img class="fullbleed p23-littower" src="assets/founder_hq_brand_lit.jpg" alt="总部大楼充能点亮">
+    <img class="fullbleed p23-dark" src="assets/founder_hq_brand_dark.jpg" alt="桢昱烽闪充总部夜幕" loading="lazy" decoding="async">
+    <img class="fullbleed p23-litcity" src="assets/founder_hq_brand_lit.jpg" alt="全城点亮" loading="lazy" decoding="async">
+    <img class="fullbleed p23-littower" src="assets/founder_hq_brand_lit.jpg" alt="总部大楼充能点亮" loading="lazy" decoding="async">
     <div class="p23-front-clip"><div class="p23-front"></div></div>
     <div class="p23-sky"></div>
     <div class="p23-rays"></div>
@@ -4628,7 +4605,7 @@
   #p24 .copy {
     position: absolute;
     left: 96px;
-    width: 780px;
+    width: 790px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 5;
@@ -4689,8 +4666,7 @@
     padding: 0 18px;
     border-radius: 999px;
     border: 1px solid rgba(229,185,92,.42);
-    background: rgba(16,14,22,.56);
-    backdrop-filter: blur(10px);
+    background: rgba(16,14,22,.84);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: .06em;
@@ -4705,12 +4681,11 @@
   }
   #p24 .video-card {
     position: absolute;
-    right: 96px;
-    top: 50%;
-    transform: translateY(-52%);
-    width: 816px;
-    height: 459px;
-    border-radius: 22px;
+    right: 88px;
+    top: 104px;
+    width: 860px;
+    height: 816px;
+    border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 0 0 1.5px rgba(229,185,92,.55), 0 32px 80px rgba(0,0,0,.68);
     z-index: 6;
@@ -4772,8 +4747,8 @@
   }
   #p24 .music {
     position: absolute;
-    right: 96px;
-    bottom: 88px;
+    right: 210px;
+    bottom: 42px;
     z-index: 6;
   }
   #p24 .music .pill {
@@ -4791,14 +4766,14 @@
   }
 </style>
 <section id="p24" class="slide dark on-photo" data-ch="终章 · 表演系" data-cue="lounge">
-  <img class="fullbleed bg-img" src="assets/founder_castle_disney.jpg" alt="迪士尼风格法国城堡">
+  <img class="fullbleed bg-img" src="assets/founder_castle_disney.jpg" alt="迪士尼风格法国城堡" loading="lazy" decoding="async">
   <div class="scrim-l2"></div>
   <div class="scrim-b2"></div>
   <div class="castle-shimmer" aria-hidden="true"></div>
   <div class="chrome-ch">终章 · 表演系</div>
   <div class="copy">
     <div class="eyebrow rv d1">OUR CASTLE IN FRANCE · 郑老师在法国为大家建的城堡</div>
-    <h1 class="rv d1"><span class="l1">我们的城堡</span><span class="gold">共富 · 财富自由人生</span></h1>
+    <h1 class="rv d1"><span class="l1">我们的城堡</span><span class="gold">共享 · 财富自由人生</span></h1>
     <div class="rule rv d2"></div>
     <div class="t-sub rv d3">100 位闪充侠，法国城堡见！</div>
     <div class="scene-pills rv d4">
@@ -4810,7 +4785,7 @@
     </div>
   </div>
   <div class="video-card">
-    <video class="no-nav" src="assets/castle_life.mp4" poster="assets/frame_castle_life.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="auto"></video>
+    <video class="no-nav" src="assets/castle_life.mp4" poster="assets/frame_castle_life.jpg" playsinline webkit-playsinline="true" x5-playsinline="true" muted loop preload="none"></video>
     <div class="shade"></div>
     <div class="card-tag"><b></b>城堡生活短片</div>
     <button type="button" class="pill no-nav">🔈 城堡生活原声</button>
@@ -5027,7 +5002,7 @@
     color: rgba(255,255,255,.42);
   }
 </style>
-<section id="p25" class="slide black" data-ch="终章 · 表演系" data-cue="anthem">
+<section id="p25" class="slide black" data-ch="终章 · 表演系" data-cue="drop">
   <div class="glow"></div>
   <div class="chrome-ch">终章 · 表演系</div>
   <div class="wrap">
@@ -6088,23 +6063,86 @@
     }
   }
 
-  function reset(el) {
+  function reset(el, instant) {
     timers.forEach(clearTimeout);
     timers = [];
     stopRain();
     stopLightning();
     if (!el) return;
-    el.querySelectorAll('.cell, .foot, .disclaimer').forEach((node) => node.classList.remove('show', 'is-bolt'));
+    const nodes = el.querySelectorAll('.cell, .foot, .disclaimer');
+    if (instant) {
+      nodes.forEach((node) => {
+        node.style.transition = 'none';
+        node.classList.remove('show', 'is-bolt');
+      });
+      void el.offsetWidth;
+      nodes.forEach((node) => {
+        node.style.transition = '';
+      });
+    } else {
+      nodes.forEach((node) => node.classList.remove('show', 'is-bolt'));
+    }
+  }
+
+  function ensureCell(cells, idx) {
+    if (cells[idx]) cells[idx].classList.add('show');
+  }
+
+  function beat1(el) {
+    if (!el) return;
+    const cells = el.querySelectorAll('.cell');
+    ensureCell(cells, 0);
+    stopRain();
+    stopLightning();
+    Deck.fx.flash('#FFFFFF');
+    Deck.sfx('zap');
+    if (cells[1]) {
+      cells[1].classList.add('is-bolt', 'show');
+      lightningFx = Deck.fx.lightning(cells[1], {
+        count: 4,
+        color: '#FFF6DB',
+        glowColor: 'rgba(255, 85, 0, 0.48)'
+      });
+      timers.push(setTimeout(stopLightning, 700));
+    }
+  }
+
+  function beat2(el) {
+    if (!el) return;
+    const cells = el.querySelectorAll('.cell');
+    ensureCell(cells, 0);
+    ensureCell(cells, 1);
+    stopRain();
+    ensureCell(cells, 2);
+    Deck.sfx('chime');
+  }
+
+  function beat3(el) {
+    if (!el) return;
+    const cells = el.querySelectorAll('.cell');
+    const foot = el.querySelector('.foot');
+    const disclaimer = el.querySelector('.disclaimer');
+    ensureCell(cells, 0);
+    ensureCell(cells, 1);
+    ensureCell(cells, 2);
+    stopRain();
+    ensureCell(cells, 3);
+    Deck.sfx('coin');
+    timers.push(setTimeout(() => {
+      if (foot) {
+        foot.classList.add('show');
+        Deck.fx.sweep(foot);
+      }
+      if (disclaimer) disclaimer.classList.add('show');
+    }, 280));
   }
 
   Deck.register('p12', {
     enter(el) {
-      reset(el);
+      reset(el, true);
       void el.offsetWidth;
 
       const cells = el.querySelectorAll('.cell');
-      const foot = el.querySelector('.foot');
-      const disclaimer = el.querySelector('.disclaimer');
 
       rainFx = Deck.fx.particles(el, 'rain');
       rainLoop = Deck.loop('rain');
@@ -6115,49 +6153,12 @@
       if (cells[0]) {
         timers.push(setTimeout(() => {
           cells[0].classList.add('show');
-        }, 200));
+        }, 160));
       }
-
-      if (cells[1]) {
-        timers.push(setTimeout(() => {
-          stopRain();
-          stopLightning();
-          cells[1].classList.add('is-bolt', 'show');
-          Deck.sfx('chime');
-          lightningFx = Deck.fx.lightning(cells[1], {
-            count: 4,
-            color: '#FFF6DB',
-            glowColor: 'rgba(255, 85, 0, 0.48)'
-          });
-          timers.push(setTimeout(stopLightning, 700));
-        }, 520));
-      }
-
-      if (cells[2]) {
-        timers.push(setTimeout(() => {
-          cells[2].classList.add('show');
-        }, 840));
-      }
-
-      if (cells[3]) {
-        timers.push(setTimeout(() => {
-          cells[3].classList.add('show');
-          Deck.sfx('coin');
-        }, 1160));
-      }
-
-      timers.push(setTimeout(() => {
-        if (foot) foot.classList.add('show');
-        if (disclaimer) disclaimer.classList.add('show');
-        if (foot) {
-          timers.push(setTimeout(() => {
-            Deck.fx.sweep(foot);
-          }, 580));
-        }
-      }, 1400));
     },
+    beats: [beat1, beat2, beat3],
     leave(el) {
-      reset(el);
+      reset(el, false);
     }
   });
 })();
@@ -6198,6 +6199,9 @@
 
       const v = el.querySelector('video');
       const btn = el.querySelector('.video-bar .pill');
+      if (v) {
+        v.preload = 'auto';
+      }
       if (inlineCtrl && typeof inlineCtrl.play === 'function') {
         if (v && v.paused) inlineCtrl.play();
       } else if (v) {
@@ -6307,6 +6311,9 @@
 
       const v = el.querySelector('video');
       const btn = el.querySelector('.media-tags .pill');
+      if (v) {
+        v.preload = 'auto';
+      }
       if (inlineCtrl && typeof inlineCtrl.play === 'function') {
         if (v && v.paused) inlineCtrl.play();
       } else if (v) {
@@ -6369,13 +6376,56 @@
   if (!root) return;
   const vPile = root.querySelector('video.v-pile');
   const vFire = root.querySelector('video.v-fire');
+  const pileSoundBtn = root.querySelector('.frame-pile .pill');
   const fireSoundBtn = root.querySelector('.frame-fire .pill');
   const numEl = root.querySelector('.num .t-num-s');
-  const inlineCtrl = (vFire && fireSoundBtn) ? Deck.video.inline(vFire, fireSoundBtn) : null;
+  const inlinePile = (vPile && pileSoundBtn) ? Deck.video.inline(vPile, pileSoundBtn) : null;
+  const inlineFire = (vFire && fireSoundBtn) ? Deck.video.inline(vFire, fireSoundBtn) : null;
 
   let delayTimer = 0;
   let countHandle = null;
   let hbLoop = null;
+
+  function muteOther(otherCtrl, otherVideo, otherBtn) {
+    if (otherCtrl && typeof otherCtrl.setMuted === 'function') {
+      otherCtrl.setMuted(true);
+    } else if (otherVideo) {
+      otherVideo.muted = true;
+      if (otherBtn) otherBtn.classList.remove('on');
+    }
+  }
+
+  if (pileSoundBtn) {
+    pileSoundBtn.addEventListener('click', () => {
+      if (vPile && !vPile.muted) {
+        muteOther(inlineFire, vFire, fireSoundBtn);
+      }
+    });
+  }
+
+  if (fireSoundBtn) {
+    fireSoundBtn.addEventListener('click', () => {
+      if (vFire && !vFire.muted) {
+        muteOther(inlinePile, vPile, pileSoundBtn);
+      }
+    });
+  }
+
+  if (vPile) {
+    vPile.addEventListener('volumechange', () => {
+      if (!vPile.muted && vFire && !vFire.muted) {
+        muteOther(inlineFire, vFire, fireSoundBtn);
+      }
+    });
+  }
+
+  if (vFire) {
+    vFire.addEventListener('volumechange', () => {
+      if (!vFire.muted && vPile && !vPile.muted) {
+        muteOther(inlinePile, vPile, pileSoundBtn);
+      }
+    });
+  }
 
   function clearFx() {
     if (delayTimer) {
@@ -6401,8 +6451,10 @@
       v.muted = true;
       try { if (v.readyState > 0) v.currentTime = 0; } catch (e) {}
     }
-    const btn = el.querySelector('.frame-fire .pill');
-    if (btn) btn.classList.remove('on');
+    const btns = el.querySelectorAll('.frame .pill');
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('on');
+    }
   }
 
   Deck.register('p15', {
@@ -6411,23 +6463,38 @@
 
       const pileEl = el.querySelector('video.v-pile');
       const fireEl = el.querySelector('video.v-fire');
-      const btn = el.querySelector('.frame-fire .pill');
+      const pileBtn = el.querySelector('.frame-pile .pill');
+      const fireBtn = el.querySelector('.frame-fire .pill');
 
       if (pileEl) {
-        pileEl.muted = true;
+        pileEl.preload = 'auto';
         pileEl.loop = true;
-        try { if (pileEl.readyState > 0) pileEl.currentTime = 0; } catch (e) {}
+      }
+      if (fireEl) {
+        fireEl.preload = 'auto';
+        fireEl.loop = true;
+      }
+
+      if (inlinePile && typeof inlinePile.play === 'function') {
+        inlinePile.play();
+      } else if (pileEl) {
+        pileEl.muted = true;
+        if (pileBtn) pileBtn.classList.remove('on');
         const pPile = pileEl.play();
         if (pPile && pPile.catch) pPile.catch(() => {});
       }
 
-      if (inlineCtrl && typeof inlineCtrl.play === 'function') {
-        if (fireEl && fireEl.paused) inlineCtrl.play();
+      if (inlineFire && typeof inlineFire.play === 'function') {
+        inlineFire.play();
       } else if (fireEl) {
         fireEl.muted = true;
-        if (btn) btn.classList.remove('on');
+        if (fireBtn) fireBtn.classList.remove('on');
         const pFire = fireEl.play();
         if (pFire && pFire.catch) pFire.catch(() => {});
+      }
+
+      if (pileEl && fireEl && !pileEl.muted && !fireEl.muted) {
+        muteOther(inlinePile, pileEl, pileBtn);
       }
 
       hbLoop = Deck.loop('heartbeat');
@@ -6452,8 +6519,11 @@
       clearFx();
       if (numEl) numEl.textContent = '20,000+';
 
-      if (inlineCtrl && typeof inlineCtrl.pause === 'function') {
-        inlineCtrl.pause();
+      if (inlinePile && typeof inlinePile.pause === 'function') {
+        inlinePile.pause();
+      }
+      if (inlineFire && typeof inlineFire.pause === 'function') {
+        inlineFire.pause();
       }
       resetVideos(el);
     }
@@ -6521,7 +6591,7 @@
     slide.classList.remove('is-finished');
     slide.classList.add('is-racing');
     void slide.offsetWidth;
-    clockEl.textContent = '00:00';
+    clockEl.textContent = '00:00.00';
     slowFill.style.width = '0%';
     slowPctEl.textContent = '0.00%';
     fastFill.style.width = '0%';
@@ -6598,10 +6668,13 @@
         const p = Math.min(1, Math.max(0, (now - t0) / duration));
         const eased = 1 - Math.pow(1 - p, 3);
 
-        const sec = Math.min(180, Math.round(p * 180));
+        const totalCs = p >= 1 ? 18000 : Math.min(17999, Math.floor(p * 18000));
+        const sec = Math.floor(totalCs / 100);
+        const cs = totalCs % 100;
         const mm = String(Math.floor(sec / 60)).padStart(2, '0');
         const ss = String(sec % 60).padStart(2, '0');
-        clockEl.textContent = mm + ':' + ss;
+        const csStr = String(cs).padStart(2, '0');
+        clockEl.textContent = mm + ':' + ss + '.' + csStr;
 
         const slowVal = p * 0.62;
         slowFill.style.width = (p >= 1 ? '0.62%' : slowVal.toFixed(3) + '%');
@@ -6811,9 +6884,16 @@
   });
 
   Deck.register('p17', {
-    enter() {
+    enter(el) {
       isEntered = true;
       resetPlayer();
+      const v = (el && el.querySelector('video')) || video;
+      if (v) {
+        v.preload = 'auto';
+        if (v.readyState === 0) {
+          try { v.load(); } catch (e) {}
+        }
+      }
       if (window.Deck && typeof Deck.sfx === 'function') {
         Deck.sfx('news');
       }
@@ -6900,8 +6980,11 @@
         stopAll(el);
 
         const pv = el.querySelector('.p18-preload');
-        if (pv && pv.readyState === 0 && pv.networkState === 0) {
-          try { pv.load(); } catch (e) {}
+        if (pv) {
+          pv.preload = 'auto';
+          if (pv.readyState === 0) {
+            try { pv.load(); } catch (e) {}
+          }
         }
 
         const col1 = el.querySelector('.num-col-first');
@@ -7251,12 +7334,39 @@
 
   (function () {
     let timers = [];
+    let duckTimer = null;
     let lightningCtrl = null;
     let particles = null;
 
     function clearTimers() {
       for (let i = 0; i < timers.length; i++) clearTimeout(timers[i]);
       timers = [];
+      if (duckTimer) {
+        clearTimeout(duckTimer);
+        duckTimer = null;
+      }
+    }
+
+    function scheduleDuckReset(delayMs) {
+      if (duckTimer) clearTimeout(duckTimer);
+      duckTimer = setTimeout(() => {
+        duckTimer = null;
+        if (window.Deck && Deck.score && typeof Deck.score.duck === 'function') {
+          Deck.score.duck(false);
+        }
+      }, delayMs);
+    }
+
+    function sparkCard(card) {
+      if (!card) return;
+      const targets = card.querySelectorAll('.gold, .orange');
+      if (targets.length > 0) {
+        for (let i = 0; i < targets.length; i++) {
+          Deck.fx.sparks(targets[i], { count: 14, color: '#FFD08A' });
+        }
+      } else {
+        Deck.fx.sparks(card, { count: 14, color: '#FFD08A' });
+      }
     }
 
     function cleanup(el) {
@@ -7281,7 +7391,52 @@
       for (let i = 0; i < leftover.length; i++) {
         if (leftover[i].parentNode) leftover[i].parentNode.removeChild(leftover[i]);
       }
+      const cards = el.querySelectorAll('.card');
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.remove('is-show');
+      }
       el.classList.remove('is-lit', 'is-struck', 'is-sub-in', 'is-glory');
+    }
+
+    function beat1(el) {
+      if (!el) return;
+      const cards = el.querySelectorAll('.card');
+      if (cards[0]) cards[0].classList.add('is-show');
+      if (cards[1]) cards[1].classList.add('is-show');
+      Deck.sfx('chime');
+      sparkCard(cards[1]);
+    }
+
+    function beat2(el) {
+      if (!el) return;
+      const cards = el.querySelectorAll('.card');
+      if (cards[0]) cards[0].classList.add('is-show');
+      if (cards[1]) cards[1].classList.add('is-show');
+      if (cards[2]) cards[2].classList.add('is-show');
+      Deck.sfx('chime');
+      sparkCard(cards[2]);
+    }
+
+    function beat3(el) {
+      if (!el) return;
+      const cards = el.querySelectorAll('.card');
+      for (let i = 0; i < 3; i++) {
+        if (cards[i]) cards[i].classList.add('is-show');
+      }
+      if (cards[3]) cards[3].classList.add('is-show');
+      el.classList.add('is-sub-in', 'is-glory');
+      Deck.sfx('coin');
+      Deck.sfx('glory');
+      Deck.score.duck(true);
+      scheduleDuckReset(6700);
+      Deck.fx.shake(0.35);
+      const highlights = el.querySelectorAll('.card-l2 .orange, .card-l2 .gold');
+      for (let i = 0; i < highlights.length; i++) {
+        Deck.fx.sparks(highlights[i], { count: 14, color: '#FFD08A' });
+      }
+      if (!particles) {
+        particles = Deck.fx.particles(el, 'gold');
+      }
     }
 
     Deck.register('p20', {
@@ -7304,6 +7459,7 @@
         timers.push(setTimeout(() => {
           Deck.sfx('glory');
           Deck.score.duck(true);
+          scheduleDuckReset(6700);
         }, 500));
 
         timers.push(setTimeout(() => {
@@ -7311,26 +7467,12 @@
         }, 530));
 
         timers.push(setTimeout(() => {
-          el.classList.add('is-sub-in');
-        }, 780));
-
-        timers.push(setTimeout(() => {
-          Deck.fx.shake(0.35);
-        }, 1700));
-
-        timers.push(setTimeout(() => {
-          el.classList.add('is-glory');
-          const highlights = el.querySelectorAll('.card-l2 .orange, .card-l2 .gold');
-          for (let i = 0; i < highlights.length; i++) {
-            Deck.fx.sparks(highlights[i], { count: 14, color: '#FFD08A' });
-          }
-          particles = Deck.fx.particles(el, 'gold');
-        }, 3900));
-
-        timers.push(setTimeout(() => {
-          Deck.score.duck(false);
-        }, 7200));
+          const cards = el.querySelectorAll('.card');
+          if (cards[0]) cards[0].classList.add('is-show');
+          Deck.sfx('chime');
+        }, 650));
       },
+      beats: [beat1, beat2, beat3],
       leave(el) {
         cleanup(el);
       }
@@ -7344,7 +7486,7 @@
     const W = 1920;
     const H = 1080;
     const SEG_LEN = 200;
-    const DRAW_DIST = 260;
+    const DRAW_DIST = 86;
     const ROAD_HALF_W = 1220;
     const LEFT_ROAD_MULT = 1.8;
     const RIGHT_ROAD_MULT = 1.05;
@@ -7364,7 +7506,7 @@
     if (!slide) return;
 
     const canvas = slide.querySelector('.p21-world');
-    const ctx = canvas ? canvas.getContext('2d') : null;
+    const ctx = canvas ? canvas.getContext('2d', { alpha: false, desynchronized: true }) : null;
     const tagRival = slide.querySelector('.tag.rival');
     const tagUs = slide.querySelector('.tag.us');
     const rivalFill = tagRival ? tagRival.querySelector('.tag-fill') : null;
@@ -7856,9 +7998,9 @@
     const roadPalettes = (function buildFogPalettes() {
       const arr = [];
       function mix(r, g, b, k) {
-        const rr = Math.round(9 + (r - 9) * k);
-        const gg = Math.round(10 + (g - 10) * k);
-        const bb = Math.round(16 + (b - 16) * k);
+        const rr = Math.round(7 + (r - 7) * k);
+        const gg = Math.round(8 + (g - 8) * k);
+        const bb = Math.round(13 + (b - 13) * k);
         return 'rgb(' + rr + ',' + gg + ',' + bb + ')';
       }
       for (let i = 0; i < FOG_STEPS; i++) {
@@ -7911,6 +8053,7 @@
     // ---------- Simulation State ----------
     let rafId = null;
     let lastTs = 0;
+    let dtSmooth = 1 / 60;
     let timers = [];
     let motorLoop = null;
     let stage = 0; // 0=standby, 1=beat1, 2=beat2, 3=beat3
@@ -7934,10 +8077,16 @@
     let mirrorAlpha = 0;
     let mirrorTarget = 0;
 
-    // Smoothed rival DOM tag tracker
+    // Smoothed rival DOM tag tracker & cached DOM state
     let rivalTagSx = 720;
     let rivalTagSy = 680;
     let rivalTagInit = false;
+    let lastTagX = -99999;
+    let lastTagY = -99999;
+    let lastRivalX = -99999;
+    let lastRivalY = -99999;
+    let tagUsShown = false;
+    let tagRivalShown = false;
 
     const cam = {
       z: 0,
@@ -7983,8 +8132,11 @@
     const shockCones = [];
     const speedSeeds = [];
     for (let i = 0; i < 72; i++) {
+      const ang = (i / 72) * Math.PI * 2 + (i % 3) * 0.019;
       speedSeeds.push({
-        angle: (i / 72) * Math.PI * 2 + (i % 3) * 0.019,
+        angle: ang,
+        cos: Math.cos(ang),
+        sin: Math.sin(ang),
         phase: (i * 0.37) % 1,
         speed: 1.5 + (i % 5) * 0.42,
         len: 0.16 + (i % 4) * 0.09,
@@ -7993,7 +8145,10 @@
       });
     }
 
-    let lastSpdDisplay = -1;
+    let lastSpdInt = -1;
+    let lastBoostHud = null;
+    let lastUsFillPct = '10%';
+    let lastRivalFillPct = '30%';
     let frameTimes = [];
     let avgFrameMs = 0;
 
@@ -8073,6 +8228,8 @@
 
     function resetAllState() {
       clearAllTimers();
+      lastTs = 0;
+      dtSmooth = 1 / 60;
       stage = 0;
       beat2Started = false;
       beat2Done = false;
@@ -8094,6 +8251,12 @@
       mirrorTarget = 0;
       rivalCharge = 30;
       rivalTagInit = false;
+      lastTagX = -99999;
+      lastTagY = -99999;
+      lastRivalX = -99999;
+      lastRivalY = -99999;
+      tagUsShown = false;
+      tagRivalShown = false;
       sparks.length = 0;
       shockCones.length = 0;
       frameTimes.length = 0;
@@ -8138,25 +8301,32 @@
         tagUs.classList.remove('is-show', 'is-charged');
         tagUs.style.opacity = '';
       }
+      lastRivalFillPct = '30%';
+      lastUsFillPct = '10%';
       if (rivalFill) rivalFill.style.width = '30%';
       if (usFill) usFill.style.width = '10%';
       updateKillPill(0);
-      lastSpdDisplay = -1;
+      lastSpdInt = -1;
+      lastBoostHud = null;
       updateSpeedHud(25, false);
     }
 
     function updateSpeedHud(spd, isBoost) {
-      const rounded = Math.round(spd);
-      if (rounded !== lastSpdDisplay) {
-        lastSpdDisplay = rounded;
-        if (spdValEl) spdValEl.textContent = String(rounded);
+      const spdInt = Math.round(spd);
+      if (spdInt !== lastSpdInt) {
+        lastSpdInt = spdInt;
+        if (spdValEl) spdValEl.textContent = String(spdInt);
         if (spdBarEl) {
-          const pct = clamp((rounded / 128) * 100, 6, 100);
+          const pct = clamp((spdInt / 128) * 100, 6, 100);
           spdBarEl.style.width = pct.toFixed(1) + '%';
         }
       }
       if (isBoost !== undefined) {
-        slide.classList.toggle('is-boost', Boolean(isBoost));
+        const boostBool = Boolean(isBoost);
+        if (boostBool !== lastBoostHud) {
+          lastBoostHud = boostBool;
+          slide.classList.toggle('is-boost', boostBool);
+        }
       }
     }
 
@@ -8463,11 +8633,25 @@
         const overlapX = tx < avoidBox.x + avoidBox.w + 14 && tx + w + 14 > avoidBox.x;
         const overlapY = ty < avoidBox.y + avoidBox.h + 10 && ty + h + 10 > avoidBox.y;
         if (overlapX && overlapY) {
-          ty = avoidBox.y - h - 14;
+          ty = Math.round(avoidBox.y - h - 14);
         }
       }
 
-      el.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+      if (el === tagUs) {
+        if (tx !== lastTagX || ty !== lastTagY) {
+          lastTagX = tx;
+          lastTagY = ty;
+          el.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+        }
+      } else if (el === tagRival) {
+        if (tx !== lastRivalX || ty !== lastRivalY) {
+          lastRivalX = tx;
+          lastRivalY = ty;
+          el.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+        }
+      } else {
+        el.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+      }
       return { x: tx, y: ty, w: w, h: h };
     }
 
@@ -8572,11 +8756,19 @@
 
         if (us.charged) {
           us.charge = lerp(us.charge, 98, Math.min(1, dt * 6.5));
-          if (usFill) usFill.style.width = us.charge.toFixed(1) + '%';
+          const usPct = us.charge.toFixed(1) + '%';
+          if (usFill && usPct !== lastUsFillPct) {
+            lastUsFillPct = usPct;
+            usFill.style.width = usPct;
+          }
         }
         if (b2LowAlert) {
           rivalCharge = lerp(rivalCharge, 8, Math.min(1, dt * 3.5));
-          if (rivalFill) rivalFill.style.width = rivalCharge.toFixed(1) + '%';
+          const rivalPct = rivalCharge.toFixed(1) + '%';
+          if (rivalFill && rivalPct !== lastRivalFillPct) {
+            lastRivalFillPct = rivalPct;
+            rivalFill.style.width = rivalPct;
+          }
         }
 
         us.z += us.v * SPEED_TO_WORLD * dt;
@@ -8693,10 +8885,13 @@
       updateSpeedHud(us.v, boostIntensity > 0.35);
     }
 
-    // ---------- Scene Renderer (< 2ms/frame) ----------
+    // ---------- Scene Renderer (< 1.0ms/frame) ----------
     function renderScene() {
       if (!ctx) return;
       const t0 = performance.now();
+
+      ctx.fillStyle = '#030408';
+      ctx.fillRect(0, 0, W, H);
 
       const baseSegIdx = Math.floor(cam.z / SEG_LEN);
       const basePct = (cam.z - baseSegIdx * SEG_LEN) / SEG_LEN;
@@ -8733,7 +8928,7 @@
         ps.sy2 = horizonY + cam.y * sc2;
         ps.w2 = ROAD_HALF_W * sc2;
         ps.curve = c;
-        ps.fogIdx = Math.min(FOG_STEPS - 1, Math.floor((k / DRAW_DIST) * FOG_STEPS));
+        ps.fogIdx = Math.min(FOG_STEPS - 1, Math.floor((k / (DRAW_DIST - 1)) * (FOG_STEPS - 1)));
 
         bucketHead[k] = -1;
         xAccum += dx;
@@ -8841,11 +9036,15 @@
       let usBox = null;
       if (tagUs && usProj) {
         const uH = 540 * usProj.sc;
-        tagUs.classList.add('is-show');
-        tagUs.style.opacity = '';
+        if (!tagUsShown) {
+          tagUsShown = true;
+          tagUs.classList.add('is-show');
+          tagUs.style.opacity = '';
+        }
         usBox = placeTag(tagUs, usProj.sx, usProj.sy - uH, 198, 78, null);
         if (usBox) labelBoxes.push(usBox);
-      } else if (tagUs) {
+      } else if (tagUs && tagUsShown) {
+        tagUsShown = false;
         tagUs.classList.remove('is-show');
       }
 
@@ -8863,12 +9062,16 @@
             rivalTagSx = lerp(rivalTagSx, targetX, 0.24);
             rivalTagSy = lerp(rivalTagSy, targetY, 0.24);
           }
-          tagRival.classList.add('is-show');
-          tagRival.style.opacity = '';
+          if (!tagRivalShown) {
+            tagRivalShown = true;
+            tagRival.classList.add('is-show');
+            tagRival.style.opacity = '';
+          }
           const hTag = b2LowAlert ? 116 : 92;
           const rBox = placeTag(tagRival, rivalTagSx, rivalTagSy, 192, hTag, usBox);
           if (rBox) labelBoxes.push(rBox);
-        } else {
+        } else if (tagRivalShown) {
+          tagRivalShown = false;
           tagRival.classList.remove('is-show');
         }
       }
@@ -8885,6 +9088,7 @@
         if (p.sy1 <= horizonY + 1 && p.sy2 <= horizonY + 1) continue;
 
         const pal = roadPalettes[p.fogIdx];
+        const segH = Math.abs(p.sy1 - p.sy2);
         const alt = (p.idx >> 1) & 1;
         const curbAlt = Math.floor(p.idx / 2) & 1;
         const dashOn = p.idx % 4 < 2;
@@ -8938,7 +9142,7 @@
         ctx.fill();
 
         // Subtle cool slate-blue tint on left slow-charge lanes
-        const leftFog = 1 - p.fogIdx / FOG_STEPS;
+        const leftFog = 1 - p.fogIdx / (FOG_STEPS - 1);
         if (leftFog > 0.05) {
           ctx.fillStyle = 'rgba(72, 102, 148, ' + (leftFog * 0.09).toFixed(3) + ')';
           ctx.beginPath();
@@ -8950,29 +9154,31 @@
           ctx.fill();
         }
 
-        // Red-and-white racing rumble curbs
-        const cw1 = p.w1 * 0.11;
-        const cw2 = p.w2 * 0.11;
-        ctx.fillStyle = curbAlt ? pal.curbRed : pal.curbWhite;
-        ctx.beginPath();
-        ctx.moveTo(leftX1 - cw1, p.sy1 + 0.6);
-        ctx.lineTo(leftX1, p.sy1 + 0.6);
-        ctx.lineTo(leftX2, p.sy2);
-        ctx.lineTo(leftX2 - cw2, p.sy2);
-        ctx.closePath();
-        ctx.fill();
+        // Red-and-white racing rumble curbs (skip sub-pixel strips near horizon)
+        if (segH >= 0.7) {
+          const cw1 = p.w1 * 0.11;
+          const cw2 = p.w2 * 0.11;
+          ctx.fillStyle = curbAlt ? pal.curbRed : pal.curbWhite;
+          ctx.beginPath();
+          ctx.moveTo(leftX1 - cw1, p.sy1 + 0.6);
+          ctx.lineTo(leftX1, p.sy1 + 0.6);
+          ctx.lineTo(leftX2, p.sy2);
+          ctx.lineTo(leftX2 - cw2, p.sy2);
+          ctx.closePath();
+          ctx.fill();
 
-        ctx.beginPath();
-        ctx.moveTo(rightX1, p.sy1 + 0.6);
-        ctx.lineTo(rightX1 + cw1, p.sy1 + 0.6);
-        ctx.lineTo(rightX2 + cw2, p.sy2);
-        ctx.lineTo(rightX2, p.sy2);
-        ctx.closePath();
-        ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(rightX1, p.sy1 + 0.6);
+          ctx.lineTo(rightX1 + cw1, p.sy1 + 0.6);
+          ctx.lineTo(rightX2 + cw2, p.sy2);
+          ctx.lineTo(rightX2, p.sy2);
+          ctx.closePath();
+          ctx.fill();
+        }
 
         // Orange glowing right fast-charge attack corridor (Beat 1+)
         if (orangeLaneAlpha > 0.02) {
-          const laneK = orangeLaneAlpha * (1 - p.fogIdx / (FOG_STEPS * 1.05));
+          const laneK = orangeLaneAlpha * (1 - p.fogIdx / (FOG_STEPS - 1));
           if (laneK > 0.02) {
             const ol1 = p.sx1 + p.w1 * 0.04;
             const or1 = p.sx1 + p.w1 * 0.96;
@@ -9008,8 +9214,8 @@
           }
         }
 
-        // Center divider & left sub-lane dashed divider
-        if (dashOn) {
+        // Center divider & left sub-lane dashed divider (skip sub-pixel strips near horizon)
+        if (dashOn && segH >= 0.7) {
           const lw1 = Math.max(1, LANE_HALF_W * p.sc1);
           const lw2 = Math.max(1, LANE_HALF_W * p.sc2);
           ctx.fillStyle = pal.dashWhite;
@@ -9043,7 +9249,7 @@
           const lx = leftX1 - 140 * p.sc1;
           const rx = rightX1 + 140 * p.sc1;
           const topY = p.sy1 - poleH;
-          const alphaFog = clamp(1 - p.fogIdx / FOG_STEPS, 0.12, 1);
+          const alphaFog = clamp(1 - p.fogIdx / (FOG_STEPS - 1), 0.12, 1);
 
           ctx.strokeStyle = 'rgba(38, 44, 58, ' + alphaFog.toFixed(2) + ')';
           ctx.lineWidth = poleW;
@@ -9322,7 +9528,7 @@
         ctx.restore();
       }
 
-      // 5. Boost Radial Speed Lines + ±2.5px Red/Cyan Chromatic Aberration
+      // 5. Boost Radial Speed Lines (single crisp bright warm/white stroke per seed)
       if (boostIntensity > 0.04) {
         const tNow = beat2RealElapsed * 4.4 + us.z * 0.00045;
         const originX = clamp(vpX, W * 0.35, W * 0.7);
@@ -9337,31 +9543,17 @@
           const prog = (tNow * sd.speed + sd.phase) % 1;
           const rStart = 210 + prog * 920;
           const rEnd = rStart + (135 + sd.len * 960) * boostIntensity;
-          const cos = Math.cos(sd.angle);
-          const sin = Math.sin(sd.angle);
 
-          const x0 = originX + cos * rStart;
-          const y0 = originY + sin * rStart;
-          const x1 = originX + cos * rEnd;
-          const y1 = originY + sin * rEnd;
-          const a = boostIntensity * (1 - prog * 0.45) * 0.56;
+          const x0 = originX + sd.cos * rStart;
+          const y0 = originY + sd.sin * rStart;
+          const x1 = originX + sd.cos * rEnd;
+          const y1 = originY + sd.sin * rEnd;
+          const a = clamp(boostIntensity * (1 - prog * 0.45) * (sd.warm ? 0.96 : 0.82), 0, 1);
 
           ctx.lineWidth = sd.thick;
-          ctx.strokeStyle = 'rgba(255, 50, 50, ' + (a * 0.55).toFixed(3) + ')';
-          ctx.beginPath();
-          ctx.moveTo(x0 - 2.5, y0);
-          ctx.lineTo(x1 - 2.5, y1);
-          ctx.stroke();
-
-          ctx.strokeStyle = 'rgba(40, 235, 255, ' + (a * 0.55).toFixed(3) + ')';
-          ctx.beginPath();
-          ctx.moveTo(x0 + 2.5, y0);
-          ctx.lineTo(x1 + 2.5, y1);
-          ctx.stroke();
-
           ctx.strokeStyle = sd.warm
-            ? 'rgba(255, 162, 65, ' + a.toFixed(3) + ')'
-            : 'rgba(255, 248, 240, ' + (a * 0.85).toFixed(3) + ')';
+            ? 'rgba(255, 168, 72, ' + a.toFixed(3) + ')'
+            : 'rgba(255, 248, 240, ' + a.toFixed(3) + ')';
           ctx.beginPath();
           ctx.moveTo(x0, y0);
           ctx.lineTo(x1, y1);
@@ -9446,10 +9638,11 @@
 
     function frame(ts) {
       if (!lastTs) lastTs = ts;
-      const dtReal = Math.min(0.05, Math.max(0.001, (ts - lastTs) / 1000));
+      const rawDt = Math.min(0.04, Math.max(0.002, (ts - lastTs) / 1000));
       lastTs = ts;
+      dtSmooth = clamp(lerp(dtSmooth, rawDt, 0.35), 0.004, 0.033);
 
-      updateSimulation(dtReal);
+      updateSimulation(dtSmooth);
       renderScene();
 
       rafId = requestAnimationFrame(frame);
@@ -9527,9 +9720,11 @@
       us.charge = 98;
       us.charged = true;
       us.boosting = true;
+      lastUsFillPct = '98%';
       if (usFill) usFill.style.width = '98%';
 
       rivalCharge = 8;
+      lastRivalFillPct = '8%';
       if (rivalFill) rivalFill.style.width = '8%';
 
       for (let i = 0; i < CONVOY_COUNT; i++) {
@@ -9615,7 +9810,10 @@
         }
         Deck.score.duck(false);
         resetAllState();
-        if (ctx) ctx.clearRect(0, 0, W, H);
+        if (ctx) {
+          ctx.fillStyle = '#030408';
+          ctx.fillRect(0, 0, W, H);
+        }
       }
     });
   })();
@@ -11880,7 +12078,9 @@
         detachButton();
         firefliesFx = Deck.fx.particles(el, 'fireflies');
 
+        if (video) video.preload = 'auto';
         const v = el.querySelector('.video-card video');
+        if (v) v.preload = 'auto';
         const vBtn = el.querySelector('.video-card .pill');
         if (inlineCtrl && typeof inlineCtrl.play === 'function') {
           if (v && v.paused) inlineCtrl.play();
@@ -11923,7 +12123,7 @@
 <script>/* P25 */
 
   (function () {
-    const TYPE_INTERVAL_MS = 85;
+    const TYPE_INTERVAL_MS = 215;
     const TELEGRAPH_STEPS = [
       { line: 'a', ch: '桢' },
       { line: 'a', ch: '昱' },
@@ -11992,13 +12192,26 @@
         emberFx = Deck.fx.particles(el, 'ember');
 
         let idx = 0;
+        let finished = false;
+        function finishTelegraph() {
+          if (finished) return;
+          finished = true;
+          if (typeInterval) {
+            clearInterval(typeInterval);
+            typeInterval = null;
+          }
+          Deck.sfx('chime');
+          el.classList.add('is-tx-done', 'is-free-glow');
+          timers.push(setTimeout(function () {
+            if (window.Deck && Deck.score && typeof Deck.score.cue === 'function') {
+              Deck.score.cue('anthem');
+            }
+          }, 320));
+        }
+
         function stepType() {
           if (idx >= TELEGRAPH_STEPS.length) {
-            if (typeInterval) {
-              clearInterval(typeInterval);
-              typeInterval = null;
-            }
-            el.classList.add('is-tx-done');
+            finishTelegraph();
             return;
           }
           const st = TELEGRAPH_STEPS[idx++];
@@ -12018,11 +12231,7 @@
           Deck.sfx('telegraph');
 
           if (idx >= TELEGRAPH_STEPS.length) {
-            if (typeInterval) {
-              clearInterval(typeInterval);
-              typeInterval = null;
-            }
-            el.classList.add('is-tx-done');
+            finishTelegraph();
           }
         }
 
@@ -12031,11 +12240,7 @@
           if (idx < TELEGRAPH_STEPS.length) {
             typeInterval = setInterval(stepType, TYPE_INTERVAL_MS);
           }
-        }, 120));
-
-        timers.push(setTimeout(function () {
-          el.classList.add('is-free-glow');
-        }, 1800));
+        }, 220));
 
         onSlideClick = function (e) {
           if (e.target && e.target.closest && e.target.closest('.chrome-no, .no-nav, button, a, input, [data-nav-stop]')) {
