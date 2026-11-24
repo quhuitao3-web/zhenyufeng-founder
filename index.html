@@ -1166,7 +1166,7 @@
   #p15 .bar:nth-child(4) i { --d: 1.11s; }
   #p15 .bar:nth-child(5) i { --d: 1.35s; }
   #p15 .bar span { font-size: 14px; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.4); font-variant-numeric: tabular-nums; }
-  #p15 .frame { position: absolute; right: 120px; top: 50%; transform: translateY(-50%); width: 880px; height: 550px; border-radius: 28px; overflow: hidden; z-index: 2;
+  #p15 .frame { position: absolute; right: 96px; top: 50%; transform: translateY(-50%); width: 1040px; height: 650px; border-radius: 28px; overflow: hidden; z-index: 2;
     box-shadow: 0 0 0 2px rgba(255,85,0,0.85), 0 0 40px rgba(255,85,0,0.35), 0 0 120px rgba(255,85,0,0.18); }
   #p15 .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
   #p15 .frame .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 26%); pointer-events: none; }
@@ -1202,7 +1202,7 @@
     58% { opacity: 0.55; transform: scale(0.92); }
   }
 </style>
-<section id="p15" class="slide dark" data-ch="叁 · 国企背书" data-cue="dark">
+<section id="p15" class="slide dark" data-ch="叁 · 国企背书" data-cue="danger">
   <div class="danger-vignette" aria-hidden="true"></div>
   <div class="chrome-ch">叁 · 国企背书</div>
   <div class="body">
@@ -1639,35 +1639,34 @@
     text-align: right;
   }
   #p19 .res .t-num {
-    font-size: 200px;
+    font-size: 150px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
     color: var(--ink);
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    will-change: transform, opacity;
   }
-  #p19 .res .u {
-    font-size: 64px;
-    font-weight: 800;
-    margin-left: 10px;
-    letter-spacing: 0;
+  #p19 .res .t-num .val {
+    display: inline-block;
+    will-change: transform, opacity;
   }
   #p19 .res .t-sub {
     font-size: 22px;
     margin-top: 20px;
   }
-  #p19 .p19-reel {
-    display: inline-block;
-    will-change: transform, opacity;
-  }
-  #p19 .p19-reel.spinning {
-    text-shadow: 0 -10px 6px rgba(14,14,16,0.16), 0 10px 6px rgba(14,14,16,0.16);
-  }
-  #p19 .p19-reel.locked {
-    animation: p19_lock 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  #p19 .res .t-num.p19-out {
+    opacity: 0;
+    transform: translateY(-16px);
   }
   #p19 .res .t-num.p19-land {
     animation: p19_land 0.24s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  #p19 .res .t-num.p19-land .val {
+    animation: p19_lock 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
   @keyframes p19_lock {
-    0% { transform: translateY(-20px) scaleY(1.06); opacity: 0.72; }
-    58% { transform: translateY(5px) scaleY(0.97); opacity: 1; }
+    0% { transform: translateY(-16px) scaleY(1.06); opacity: 0.72; }
+    58% { transform: translateY(4px) scaleY(0.98); opacity: 1; }
     100% { transform: translateY(0) scaleY(1); opacity: 1; }
   }
   @keyframes p19_land {
@@ -1680,22 +1679,22 @@
   <div class="chrome-ch">肆 · 利群计划</div>
   <div class="wrap">
     <div class="t-label kicker rv d1">爱在雅迪闪充</div>
-    <h1 class="t-title rv d2">消费 ¥1,000，<span class="orange">免费充电两年</span></h1>
-    <div class="sub t-sub rv d3">对标胖东来 · 消费 ¥100 返充 33 次</div>
+    <h1 class="t-title rv d2">免费充电，<span class="orange">免费得碳豆</span></h1>
+    <div class="sub t-sub rv d3">无任何套路</div>
   </div>
   <div class="rule hairline-lt rv d3"></div>
   <div class="calc rv d4">
     <div>
       <div class="t-label seg-label">选择消费金额</div>
       <div class="seg">
-        <button type="button" class="no-nav" data-tier="100" data-count="33" data-note="按每次 ¥3 计 · 约可免费充电 2.4 个月">¥100</button>
-        <button type="button" class="no-nav" data-tier="500" data-count="166" data-note="按每次 ¥3 计 · 约可免费充电 1 年">¥500</button>
-        <button type="button" class="no-nav on" data-tier="1000" data-count="333" data-note="按每次 ¥3 计 · 约可免费充电两年">¥1,000</button>
+        <button type="button" class="no-nav" data-tier="100" data-big="免费充" data-note="消费即得碳豆 · 碳豆直接抵充电">¥100</button>
+        <button type="button" class="no-nav" data-tier="500" data-big="多得碳豆" data-note="消费越多 · 碳豆越多 · 免费充得越久">¥500</button>
+        <button type="button" class="no-nav on" data-tier="1000" data-big="长期免费" data-note="免费充电 · 免费得碳豆 · 无任何套路">¥1,000</button>
       </div>
     </div>
     <div class="res">
-      <div class="t-num"><span class="val">333</span><span class="u">次</span></div>
-      <div class="t-sub res-note">按每次 ¥3 计 · 约可免费充电两年</div>
+      <div class="t-num"><span class="val">长期免费</span></div>
+      <div class="t-sub res-note">免费充电 · 免费得碳豆 · 无任何套路</div>
     </div>
   </div>
   <div class="chrome-no">19 / 25</div>
@@ -2755,7 +2754,7 @@
 </style>
 <section id="p23" class="slide dark on-photo" data-ch="终章 · 表演系" data-cue="anthem">
   <div class="p23-cam" aria-hidden="true">
-    <img class="fullbleed p23-dark" src="assets/founder_hq_brand_dark.jpg" alt="桢昱烽动力总部夜幕">
+    <img class="fullbleed p23-dark" src="assets/founder_hq_brand_dark.jpg" alt="桢昱烽闪充总部夜幕">
     <img class="fullbleed p23-litcity" src="assets/founder_hq_brand_lit.jpg" alt="全城点亮">
     <img class="fullbleed p23-littower" src="assets/founder_hq_brand_lit.jpg" alt="总部大楼充能点亮">
     <div class="p23-front-clip"><div class="p23-front"></div></div>
@@ -2776,7 +2775,7 @@
   <div class="chrome-ch">终章 · 表演系</div>
   <div class="copy">
     <div class="rule p23-wait"></div>
-    <h1 class="p23-wait">桢昱烽动力<span class="dot">·</span><span class="orange">闪充领导者</span></h1>
+    <h1 class="p23-wait">桢昱烽闪充<span class="dot">·</span><span class="orange">闪充领导者</span></h1>
     <div class="t-sub p23-wait">群鹰归巢 · 灯塔在此</div>
   </div>
   <div class="chrome-no">23 / 25</div>
@@ -2991,7 +2990,7 @@
       <span class="b">就是闪充第一品牌</span>
     </div>
     <div class="rule rv d3"></div>
-    <div class="t-sub rv d4">闪充中国，让每一次出行都是<span class="orange">免费</span></div>
+    <div class="t-sub rv d4">桢昱烽闪充，让每一次出行都是<span class="orange">免费</span></div>
   </div>
   <div class="mark">上海桢昱烽动力独家运营</div>
   <div class="chrome-no">25 / 25</div>
@@ -4794,119 +4793,51 @@
 <script>/* P19 */
 
   (function () {
-    let rafId = 0;
-    let delayTimer = 0;
-    let settleTimer = 0;
-    let currentVal = 333;
+    let timers = [];
+
+    function clearTimers() {
+      for (let i = 0; i < timers.length; i++) {
+        clearTimeout(timers[i]);
+      }
+      timers = [];
+    }
 
     function stopAnim(valEl) {
-      if (delayTimer) {
-        clearTimeout(delayTimer);
-        delayTimer = 0;
-      }
-      if (settleTimer) {
-        clearTimeout(settleTimer);
-        settleTimer = 0;
-      }
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = 0;
-      }
+      clearTimers();
       if (valEl) {
         const numEl = valEl.closest('.t-num');
-        if (numEl) numEl.classList.remove('p19-land');
+        if (numEl) numEl.classList.remove('p19-out', 'p19-land');
       }
     }
 
-    function slotRollTo(valEl, to, duration) {
+    function flipTo(valEl, text) {
       stopAnim(valEl);
-      const target = Math.max(0, Math.round(Number(to) || 0));
-      const targetStr = String(target);
-      const len = targetStr.length;
-      const ms = duration || 500;
+      if (!valEl) return;
       const numEl = valEl.closest('.t-num');
+      const targetText = String(text || '');
 
-      valEl.textContent = '';
-      const reels = [];
-      const lockTimes = [];
-      const lastDigits = [];
-      const lastSteps = [];
-
-      for (let i = 0; i < len; i++) {
-        const span = document.createElement('span');
-        span.className = 'p19-reel spinning';
-        const initDigit = (Number(targetStr[i]) + 3 + i * 4) % 10;
-        span.textContent = String(initDigit);
-        valEl.appendChild(span);
-        reels.push(span);
-        lastDigits.push(initDigit);
-        lastSteps.push(-1);
-        const frac = len === 1 ? 1 : (0.52 + (0.48 * i) / (len - 1));
-        lockTimes.push(ms * frac);
+      if (numEl) {
+        numEl.classList.remove('p19-land');
+        void numEl.offsetWidth;
+        numEl.classList.add('p19-out');
       }
 
-      const locked = new Array(len).fill(false);
-      const start = performance.now();
-      let lastTickAt = start - 70;
+      Deck.sfx('tick');
+      timers.push(setTimeout(function () { Deck.sfx('tick'); }, 65));
+      timers.push(setTimeout(function () { Deck.sfx('tick'); }, 125));
 
-      function tick(now) {
-        const elapsed = now - start;
-        let allLocked = true;
-
-        if (elapsed < ms * 0.88 && now - lastTickAt >= 68) {
-          lastTickAt = now;
-          Deck.sfx('tick');
+      timers.push(setTimeout(function () {
+        valEl.textContent = targetText;
+        if (numEl) {
+          numEl.classList.remove('p19-out');
+          void numEl.offsetWidth;
+          numEl.classList.add('p19-land');
         }
-
-        for (let i = 0; i < len; i++) {
-          if (locked[i]) continue;
-          const lockAt = lockTimes[i];
-          if (elapsed >= lockAt) {
-            locked[i] = true;
-            reels[i].textContent = targetStr[i];
-            reels[i].style.transform = '';
-            reels[i].classList.remove('spinning');
-            reels[i].classList.add('locked');
-            if (i < len - 1 && elapsed < ms * 0.92) {
-              Deck.sfx('tick');
-            }
-          } else {
-            allLocked = false;
-            const localP = elapsed / lockAt;
-            const speedMs = 26 + localP * localP * 28;
-            const stepIdx = Math.floor(elapsed / speedMs);
-            if (stepIdx !== lastSteps[i]) {
-              lastSteps[i] = stepIdx;
-              const nextD = (lastDigits[i] + 1 + ((i * 2 + stepIdx) % 3)) % 10;
-              lastDigits[i] = nextD;
-              reels[i].textContent = String(nextD);
-            }
-            const phase = (elapsed % speedMs) / speedMs;
-            const dy = (0.5 - phase) * 22;
-            reels[i].style.transform = 'translateY(' + dy.toFixed(1) + 'px)';
-          }
-        }
-
-        if (!allLocked && elapsed < ms + 40) {
-          rafId = requestAnimationFrame(tick);
-        } else {
-          rafId = 0;
-          currentVal = target;
-          Deck.sfx('coin');
-          if (numEl) {
-            numEl.classList.remove('p19-land');
-            void numEl.offsetWidth;
-            numEl.classList.add('p19-land');
-          }
-          settleTimer = setTimeout(function () {
-            settleTimer = 0;
-            valEl.textContent = targetStr;
-            if (numEl) numEl.classList.remove('p19-land');
-          }, 220);
-        }
-      }
-
-      rafId = requestAnimationFrame(tick);
+        Deck.sfx('coin');
+        timers.push(setTimeout(function () {
+          if (numEl) numEl.classList.remove('p19-land');
+        }, 260));
+      }, 160));
     }
 
     function resetDefault(el) {
@@ -4916,9 +4847,8 @@
       btns.forEach(function (b) {
         b.classList.toggle('on', b.dataset.tier === '1000');
       });
-      if (noteEl) noteEl.textContent = '按每次 ¥3 计 · 约可免费充电两年';
-      currentVal = 333;
-      if (valEl) valEl.textContent = '333';
+      if (noteEl) noteEl.textContent = '免费充电 · 免费得碳豆 · 无任何套路';
+      if (valEl) valEl.textContent = '长期免费';
     }
 
     function bind(el) {
@@ -4930,7 +4860,7 @@
 
       btns.forEach(function (btn) {
         btn.addEventListener('click', function () {
-          const target = Number(btn.dataset.count) || 0;
+          const bigText = btn.dataset.big || '';
           const note = btn.dataset.note || '';
           btns.forEach(function (b) {
             b.classList.toggle('on', b === btn);
@@ -4939,7 +4869,7 @@
           if (Deck.fx && typeof Deck.fx.sparks === 'function') {
             Deck.fx.sparks(btn, { count: 16, color: '#FF5500' });
           }
-          if (valEl) slotRollTo(valEl, target, 500);
+          if (valEl) flipTo(valEl, bigText);
         });
       });
     }
@@ -4950,14 +4880,15 @@
       enter(el) {
         bind(el);
         const valEl = el.querySelector('.res .val');
+        const numEl = el.querySelector('.res .t-num');
         stopAnim(valEl);
         resetDefault(el);
-        currentVal = 0;
-        if (valEl) valEl.textContent = '0';
-        delayTimer = setTimeout(function () {
-          delayTimer = 0;
-          if (valEl) slotRollTo(valEl, 333, 520);
-        }, 480);
+        timers.push(setTimeout(function () {
+          if (valEl) flipTo(valEl, '长期免费');
+          if (numEl && Deck.fx && typeof Deck.fx.sparks === 'function') {
+            Deck.fx.sparks(numEl, { count: 18, color: '#FFB15C' });
+          }
+        }, 480));
       },
       leave(el) {
         const valEl = el.querySelector('.res .val');
@@ -6871,7 +6802,7 @@
     const H_START = 1080 - BASE_Y - 12;
     const H_END = 1080 - 48;
     const EAGLE_T0 = 3000;
-    const LINE_A = ['桢', '昱', '烽', '动', '力'];
+    const LINE_A = ['桢', '昱', '烽', '闪', '充'];
     const LINE_B = ['闪', '充', '领', '导', '者'];
 
     let timers = [];

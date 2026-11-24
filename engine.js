@@ -2886,6 +2886,37 @@
           antBar++;
         }
       }, 170);
+    } else if (name === 'danger') {
+      scheduleDrone([55.0, 58.27, 82.41, 87.31], 'sawtooth', 220, 0.25, 160, 0.17);
+      var dgLp = ctx.createBiquadFilter();
+      dgLp.type = 'lowpass';
+      dgLp.frequency.value = 900;
+      dgLp.connect(trackGain);
+      extraNodes.push(dgLp);
+
+      var dgStep = 0;
+      var dgNext = now + 0.05;
+      addTimer(function () {
+        if (stopped || !ctx) return;
+        while (dgNext < ctx.currentTime + 0.32) {
+          playNote(110.0, dgNext, 0.07, 'sawtooth', 0.11, dgLp, 0.004);
+          if (dgStep % 4 === 0) {
+            playNote(220.0, dgNext, 0.06, 'sawtooth', 0.07, dgLp, 0.004);
+          }
+          if (dgStep % 8 === 0) {
+            playKick(dgNext, 120, 40, 0.22, 0.3);
+            playKick(dgNext + 0.18, 105, 38, 0.18, 0.22);
+          }
+          if (dgStep % 32 === 0) {
+            playNote(466.16, dgNext, 0.4, 'square', 0.035, trackGain, 0.01);
+            playNote(659.25, dgNext, 0.4, 'square', 0.035, trackGain, 0.01);
+            playNoiseHit(dgNext, 1.3, 'bandpass', 1800, 1.0, 0.06);
+            playNote(1864.66, dgNext, 3.0, 'sine', 0.016, trackGain, 0.6);
+          }
+          dgNext += 0.1;
+          dgStep++;
+        }
+      }, 75);
     } else if (name === 'lounge') {
       var lgChords = [
         { bass: 87.31, pad: [174.61, 220.0, 261.63, 329.63], arp: [349.23, 440.0, 523.25, 659.25] },
